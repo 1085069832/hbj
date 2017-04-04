@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/douban_item_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_content_icon_mt"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_content_icon_mt_title"
+            style="@style/ItemTitle" />
+
+        <TextView
+            android:id="@+id/tv_content_icon_mt_look_more"
+            style="@style/LookMore"
+            android:text="更多" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_content_icon_mt_item"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:id="@+id/rl_content_des"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_content_icon_des"
+            style="@style/ItemTitle"
+            android:text="des" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Douban</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">搜索</string>
+
+    <string-array name="home_titlepage">
+        <item>每日推荐</item>
+        <item>全部</item>
+        <item>Android</item>
+        <item>福利</item>
+    </string-array>
+</resources>
