@@ -10,18 +10,6 @@ import me.drakeet.multitype.MultiTypeAdapter;
 /**
  * Created by Administrator on 2017/4/3 0003.
  */
-public interface IMusicFragmentView {
+public interface IMusicFragmentView extends IFragmentBaseView {
 
-    void onRegisterMultitypeItem(Items items, MultiTypeAdapter adapter);
-
-    void onInitLayoutManager(RecyclerView.LayoutManager manager);
-
-    void onConnectHttp(List<String> newMusicData, List<String> mandoPopMusicData, List<String> westernMusicData, List<String> jSKMusicData,
-                       List<String> mayYouLikeMusicData);
-
-    void onStartVisibility();
-
-    void onErrorVisibility();
-
-    void onCompletedVisibility();
 }

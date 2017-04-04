@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,15 +47,12 @@ import rx.schedulers.Schedulers;
  * 书籍
  * Created by Administrator on 2017/3/17 0017.
  */
-public class BookFragment extends LazyFragment {
+public class BookFragment extends BaseFragment {
 
     private static final String TAG = "BookFragment";
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
     private boolean isLoading = false;
-    private ProgressBar pb_loading;
-    private RecyclerView rc_book;
-    private TextView iv_error;
     private Items items;
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData3 = new ArrayList<>();
@@ -74,18 +72,11 @@ public class BookFragment extends LazyFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initChildView() {
         MyLogUtils.i(TAG, "onCreateView");
-        //此处加载界面
-        View view = inflater.inflate(R.layout.fg_book, container, false);
-        rc_book = (RecyclerView) view.findViewById(R.id.rc_book);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (TextView) view.findViewById(R.id.tv_error);
-
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        rc_book.setLayoutManager(manager);
+        rc_base.setLayoutManager(manager);
         items = new Items();
         //new一个MultiTypeAdapter
         MultiTypeAdapter adapter = new MultiTypeAdapter(items);
@@ -114,13 +105,13 @@ public class BookFragment extends LazyFragment {
         items.add(new NormalItem(mData1, "畅销书籍", MyConstants.BOOK_BESTSELLER_BOOK_INDEX));
         items.add(new MayYouLikeItem(mData3, "你可能感兴趣", MyConstants.BOOK_MAY_YOU_LIKE_BOOK_INDEX));
         items.add(new SelectItem("选图书"));
-        rc_book.setAdapter(adapter);
+        rc_base.setAdapter(adapter);
 
 
         isCreateView = true;
         MyLogUtils.i(TAG, "isLoading" + isLoading);
         lazyLoad();
-        return view;
+        return null;
     }
 
     @Override
@@ -172,7 +163,7 @@ public class BookFragment extends LazyFragment {
                     public void onCompleted() {
                         //请求结束
                         pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.GONE);
+                        tv_error.setVisibility(View.GONE);
 
                     }
 
@@ -180,7 +171,7 @@ public class BookFragment extends LazyFragment {
                     public void onError(Throwable e) {
                         //错误回调
                         pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.VISIBLE);
+                        tv_error.setVisibility(View.VISIBLE);
                         Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
                     }
 
@@ -199,13 +190,13 @@ public class BookFragment extends LazyFragment {
                         //设置第一次加载变量
                         isFirstCreate = false;
                         pb_loading.setVisibility(View.VISIBLE);
-                        iv_error.setVisibility(View.GONE);
+                        tv_error.setVisibility(View.GONE);
                     }
                 });
     }
 
     private void initEvent() {
-        iv_error.setOnClickListener(new View.OnClickListener() {
+        tv_error.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toConnectData();

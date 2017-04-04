@@ -48,22 +48,18 @@ import rx.schedulers.Schedulers;
  * 电影
  * Created by Administrator on 2017/3/17 0017.
  */
-public class MovieFragment extends LazyFragment {
+public class MovieFragment extends BaseFragment {
 
     private static final String TAG = "MovieFragment";
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
     private boolean isLoading = false;
-    private ProgressBar pb_loading;
-    private RecyclerView rc_movie;
-    private TextView iv_error;
     private Items items;
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData2 = new ArrayList<>();
     private List<String> mData3 = new ArrayList<>();
     private List<String> mData4 = new ArrayList<>();
     private List<View> mData5 = new ArrayList<>();
-    private LinearLayoutManager manager;
 
     public static MovieFragment newsInstance(int pos) {
         MovieFragment fragment = new MovieFragment();
@@ -79,17 +75,10 @@ public class MovieFragment extends LazyFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MyLogUtils.i(TAG, "onCreateView");
-        //此处加载界面
-        View view = inflater.inflate(R.layout.fg_movie, container, false);
-        rc_movie = (RecyclerView) view.findViewById(R.id.rc_movie);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (TextView) view.findViewById(R.id.tv_error);
-        manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        rc_movie.setLayoutManager(manager);
+    protected View initChildView() {
+        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        rc_base.setLayoutManager(manager);
         //Item是一个布局集，可以添加很多布局
         items = new Items();
         //new一个MultiTypeAdapter
@@ -127,12 +116,12 @@ public class MovieFragment extends LazyFragment {
         items.add(new MovieListSelectionItem(mData3, "榜单精选"));
         items.add(new MayYouLikeItem(mData4, "你可能感兴趣", MyConstants.MOVIE_MAY_YOU_LIKE_INDEX));
         items.add(new SelectItem("选电影"));
-        rc_movie.setAdapter(adapter);
+        rc_base.setAdapter(adapter);
 
 
         isCreateView = true;
         lazyLoad();
-        return view;
+        return null;
     }
 
     @Override
@@ -185,7 +174,7 @@ public class MovieFragment extends LazyFragment {
                     public void onCompleted() {
                         //请求结束
                         pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.GONE);
+                        tv_error.setVisibility(View.GONE);
 
                     }
 
@@ -193,7 +182,7 @@ public class MovieFragment extends LazyFragment {
                     public void onError(Throwable e) {
                         //错误回调
                         pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.VISIBLE);
+                        tv_error.setVisibility(View.VISIBLE);
                         Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
                     }
 
@@ -212,14 +201,14 @@ public class MovieFragment extends LazyFragment {
                         //设置第一次加载变量
                         isFirstCreate = false;
                         pb_loading.setVisibility(View.VISIBLE);
-                        iv_error.setVisibility(View.GONE);
+                        tv_error.setVisibility(View.GONE);
                     }
                 });
     }
 
     private void initEvent() {
 
-        iv_error.setOnClickListener(new View.OnClickListener() {
+        tv_error.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toConnectData();
