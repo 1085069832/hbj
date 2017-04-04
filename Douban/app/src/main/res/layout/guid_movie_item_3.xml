@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_guid_movie_item_3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_dongzuo"
+        style="@style/MovieItemStyle"
+        android:text="动作" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_xuanyi"
+        style="@style/MovieItemStyle"
+        android:text="悬疑" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_qingchun"
+        style="@style/MovieItemStyle"
+        android:text="青春" />
+
+</LinearLayout>

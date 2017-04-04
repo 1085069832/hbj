@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <com.doubanapp.hbj.douban.view.NoScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </com.doubanapp.hbj.douban.view.NoScrollViewPager>
+
+    <RadioGroup
+        android:id="@+id/rg_content"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/radio_buttom"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            style="@style/MyRadioButton"
+            android:drawableTop="@drawable/home_selector"
+            android:text="首页" />
+
+        <RadioButton
+            android:id="@+id/rb_movie"
+            style="@style/MyRadioButton"
+            android:drawableTop="@drawable/movie_selector"
+            android:text="电影" />
+
+        <RadioButton
+            android:id="@+id/rb_book"
+            style="@style/MyRadioButton"
+            android:drawableTop="@drawable/book_selector"
+            android:text="书籍" />
+
+        <RadioButton
+            android:id="@+id/rb_music"
+            style="@style/MyRadioButton"
+            android:drawableTop="@drawable/music_selector"
+            android:text="音乐" />
+
+    </RadioGroup>
+
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/douban_bg"
+    android:orientation="vertical">
+
+    <lib.homhomlib.design.SlidingLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bt_me_changelanguage"
+                style="@style/MeItemStyle"
+                android:drawableLeft="@mipmap/me_item_left_yellow"
+                android:text="多语言" />
+
+            <Button
+                android:id="@+id/bt_me_changefontsize"
+                style="@style/MeItemStyle"
+                android:drawableLeft="@mipmap/me_item_left_yellow"
+                android:text="字体大小" />
+
+            <Button
+                android:id="@+id/bt_me_myliketag"
+                style="@style/MeItemStyle"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/me_item_left_green"
+                android:text="兴趣标签" />
+
+            <Button
+                android:id="@+id/bt_me_checknet"
+                style="@style/MeItemStyle"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/me_item_left_red"
+                android:text="网络诊断" />
+
+            <Button
+                android:id="@+id/bt_me_flow"
+                style="@style/MeItemStyle"
+                android:drawableLeft="@mipmap/me_item_left_red"
+                android:text="流量统计" />
+
+            <Button
+                android:id="@+id/bt_me_clear"
+                style="@style/MeItemStyle"
+                android:drawableLeft="@mipmap/me_item_left_red"
+                android:text="清理缓存" />
+
+            <Button
+                android:id="@+id/bt_me_about"
+                style="@style/MeItemStyle"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/me_item_left_gray"
+                android:text="关于" />
+
+        </LinearLayout>
+    </lib.homhomlib.design.SlidingLayout>
+
+</LinearLayout>

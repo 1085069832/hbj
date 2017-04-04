@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"></group>
+
+    <item android:title="菜单">
+        <menu>
+            <item
+                android:id="@+id/nav_looked"
+                android:icon="@mipmap/ic_menu_looked"
+                android:title="我的浏览历史" />
+            <item
+                android:id="@+id/nav_collect"
+                android:icon="@mipmap/ic_menu_collect"
+                android:title="我的收藏" />
+            <item
+                android:id="@+id/nav_mystyle"
+                android:icon="@mipmap/ic_menu_mystyle"
+                android:title="个性主题" />
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@mipmap/ic_menu_setting"
+                android:title="设置" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@mipmap/ic_menu_share"
+                android:title="分享" />
+            <item
+                android:id="@+id/nav_night"
+                android:icon="@mipmap/ic_menu_night"
+                android:title="夜间" />
+        </menu>
+    </item>
+
+</menu>

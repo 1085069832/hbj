@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_guid_music_item_1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_liuxing"
+        style="@style/MusicItemStyle"
+        android:text="流行" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_yaogun"
+        style="@style/MusicItemStyle"
+        android:text="摇滚" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_minyao"
+        style="@style/MusicItemStyle"
+        android:text="民谣" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_duli"
+        style="@style/MusicItemStyle"
+        android:text="独立" />
+</LinearLayout>

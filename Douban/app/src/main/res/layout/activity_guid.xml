@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lib.homhomlib.design.SlidingLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.doubanapp.hbj.douban.activity.GuidActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/guid_title"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="你对什么感兴趣？"
+                    android:textColor="#009900"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="选择想要看到的内容吧"
+                    android:textColor="#999999"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_guid_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="15dp"
+                android:src="@mipmap/ic_guid_cancel" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="vertical">
+                <!--电影-->
+                <LinearLayout
+                    android:id="@+id/ll_guid_movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/guid_item"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GuidIconStyle"
+                        android:layout_marginLeft="10dp"
+                        android:drawableTop="@mipmap/ic_guid_movie"
+                        android:text="电影"
+                        android:textColor="#ff9933" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/guid_movie_item_1" />
+
+                        <include layout="@layout/guid_movie_item_2" />
+
+                        <include layout="@layout/guid_movie_item_3" />
+                    </LinearLayout>
+                </LinearLayout>
+                <!--书籍-->
+                <LinearLayout
+                    android:id="@+id/ll_guid_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/guid_title"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/GuidIconStyle"
+                        android:drawableTop="@mipmap/ic_guid_book"
+                        android:text="书籍"
+                        android:textColor="#0099cc" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/guid_book_item_1" />
+
+                        <include layout="@layout/guid_book_item_2" />
+                    </LinearLayout>
+                </LinearLayout>
+                <!--音乐-->
+                <LinearLayout
+                    android:id="@+id/ll_guid_music"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/guid_item"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GuidIconStyle"
+                        android:layout_marginLeft="10dp"
+                        android:drawableTop="@mipmap/ic_guid_music"
+                        android:text="音乐"
+                        android:textColor="#6666cc" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/guid_music_item_1" />
+
+                        <include layout="@layout/guid_music_item_2" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_guid_start_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/guid_title"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="选好了，进入首页>"
+                android:textColor="#999999"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+</lib.homhomlib.design.SlidingLayout>

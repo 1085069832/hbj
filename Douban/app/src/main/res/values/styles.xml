@@ -1,0 +1,140 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MyRadioButton">
+        <item name="android:textColor">@color/radio_button_text_selector</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+
+    </style>
+
+    <style name="GuidIconStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="MovieItemStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/guid_movie_item_text_selector</item>
+        <item name="android:background">@drawable/guid_movie_item_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="BookItemStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/guid_book_item_text_selector</item>
+        <item name="android:background">@drawable/guid_book_item_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="MusicItemStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/guid_music_item_text_selector</item>
+        <item name="android:background">@drawable/guid_music_item_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="MeItemStyle">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:elevation" tools:targetApi="lollipop">5dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/setting_item_selector</item>
+        <item name="android:drawableRight">@mipmap/me_item_right</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ItemTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="LookMore">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:drawableRight">@mipmap/more_icon</item>
+        <item name="android:textColor">#009900</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="SelectItem">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#33cc33</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:background">@drawable/select_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <!--app样式-->
+    <style name="AppStyledIndicators" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="android:windowAnimationStyle">@style/MyWindowAnimation</item>
+    </style>
+
+    <style name="MyWindowAnimation" parent="android:Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/window_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/window_exit_anim</item>
+    </style>
+
+    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
+        <item name="android:background">@drawable/tab_indicator</item>
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:dividerPadding">8dp</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
+    </style>
+
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+        <item name="android:textColor">@drawable/selector_tabtext</item>
+    </style>
+</resources>

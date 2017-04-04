@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.doubanapp.hbj.douban.activity.SpalshActivity">
+
+    <!--版本-->
+    <ImageView
+        android:id="@+id/splash_version"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/splash_icon"
+        android:visibility="gone" />
+    <!--hello-->
+    <ImageView
+        android:id="@+id/splash_hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/splash_hello" />
+    <!--豆-->
+    <ImageView
+        android:id="@+id/splash_dou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/splash_title"
+        android:visibility="gone" />
+    <!--start-->
+    <Button
+        android:id="@+id/splash_start"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/splash_start_selector"
+        android:elevation="8dp"
+        android:text="立即体验"
+        android:textColor="@color/splash_start_text_selector"
+        android:visibility="gone" />
+</RelativeLayout>

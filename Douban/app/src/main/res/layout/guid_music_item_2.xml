@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_guid_music_item_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_huayu"
+        style="@style/MusicItemStyle"
+        android:text="华语" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_oumei"
+        style="@style/MusicItemStyle"
+        android:text="欧美" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_riben"
+        style="@style/MusicItemStyle"
+        android:text="日本" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_music_item_hanguo"
+        style="@style/MusicItemStyle"
+        android:text="韩国" />
+</LinearLayout>

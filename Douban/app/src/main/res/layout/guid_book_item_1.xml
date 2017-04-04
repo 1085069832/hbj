@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_guid_book_item_1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_xiaoshuo"
+        style="@style/BookItemStyle"
+        android:text="小说" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_qihuan"
+        style="@style/BookItemStyle"
+        android:text="奇幻" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_waiguowenzi"
+        style="@style/BookItemStyle"
+        android:text="外国文字" />
+</LinearLayout>

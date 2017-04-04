@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_guid_book_item_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_qingchun"
+        style="@style/BookItemStyle"
+        android:text="青春" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_lizhi"
+        style="@style/BookItemStyle"
+        android:text="励志" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_suibi"
+        style="@style/BookItemStyle"
+        android:text="随笔" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_book_item_aiqing"
+        style="@style/BookItemStyle"
+        android:text="爱情" />
+
+</LinearLayout>

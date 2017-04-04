@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_guid_movie_item_1"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_jingdian"
+        style="@style/MovieItemStyle"
+        android:text="经典" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_doubangaofen"
+        style="@style/MovieItemStyle"
+        android:text="豆瓣高分" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_lengmengjiapian"
+        style="@style/MovieItemStyle"
+        android:text="冷门佳片" />
+
+</LinearLayout>

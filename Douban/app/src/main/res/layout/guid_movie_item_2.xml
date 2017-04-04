@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_guid_movie_item_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_juqing"
+        style="@style/MovieItemStyle"
+        android:text="剧情" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_aiqing"
+        style="@style/MovieItemStyle"
+        android:text="爱情" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_xiju"
+        style="@style/MovieItemStyle"
+        android:text="喜剧" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_kehuan"
+        style="@style/MovieItemStyle"
+        android:text="科幻" />
+
+    <CheckBox
+        android:id="@+id/cb_guid_movie_item_wengyi"
+        style="@style/MovieItemStyle"
+        android:text="文艺" />
+</LinearLayout>
