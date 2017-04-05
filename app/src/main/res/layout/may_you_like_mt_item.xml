@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="15dp"
-    android:background="@drawable/douban_item_bg"
+    style="@style/MyLayoutStyle"
     android:gravity="center"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="15dp"
-        android:gravity="center_vertical">
+        style="@style/ItemTitleLayout">
 
         <TextView
             android:id="@+id/tv_may_you_like_title"

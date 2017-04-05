@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
@@ -64,6 +66,8 @@ public class HomeDayRecommendFragment extends LazyFragment {
     private List<String> mData6 = new ArrayList<>();
     private List<String> mData7 = new ArrayList<>();
     private List<View> mData8 = new ArrayList<>();
+    private MultiTypeAdapter adapter;
+    private LinearLayoutManager manager;
 
     public static HomeDayRecommendFragment newsInstance(int pos) {
         HomeDayRecommendFragment fragment = new HomeDayRecommendFragment();
@@ -89,18 +93,21 @@ public class HomeDayRecommendFragment extends LazyFragment {
         rc_home_day_recommend = (RecyclerView) view.findViewById(R.id.rc_home_day_recommend);
         pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
         iv_error = (TextView) view.findViewById(R.id.tv_error);
-        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        rc_home_day_recommend.setLayoutManager(manager);
-        //Item是一个布局集，可以添加很多布局
+
+        manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         items = new Items();
         //new一个MultiTypeAdapter
-        MultiTypeAdapter adapter = new MultiTypeAdapter(items);
+        adapter = new MultiTypeAdapter(items);
         //注册MultiTypeAdapter，绑定 Image.class和 ImageViewProvider，此处可以在application中使用GlobalMultiTypePool.register(Image.class, new ImageViewProvider())注册，然后在Activity中使用adapter.applyGlobalMultiTypePool()调用，方便整理代码
+        adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
         adapter.register(NormalItem.class, new NormalProvider(mContext));
         adapter.register(ContentIconItem.class, new ContentIconProvider(mContext));
-        adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
         adapter.register(ButtomItem.class, new ButtomProvider());
-
+        for (int i = 0; i < 4; i++) {
+            ImageView imageView = new ImageView(MyUtils.getContext());
+            Glide.with(mContext).load(R.mipmap.navigation_title_icon).crossFade().centerCrop().into(imageView);
+            mData4.add(imageView);
+        }
         for (int i = 0; i < 3; i++) {
             mData1.add("Android");
         }
@@ -119,13 +126,6 @@ public class HomeDayRecommendFragment extends LazyFragment {
             textView.setTextSize(35);
             textView.setTextColor(Color.BLUE);
             mData3.add(textView);
-        }
-        for (int i = 0; i < 4; i++) {
-            TextView textView = new TextView(MyUtils.getContext());
-            textView.setText("拓展资源" + i);
-            textView.setTextSize(35);
-            textView.setTextColor(Color.BLUE);
-            mData4.add(textView);
         }
         for (int i = 0; i < 1; i++) {
             TextView textView = new TextView(MyUtils.getContext());
@@ -150,11 +150,8 @@ public class HomeDayRecommendFragment extends LazyFragment {
         items.add(new ContentIconItem(mData3, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
         items.add(new ContentIconItem(mData5, "福利", MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX));
         items.add(new ButtomItem());
+        rc_home_day_recommend.setLayoutManager(manager);
         rc_home_day_recommend.setAdapter(adapter);
-
-
-
-
 
         isCreateView = true;
         lazyLoad();
@@ -177,7 +174,9 @@ public class HomeDayRecommendFragment extends LazyFragment {
             //不加载数据
             return;
         }
+
         toConnectData();
+
     }
 
     private void toConnectData() {

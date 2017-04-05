@@ -15,11 +15,11 @@ public interface IFragmentBaseView {
 
     void onInitLayoutManager(RecyclerView.LayoutManager manager);
 
-    void onStartVisibility();
+    void onStartVisibility(int progressVisb, int errorVisb);
 
-    void onErrorVisibility();
+    void onErrorVisibility(int progressVisb, int errorVisb);
 
-    void onCompletedVisibility();
+    void onCompletedVisibility(int progressVisb, int errorVisb);
 
     void onSetAdapter();
 }

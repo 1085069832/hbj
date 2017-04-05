@@ -104,26 +104,26 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener,
     /*
     * 开始请求*/
     @Override
-    public void onStartVisibility() {
-        pb_loading.setVisibility(View.VISIBLE);
-        tv_error.setVisibility(View.GONE);
+    public void onStartVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        tv_error.setVisibility(errorVisb);
     }
 
     /*
     * 请求失败*/
     @Override
-    public void onErrorVisibility() {
-        pb_loading.setVisibility(View.GONE);
-        tv_error.setVisibility(View.VISIBLE);
+    public void onErrorVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        tv_error.setVisibility(errorVisb);
         Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
     }
 
     /*
     * 请求结束*/
     @Override
-    public void onCompletedVisibility() {
-        pb_loading.setVisibility(View.GONE);
-        tv_error.setVisibility(View.GONE);
+    public void onCompletedVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        tv_error.setVisibility(errorVisb);
     }
 
     @Override

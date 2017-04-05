@@ -2,6 +2,7 @@ package com.doubanapp.hbj.douban.presenter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.doubanapp.hbj.douban.IPresenter.IMusicFragmentPresenter;
 import com.doubanapp.hbj.douban.IView.IMusicFragmentView;
@@ -58,7 +59,7 @@ public class MusicFragmentPresenter implements IMusicFragmentPresenter, IMusicFr
 
     @Override
     public void onConnectStart() {
-        iMusicFragmentView.onStartVisibility();
+        iMusicFragmentView.onStartVisibility(View.VISIBLE, View.GONE);
     }
 
     @Override
@@ -73,12 +74,12 @@ public class MusicFragmentPresenter implements IMusicFragmentPresenter, IMusicFr
 
     @Override
     public void onConnectError() {
-        iMusicFragmentView.onErrorVisibility();
+        iMusicFragmentView.onErrorVisibility(View.GONE,View.VISIBLE);
     }
 
     @Override
     public void onConnectCompleted() {
-        iMusicFragmentView.onCompletedVisibility();
+        iMusicFragmentView.onCompletedVisibility(View.GONE,View.GONE);
         iMusicFragmentView.onSetAdapter();
     }
 }

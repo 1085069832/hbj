@@ -254,11 +254,11 @@ public class HomeAllFragment extends LazyFragment {
                     //选中checkbox
                     if (!dl_fg_home_all.isDrawerOpen(GravityCompat.END)) {
                         dl_fg_home_all.openDrawer(GravityCompat.END);
+                        //设置动画
+                        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.home_all_drawer_rg_anim);
+                        rg_home_select_class.startAnimation(animation);
                     }
                 }
-                //设置动画
-                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.home_all_drawer_rg_anim);
-                rg_home_select_class.startAnimation(animation);
             }
         });
         rg_home_select_class.check(R.id.rb_home_all_select_all);

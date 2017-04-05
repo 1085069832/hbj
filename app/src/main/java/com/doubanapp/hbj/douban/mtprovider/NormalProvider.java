@@ -58,6 +58,7 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
             }
         });
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
+
         NormalRcAdapter adapter = new NormalRcAdapter(normalItem.content);
         LinearLayoutManager manager = new LinearLayoutManager(MyUtils.getContext(), LinearLayoutManager.HORIZONTAL, false);
         ((NormalItemViewHolder) holder).rc_normal_item.setAdapter(adapter);
