@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.RadioGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IMainView;
@@ -28,30 +27,40 @@ import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.adapter.MyContentViewPagerAdapter;
 import com.doubanapp.hbj.douban.presenter.MainPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
-import com.doubanapp.hbj.douban.view.NoScrollViewPager;
+import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
+import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /*
 * 主界面
 * */
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, RadioGroup.OnCheckedChangeListener,
+        implements NavigationView.OnNavigationItemSelectedListener,
         DrawerLayout.DrawerListener, View.OnClickListener, IMainView {
 
     private static final String TAG = "MainActivity";
-    private NoScrollViewPager vp_content;
-    private RadioGroup rg_content;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.bottomNavigation)
+    BottomNavigationView bottomNavigationView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
     private int currentChecked = 0;//标记当前选中的radio
     private static Map<String, String> mIsCheckedMap = new HashMap<>();//guid选中的标签
     private List<String> permissionList = new ArrayList<>();
-    private Toolbar toolbar;
     private int navigationIndex = -1;
-    private DrawerLayout drawer;
-    private FloatingActionButton fab;
 
     public static void startAction(Context context, Map<String, String> isCheckedMap) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -63,6 +72,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         //申请权限
         checkPermission();
@@ -70,22 +80,24 @@ public class MainActivity extends BaseActivity
         //设置不能滑动退出
         setSwipeBackEnable(false);
 
-        //findview
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        vp_content = (NoScrollViewPager) findViewById(R.id.vp_content);
-        rg_content = (RadioGroup) findViewById(R.id.rg_content);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
         //set listener
-        rg_content.setOnCheckedChangeListener(this);
         drawer.addDrawerListener(this);
-        navigationView.setNavigationItemSelectedListener(this);
+        navView.setNavigationItemSelectedListener(this);
         fab.setOnClickListener(this);
 
-        //默认选择rb_home
-        rg_content.check(R.id.rb_home);
+        BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
+                ("首页", ContextCompat.getColor(this, R.color.colorPrimary), R.mipmap.ic_home_bottom_navigation);
+        BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
+                ("电影", ContextCompat.getColor(this, R.color.default_line_indicator_selected_color), R.mipmap.ic_movie_bottom_navigation);
+        BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
+                ("书籍", ContextCompat.getColor(this, R.color.vpi__bright_foreground_disabled_holo_dark), R.mipmap.ic_book_bottom_navigation);
+        BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
+                ("音乐", ContextCompat.getColor(this, R.color.colorAccent), R.mipmap.ic_music_bottom_navigation);
+
+        bottomNavigationView.addTab(bottomNavigationItem);
+        bottomNavigationView.addTab(bottomNavigationItem1);
+        bottomNavigationView.addTab(bottomNavigationItem2);
+        bottomNavigationView.addTab(bottomNavigationItem3);
 
         //Presenter
         MainPresenter mainPresenter = new MainPresenter(this, this);
@@ -184,30 +196,6 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_home:
-                currentChecked = 0;
-                toolbar.setTitle("首页");
-                break;
-            case R.id.rb_movie:
-                currentChecked = 1;
-                toolbar.setTitle("电影");
-                break;
-            case R.id.rb_book:
-                currentChecked = 2;
-                toolbar.setTitle("书籍");
-                break;
-            case R.id.rb_music:
-                currentChecked = 3;
-                toolbar.setTitle("音乐");
-                break;
-            default:
-        }
-        vp_content.setCurrentItem(currentChecked);
-    }
-
-    @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
     }
 
@@ -268,6 +256,5 @@ public class MainActivity extends BaseActivity
     * adapter*/
     @Override
     public void onInitAdapter(MyContentViewPagerAdapter adapter) {
-        vp_content.setAdapter(adapter);
     }
 }
