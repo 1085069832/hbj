@@ -1,41 +1,26 @@
 package com.doubanapp.hbj.douban.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IMusicFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.constants.MyConstants;
-import com.doubanapp.hbj.douban.mtitem.MayYouLikeItem;
-import com.doubanapp.hbj.douban.mtitem.NormalItem;
-import com.doubanapp.hbj.douban.mtitem.SelectItem;
+import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.presenter.MusicFragmentPresenter;
-import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 
-import java.util.List;
-
-import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
  * 音乐
  * Created by Administrator on 2017/3/17 0017.
  */
-public class MusicFragment extends BaseFragment implements View.OnClickListener, IMusicFragmentView {
+public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
     private static final String TAG = "MusicFragment";
-    private boolean isFirstCreate;//是否第一次加载
-    private boolean isCreateView = false;//是否创建了视图
-    private boolean isLoading = false;
     private MultiTypeAdapter adapter;
     private MusicFragmentPresenter musicFragmentPresenter;
 
@@ -49,41 +34,22 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener,
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        isFirstCreate = true;
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected View initChildView() {
-
-        tv_error.setOnClickListener(this);
         //Presenter
         musicFragmentPresenter = new MusicFragmentPresenter(mContext, this);
         musicFragmentPresenter.doRegisterMultitypeItem();
         musicFragmentPresenter.doInitLayoutManager();
-
-
-        isCreateView = true;
-        MyLogUtils.i(TAG, "isLoading" + isLoading);
-        lazyLoad();
         return null;
     }
 
     @Override
-    protected synchronized void lazyLoad() {
-        MyLogUtils.i(TAG, isCreateView + "isCreateView");
-        MyLogUtils.i(TAG, isVisible + "isVisible");
-        if (!isFirstCreate || !isCreateView || !isVisible) {
-            //不是第一次创建，或者还没有加载完view，或者没显示
-            //不加载数据
-            return;
-        }
-
-        //设置第一次加载变量
-        isFirstCreate = false;
-        //获取数据
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         musicFragmentPresenter.doConnectHttp();
+    }
+
+    @Override
+    protected synchronized void lazyLoad() {
     }
 
 
@@ -106,7 +72,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onStartVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
-        tv_error.setVisibility(errorVisb);
+        rl_error.setVisibility(errorVisb);
     }
 
     /*
@@ -114,7 +80,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
-        tv_error.setVisibility(errorVisb);
+        rl_error.setVisibility(errorVisb);
         Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
     }
 
@@ -123,7 +89,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onCompletedVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
-        tv_error.setVisibility(errorVisb);
+        rl_error.setVisibility(errorVisb);
     }
 
     @Override
@@ -135,10 +101,15 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener,
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.tv_error:
+            case R.id.rl_error:
                 musicFragmentPresenter.doConnectHttp();
                 break;
             default:
         }
+    }
+
+    @Override
+    public void onFloatingClicked() {
+        rc_base.smoothScrollToPosition(0);
     }
 }

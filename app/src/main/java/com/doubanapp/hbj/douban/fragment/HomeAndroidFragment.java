@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class HomeAndroidFragment extends LazyFragment {
     private boolean isLoading = false;
     private ProgressBar pb_loading;
     private RecyclerView rc_home_android;
-    private TextView iv_error;
+    private RelativeLayout iv_error;
     private List<String> mData = new ArrayList<>();
 
     public static HomeAndroidFragment newsInstance(int pos) {
@@ -69,15 +70,9 @@ public class HomeAndroidFragment extends LazyFragment {
         View view = inflater.inflate(R.layout.fg_home_android, container, false);
         rc_home_android = (RecyclerView) view.findViewById(R.id.rc_home_android);
         pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (TextView) view.findViewById(R.id.tv_error);
+        iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rc_home_android.setLayoutManager(manager);
-
-        for (int i = 0; i < 30; i++) {
-            mData.add("Android");
-        }
-        HomeNormalRcAdapter adapter = new HomeNormalRcAdapter(mData);
-        rc_home_android.setAdapter(adapter);
 
 
         isCreateView = true;
@@ -149,7 +144,11 @@ public class HomeAndroidFragment extends LazyFragment {
                     public void onNext(KuaiDiJsonData res) {
                         //成功
                         MyLogUtils.i(TAG, res.getData().get(0).getContext());
-
+                        for (int i = 0; i < 30; i++) {
+                            mData.add("Android");
+                        }
+                        HomeNormalRcAdapter adapter = new HomeNormalRcAdapter(mData);
+                        rc_home_android.setAdapter(adapter);
                     }
 
                     @Override
@@ -180,6 +179,4 @@ public class HomeAndroidFragment extends LazyFragment {
         Gson gson = new Gson();
         return gson.fromJson(data, KuaiDiJsonData.class);
     }
-
-
 }

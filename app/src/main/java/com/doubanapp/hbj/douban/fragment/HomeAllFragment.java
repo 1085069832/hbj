@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +55,7 @@ public class HomeAllFragment extends LazyFragment {
     private boolean isLoading = false;
     private ProgressBar pb_loading;
     private RecyclerView rc_home_all;
-    private TextView iv_error;
+    private RelativeLayout iv_error;
     private DrawerLayout dl_fg_home_all;
     private CheckBox cb_home_all_select_class;
     private List<String> mData = new ArrayList<>();
@@ -86,18 +87,13 @@ public class HomeAllFragment extends LazyFragment {
         View view = inflater.inflate(R.layout.fg_home_all, container, false);
         rc_home_all = (RecyclerView) view.findViewById(R.id.rc_home_all);
         pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (TextView) view.findViewById(R.id.tv_error);
+        iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
         tv_home_all_title_type = (TextView) view.findViewById(R.id.tv_home_all_title_type);
         cb_home_all_select_class = (CheckBox) view.findViewById(R.id.cb_home_all_select_class);
         dl_fg_home_all = (DrawerLayout) view.findViewById(R.id.dl_fg_home_all);
         rg_home_select_class = (RadioGroup) view.findViewById(R.id.rg_home_select_class);
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rc_home_all.setLayoutManager(manager);
-        for (int i = 0; i < 30; i++) {
-            mData.add("全部");
-        }
-        adapter = new HomeNormalRcAdapter(mData);
-        rc_home_all.setAdapter(adapter);
 
 
         isCreateView = true;
@@ -126,12 +122,22 @@ public class HomeAllFragment extends LazyFragment {
     }
 
     private void toConnectHttp() {
+        isFirstCreate = false;
+        pb_loading.setVisibility(View.VISIBLE);
+        iv_error.setVisibility(View.GONE);
+
         //获取有内容的日期 http://gank.io/api/day/history
         gank_base_url = MyUtils.getResourcesString(R.string.gank_base_url);
         MyUtils.sendOkHttpConnect(gank_base_url + "/api/day/history", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                MyUtils.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pb_loading.setVisibility(View.GONE);
+                        iv_error.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             @Override
@@ -201,6 +207,12 @@ public class HomeAllFragment extends LazyFragment {
                         //成功
                         String desc = res.getResults().getAndroid().get(0).getDesc();
                         MyLogUtils.i(TAG, desc);
+                        for (int i = 0; i < 30; i++) {
+                            mData.add("全部");
+                        }
+                        adapter = new HomeNormalRcAdapter(mData);
+                        rc_home_all.setAdapter(adapter);
+
                     }
 
                     @Override
@@ -208,9 +220,6 @@ public class HomeAllFragment extends LazyFragment {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
                         //设置第一次加载变量
-                        isFirstCreate = false;
-                        pb_loading.setVisibility(View.VISIBLE);
-                        iv_error.setVisibility(View.GONE);
                     }
                 });
     }

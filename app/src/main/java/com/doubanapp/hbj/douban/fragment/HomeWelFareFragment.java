@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class HomeWelFareFragment extends LazyFragment {
     private boolean isLoading = false;
     private ProgressBar pb_loading;
     private RecyclerView rc_home_welfare;
-    private TextView iv_error;
+    private RelativeLayout iv_error;
     private List<String> mData = new ArrayList<>();
     private List<Integer> mHeight = new ArrayList<>();
 
@@ -70,21 +71,9 @@ public class HomeWelFareFragment extends LazyFragment {
         View view = inflater.inflate(R.layout.fg_home_welfare, container, false);
         rc_home_welfare = (RecyclerView) view.findViewById(R.id.rc_home_welfare);
         pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (TextView) view.findViewById(R.id.tv_error);
+        iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rc_home_welfare.setLayoutManager(manager);
-        for (int i = 0; i < 30; i++) {
-            mData.add("c");
-        }
-        for (int i = 0; i < mData.size(); i++) {
-            int randomHeight = (int) (Math.random() * 50);
-            mHeight.add(randomHeight);
-        }
-        WelFareRcAdapter adapter = new WelFareRcAdapter(mData, mHeight);
-        rc_home_welfare.setAdapter(adapter);
-
-
-
 
 
         isCreateView = true;
@@ -156,6 +145,16 @@ public class HomeWelFareFragment extends LazyFragment {
                     public void onNext(KuaiDiJsonData res) {
                         //成功
                         MyLogUtils.i(TAG, res.getData().get(0).getContext());
+                        for (int i = 0; i < 30; i++) {
+                            mData.add("c");
+                        }
+                        for (int i = 0; i < mData.size(); i++) {
+                            int randomHeight = (int) (Math.random() * 50);
+                            mHeight.add(randomHeight);
+                        }
+                        WelFareRcAdapter adapter = new WelFareRcAdapter(mData, mHeight);
+                        rc_home_welfare.setAdapter(adapter);
+
 
                     }
 
@@ -187,6 +186,4 @@ public class HomeWelFareFragment extends LazyFragment {
         Gson gson = new Gson();
         return gson.fromJson(data, KuaiDiJsonData.class);
     }
-
-
 }

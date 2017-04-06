@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fg_home, container, false);
         TabPageIndicator ti_home = (TabPageIndicator) view.findViewById(R.id.ti_home);
         ViewPager vp_home = (ViewPager) view.findViewById(R.id.vp_home);
-        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getChildFragmentManager());
+        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getFragmentManager());
         vp_home.setAdapter(adapter);
         vp_home.setOffscreenPageLimit(4);
         ti_home.setViewPager(vp_home);

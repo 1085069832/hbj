@@ -1,5 +1,8 @@
 package com.doubanapp.hbj.douban.IPresenter;
 
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+
 import java.util.Map;
 
 /**
@@ -13,5 +16,11 @@ public interface IMainPresenter {
 
     void doGuidMapCheckResult(Map<String, String> mIsCheckedMap);
 
-    void doInitAdapter();
+    void doInitNavigationBottom();
+
+    void doInitDefaultFragment();
+
+    void doHideFragment();
+
+    void doShowFragment(Toolbar toolbar, int index);
 }

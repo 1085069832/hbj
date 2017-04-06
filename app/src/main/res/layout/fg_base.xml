@@ -7,7 +7,8 @@
         android:id="@+id/rc_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/douban_bg">
+        android:background="@drawable/douban_bg"
+        android:descendantFocusability="blocksDescendants">
 
     </android.support.v7.widget.RecyclerView>
 

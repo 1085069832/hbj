@@ -10,6 +10,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,10 +27,16 @@ import android.widget.Toast;
 import com.doubanapp.hbj.douban.IView.IMainView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.adapter.MyContentViewPagerAdapter;
+import com.doubanapp.hbj.douban.fragment.BaseFragment;
+import com.doubanapp.hbj.douban.fragment.BookFragment;
+import com.doubanapp.hbj.douban.fragment.HomeFragment;
+import com.doubanapp.hbj.douban.fragment.MovieFragment;
+import com.doubanapp.hbj.douban.fragment.MusicFragment;
 import com.doubanapp.hbj.douban.presenter.MainPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
+import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +51,7 @@ import butterknife.ButterKnife;
 * */
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        DrawerLayout.DrawerListener, View.OnClickListener, IMainView {
+        DrawerLayout.DrawerListener, View.OnClickListener, OnBottomNavigationItemClickListener, IMainView {
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.toolbar)
@@ -57,10 +65,10 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    private int currentChecked = 0;//标记当前选中的radio
     private static Map<String, String> mIsCheckedMap = new HashMap<>();//guid选中的标签
     private List<String> permissionList = new ArrayList<>();
     private int navigationIndex = -1;
+    private MainPresenter mainPresenter;
 
     public static void startAction(Context context, Map<String, String> isCheckedMap) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -76,7 +84,6 @@ public class MainActivity extends BaseActivity
 
         //申请权限
         checkPermission();
-
         //设置不能滑动退出
         setSwipeBackEnable(false);
 
@@ -84,27 +91,15 @@ public class MainActivity extends BaseActivity
         drawer.addDrawerListener(this);
         navView.setNavigationItemSelectedListener(this);
         fab.setOnClickListener(this);
-
-        BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
-                ("首页", ContextCompat.getColor(this, R.color.colorPrimary), R.mipmap.ic_home_bottom_navigation);
-        BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
-                ("电影", ContextCompat.getColor(this, R.color.default_line_indicator_selected_color), R.mipmap.ic_movie_bottom_navigation);
-        BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
-                ("书籍", ContextCompat.getColor(this, R.color.vpi__bright_foreground_disabled_holo_dark), R.mipmap.ic_book_bottom_navigation);
-        BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
-                ("音乐", ContextCompat.getColor(this, R.color.colorAccent), R.mipmap.ic_music_bottom_navigation);
-
-        bottomNavigationView.addTab(bottomNavigationItem);
-        bottomNavigationView.addTab(bottomNavigationItem1);
-        bottomNavigationView.addTab(bottomNavigationItem2);
-        bottomNavigationView.addTab(bottomNavigationItem3);
+        bottomNavigationView.setOnBottomNavigationItemClickListener(this);
 
         //Presenter
-        MainPresenter mainPresenter = new MainPresenter(this, this);
-        mainPresenter.doAnim();
-        mainPresenter.doInitToolBar();
-        mainPresenter.doGuidMapCheckResult(mIsCheckedMap);
-        mainPresenter.doInitAdapter();
+        mainPresenter = new MainPresenter(this, this);
+        mainPresenter.doAnim();//开启动画
+        mainPresenter.doInitToolBar();//toolbar
+        mainPresenter.doGuidMapCheckResult(mIsCheckedMap);//guid选中的tag
+        mainPresenter.doInitNavigationBottom();//bottom
+        mainPresenter.doInitDefaultFragment();//默认显示HomeFragment
     }
 
     /*
@@ -216,13 +211,26 @@ public class MainActivity extends BaseActivity
     public void onDrawerStateChanged(int newState) {
     }
 
+    private FloatingClickedListener floatingClickedListener;
+
+    public interface FloatingClickedListener {
+        void onFloatingClicked();
+    }
+
+    public void setFloatingClickedListener(FloatingClickedListener listener) {
+        this.floatingClickedListener = listener;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                if (floatingClickedListener != null)
+                    floatingClickedListener.onFloatingClicked();
                 break;
+            default:
         }
     }
 
@@ -253,8 +261,26 @@ public class MainActivity extends BaseActivity
     }
 
     /*
-    * adapter*/
+    * 添加navigationbottom*/
     @Override
-    public void onInitAdapter(MyContentViewPagerAdapter adapter) {
+    public void onInitNavigationBottom(List<BottomNavigationItem> bottomNavigationItemsList) {
+        for (BottomNavigationItem item : bottomNavigationItemsList) {
+            bottomNavigationView.addTab(item);
+        }
+    }
+
+    /*
+    * 默认选中第一个和显示第一个fragment*/
+    @Override
+    public void onNavigationDefaultShow(int defaultSelect) {
+        bottomNavigationView.selectTab(defaultSelect);
+    }
+
+    /*
+    * navigationbottom click to hide and show fragment*/
+    @Override
+    public void onNavigationItemClick(int index) {
+        mainPresenter.doHideFragment();
+        mainPresenter.doShowFragment(toolbar, index);
     }
 }

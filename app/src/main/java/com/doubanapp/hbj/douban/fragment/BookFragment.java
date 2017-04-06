@@ -4,16 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
@@ -50,13 +46,11 @@ import rx.schedulers.Schedulers;
 public class BookFragment extends BaseFragment {
 
     private static final String TAG = "BookFragment";
-    private boolean isFirstCreate;//是否第一次加载
-    private boolean isCreateView = false;//是否创建了视图
-    private boolean isLoading = false;
     private Items items;
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData3 = new ArrayList<>();
     private List<View> mData2 = new ArrayList<>();
+    private MultiTypeAdapter adapter;
 
     public static BookFragment newsInstance(int pos) {
         BookFragment fragment = new BookFragment();
@@ -67,71 +61,23 @@ public class BookFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        isFirstCreate = true;
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected View initChildView() {
         MyLogUtils.i(TAG, "onCreateView");
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rc_base.setLayoutManager(manager);
         items = new Items();
         //new一个MultiTypeAdapter
-        MultiTypeAdapter adapter = new MultiTypeAdapter(items);
-
+        adapter = new MultiTypeAdapter(items);
         adapter.register(NormalItem.class, new NormalProvider(mContext));
         adapter.register(ContentIconItem.class, new ContentIconProvider(mContext));
         adapter.register(MayYouLikeItem.class, new MayYouLikeProvider(mContext));
         adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.BOOK_SELECT_BOOK_INDEX));
-        for (int i = 0; i < 10; i++) {
-            mData1.add("新书");
-        }
-        for (int i = 0; i < 4; i++) {
-            TextView textView = new TextView(MyUtils.getContext());
-            textView.setText("四大名著" + i);
-            textView.setTextSize(35);
-            textView.setTextColor(Color.BLUE);
-            mData2.add(textView);
-        }
-        for (int i = 0; i < 6; i++) {
-            mData3.add("感兴趣");
-        }
-        items.add(new NormalItem(mData1, "新书速递", MyConstants.BOOK_NEW_BOOK_INDEX));
-        items.add(new NormalItem(mData1, "虚构类图书", MyConstants.BOOK_FICTION_BOOK_INDEX));
-        items.add(new NormalItem(mData1, "非虚构类图书", MyConstants.BOOK_NOFICTION_BOOK_INDEX));
-        items.add(new ContentIconItem(mData2, "热点", MyConstants.BOOK_CONTENT_ICON_INDEX));
-        items.add(new NormalItem(mData1, "畅销书籍", MyConstants.BOOK_BESTSELLER_BOOK_INDEX));
-        items.add(new MayYouLikeItem(mData3, "你可能感兴趣", MyConstants.BOOK_MAY_YOU_LIKE_BOOK_INDEX));
-        items.add(new SelectItem("选图书"));
-        rc_base.setAdapter(adapter);
-
-
-        isCreateView = true;
-        MyLogUtils.i(TAG, "isLoading" + isLoading);
-        lazyLoad();
+        toConnectData();
         return null;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        initEvent();
-    }
-
-    @Override
     protected synchronized void lazyLoad() {
-        MyLogUtils.i(TAG, isCreateView + "isCreateView");
-        MyLogUtils.i(TAG, isVisible + "isVisible");
-        if (!isFirstCreate || !isCreateView || !isVisible) {
-            //不是第一次创建，或者还没有加载完view，或者没显示
-            //不加载数据
-            return;
-        }
-
-        toConnectData();
     }
 
     private void toConnectData() {
@@ -163,7 +109,7 @@ public class BookFragment extends BaseFragment {
                     public void onCompleted() {
                         //请求结束
                         pb_loading.setVisibility(View.GONE);
-                        tv_error.setVisibility(View.GONE);
+                        rl_error.setVisibility(View.GONE);
 
                     }
 
@@ -171,7 +117,7 @@ public class BookFragment extends BaseFragment {
                     public void onError(Throwable e) {
                         //错误回调
                         pb_loading.setVisibility(View.GONE);
-                        tv_error.setVisibility(View.VISIBLE);
+                        rl_error.setVisibility(View.VISIBLE);
                         Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
                     }
 
@@ -179,6 +125,27 @@ public class BookFragment extends BaseFragment {
                     public void onNext(KuaiDiJsonData res) {
                         //成功
                         MyLogUtils.i(TAG, res.getData().get(0).getContext());
+                        for (int i = 0; i < 10; i++) {
+                            mData1.add("新书");
+                        }
+                        for (int i = 0; i < 4; i++) {
+                            TextView textView = new TextView(MyUtils.getContext());
+                            textView.setText("四大名著" + i);
+                            textView.setTextSize(35);
+                            textView.setTextColor(Color.BLUE);
+                            mData2.add(textView);
+                        }
+                        for (int i = 0; i < 6; i++) {
+                            mData3.add("感兴趣");
+                        }
+                        items.add(new NormalItem(mData1, "新书速递", MyConstants.BOOK_NEW_BOOK_INDEX));
+                        items.add(new NormalItem(mData1, "虚构类图书", MyConstants.BOOK_FICTION_BOOK_INDEX));
+                        items.add(new NormalItem(mData1, "非虚构类图书", MyConstants.BOOK_NOFICTION_BOOK_INDEX));
+                        items.add(new ContentIconItem(mData2, "热点", MyConstants.BOOK_CONTENT_ICON_INDEX));
+                        items.add(new NormalItem(mData1, "畅销书籍", MyConstants.BOOK_BESTSELLER_BOOK_INDEX));
+                        items.add(new MayYouLikeItem(mData3, "你可能感兴趣", MyConstants.BOOK_MAY_YOU_LIKE_BOOK_INDEX));
+                        items.add(new SelectItem("选图书"));
+                        rc_base.setAdapter(adapter);
 
                     }
 
@@ -188,24 +155,29 @@ public class BookFragment extends BaseFragment {
                         MyLogUtils.i(TAG, "onStart");
                         new BoubanAPIConnectCountAlert(mContext);
                         //设置第一次加载变量
-                        isFirstCreate = false;
                         pb_loading.setVisibility(View.VISIBLE);
-                        tv_error.setVisibility(View.GONE);
+                        rl_error.setVisibility(View.GONE);
                     }
                 });
-    }
-
-    private void initEvent() {
-        tv_error.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toConnectData();
-            }
-        });
     }
 
     private KuaiDiJsonData parseJsonData(String data) {
         Gson gson = new Gson();
         return gson.fromJson(data, KuaiDiJsonData.class);
+    }
+
+    @Override
+    public void onFloatingClicked() {
+        rc_base.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_error:
+                toConnectData();
+                break;
+            default:
+        }
     }
 }

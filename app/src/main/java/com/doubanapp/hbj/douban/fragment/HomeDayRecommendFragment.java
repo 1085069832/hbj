@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class HomeDayRecommendFragment extends LazyFragment {
     private boolean isLoading = false;
     private ProgressBar pb_loading;
     private RecyclerView rc_home_day_recommend;
-    private TextView iv_error;
+    private RelativeLayout iv_error;
     private Items items;
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData2 = new ArrayList<>();
@@ -92,7 +93,7 @@ public class HomeDayRecommendFragment extends LazyFragment {
         View view = inflater.inflate(R.layout.fg_home_day_recommend, container, false);
         rc_home_day_recommend = (RecyclerView) view.findViewById(R.id.rc_home_day_recommend);
         pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (TextView) view.findViewById(R.id.tv_error);
+        iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
 
         manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         items = new Items();
@@ -103,55 +104,8 @@ public class HomeDayRecommendFragment extends LazyFragment {
         adapter.register(NormalItem.class, new NormalProvider(mContext));
         adapter.register(ContentIconItem.class, new ContentIconProvider(mContext));
         adapter.register(ButtomItem.class, new ButtomProvider());
-        for (int i = 0; i < 4; i++) {
-            ImageView imageView = new ImageView(MyUtils.getContext());
-            Glide.with(mContext).load(R.mipmap.navigation_title_icon).crossFade().centerCrop().into(imageView);
-            mData4.add(imageView);
-        }
-        for (int i = 0; i < 3; i++) {
-            mData1.add("Android");
-        }
-        for (int i = 0; i < 3; i++) {
-            mData2.add("前端");
-        }
-        for (int i = 0; i < 3; i++) {
-            mData6.add("iOS");
-        }
-        for (int i = 0; i < 3; i++) {
-            mData7.add("App");
-        }
-        for (int i = 0; i < 1; i++) {
-            TextView textView = new TextView(MyUtils.getContext());
-            textView.setText("休息视频" + i);
-            textView.setTextSize(35);
-            textView.setTextColor(Color.BLUE);
-            mData3.add(textView);
-        }
-        for (int i = 0; i < 1; i++) {
-            TextView textView = new TextView(MyUtils.getContext());
-            textView.setText("更多推荐" + i);
-            textView.setTextSize(35);
-            textView.setTextColor(Color.BLUE);
-            mData8.add(textView);
-        }
-        for (int i = 0; i < 1; i++) {
-            TextView textView = new TextView(MyUtils.getContext());
-            textView.setText("福利" + i);
-            textView.setTextSize(35);
-            textView.setTextColor(Color.BLUE);
-            mData5.add(textView);
-        }
-        items.add(new ContentTitleViewPagerItem(mData4, MyConstants.HOME_CONTENT_TITLE_VP_INDEX));
-        items.add(new NormalItem(mData1, "Android", MyConstants.HOME_ANDROID_INDEX));
-        items.add(new NormalItem(mData6, "iOS", MyConstants.HOME_IOS_INDEX));
-        items.add(new ContentIconItem(mData8, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));
-        items.add(new NormalItem(mData2, "前端", MyConstants.HOME_FRONT_INDEX));
-        items.add(new NormalItem(mData7, "App", MyConstants.HOME_APP_INDEX));
-        items.add(new ContentIconItem(mData3, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
-        items.add(new ContentIconItem(mData5, "福利", MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX));
-        items.add(new ButtomItem());
         rc_home_day_recommend.setLayoutManager(manager);
-        rc_home_day_recommend.setAdapter(adapter);
+
 
         isCreateView = true;
         lazyLoad();
@@ -224,6 +178,55 @@ public class HomeDayRecommendFragment extends LazyFragment {
                     public void onNext(KuaiDiJsonData res) {
                         //成功
                         MyLogUtils.i(TAG, res.getData().get(0).getContext());
+                        for (int i = 0; i < 4; i++) {
+                            ImageView imageView = new ImageView(MyUtils.getContext());
+                            Glide.with(mContext).load(R.mipmap.navigation_title_icon).crossFade().centerCrop().into(imageView);
+                            mData4.add(imageView);
+                        }
+                        for (int i = 0; i < 3; i++) {
+                            mData1.add("Android");
+                        }
+                        for (int i = 0; i < 3; i++) {
+                            mData2.add("前端");
+                        }
+                        for (int i = 0; i < 3; i++) {
+                            mData6.add("iOS");
+                        }
+                        for (int i = 0; i < 3; i++) {
+                            mData7.add("App");
+                        }
+                        for (int i = 0; i < 1; i++) {
+                            TextView textView = new TextView(MyUtils.getContext());
+                            textView.setText("休息视频" + i);
+                            textView.setTextSize(35);
+                            textView.setTextColor(Color.BLUE);
+                            mData3.add(textView);
+                        }
+                        for (int i = 0; i < 1; i++) {
+                            TextView textView = new TextView(MyUtils.getContext());
+                            textView.setText("更多推荐" + i);
+                            textView.setTextSize(35);
+                            textView.setTextColor(Color.BLUE);
+                            mData8.add(textView);
+                        }
+                        for (int i = 0; i < 1; i++) {
+                            TextView textView = new TextView(MyUtils.getContext());
+                            textView.setText("福利" + i);
+                            textView.setTextSize(35);
+                            textView.setTextColor(Color.BLUE);
+                            mData5.add(textView);
+                        }
+                        items.add(new ContentTitleViewPagerItem(mData4, MyConstants.HOME_CONTENT_TITLE_VP_INDEX));
+                        items.add(new NormalItem(mData1, "Android", MyConstants.HOME_ANDROID_INDEX));
+                        items.add(new NormalItem(mData6, "iOS", MyConstants.HOME_IOS_INDEX));
+                        items.add(new ContentIconItem(mData8, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));
+                        items.add(new NormalItem(mData2, "前端", MyConstants.HOME_FRONT_INDEX));
+                        items.add(new NormalItem(mData7, "App", MyConstants.HOME_APP_INDEX));
+                        items.add(new ContentIconItem(mData3, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
+                        items.add(new ContentIconItem(mData5, "福利", MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX));
+                        items.add(new ButtomItem());
+
+                        rc_home_day_recommend.setAdapter(adapter);
 
                     }
 
@@ -255,6 +258,4 @@ public class HomeDayRecommendFragment extends LazyFragment {
         Gson gson = new Gson();
         return gson.fromJson(data, KuaiDiJsonData.class);
     }
-
-
 }

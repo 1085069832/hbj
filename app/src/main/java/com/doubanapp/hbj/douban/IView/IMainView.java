@@ -1,9 +1,13 @@
 package com.doubanapp.hbj.douban.IView;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.animation.Animation;
 
 import com.doubanapp.hbj.douban.adapter.MyContentViewPagerAdapter;
+import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +21,7 @@ public interface IMainView {
 
     void onGuidMapCheckResult(Map<String, String> mIsCheckedMap);
 
-    void onInitAdapter(MyContentViewPagerAdapter adapter);
+    void onInitNavigationBottom(List<BottomNavigationItem> bottomNavigationItemsList);
+
+    void onNavigationDefaultShow(int defaultSelect);
 }

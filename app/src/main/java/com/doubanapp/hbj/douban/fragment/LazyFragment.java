@@ -1,11 +1,14 @@
 package com.doubanapp.hbj.douban.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.doubanapp.hbj.douban.activity.MainActivity;
 
-/**懒加载
+/**
+ * 懒加载
  * Created by Administrator on 2017/3/17 0017.
  */
 public abstract class LazyFragment extends Fragment {
