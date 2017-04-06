@@ -201,6 +201,9 @@ public class MainActivity extends BaseActivity
     @Override
     public void onDrawerClosed(View drawerView) {
         if (navigationIndex != -1) {
+            if (navigationIndex == 4 || navigationIndex == 5) {
+                return;
+            }
             //开启MenuActivity
             MenuActivity.startAction(MainActivity.this, navigationIndex);
             navigationIndex = -1;

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
+ * IFragmentbaseView
  * Created by Administrator
  * time: 2017-04-04.
  */

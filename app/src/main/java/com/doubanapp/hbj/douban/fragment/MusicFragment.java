@@ -52,7 +52,6 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     protected synchronized void lazyLoad() {
     }
 
-
     /*
     * multitype*/
     @Override
@@ -81,7 +80,6 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     public void onErrorVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
-        Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
     }
 
     /*
