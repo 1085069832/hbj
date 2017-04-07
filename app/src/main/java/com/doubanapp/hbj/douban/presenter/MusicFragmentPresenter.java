@@ -70,16 +70,16 @@ public class MusicFragmentPresenter implements IMusicFragmentPresenter, IMusicFr
         items.add(new NormalItem(jSKMusicData, "日韩歌曲", MyConstants.MUSIC_RIHAN_MUSIC_INDEX));
         items.add(new MayYouLikeItem(mayYouLikeMusicData, "你可能感兴趣", MyConstants.MUSIC_MAY_YOU_LIKE_MUSIC_INDEX));
         items.add(new SelectItem("选音乐"));
+        iMusicFragmentView.onSetAdapter();
     }
 
     @Override
     public void onConnectError() {
-        iMusicFragmentView.onErrorVisibility(View.GONE,View.VISIBLE);
+        iMusicFragmentView.onErrorVisibility(View.GONE, View.VISIBLE);
     }
 
     @Override
     public void onConnectCompleted() {
-        iMusicFragmentView.onCompletedVisibility(View.GONE,View.GONE);
-        iMusicFragmentView.onSetAdapter();
+        iMusicFragmentView.onCompletedVisibility(View.GONE, View.GONE);
     }
 }

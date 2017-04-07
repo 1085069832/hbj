@@ -8,10 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,17 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IMainView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.adapter.MyContentViewPagerAdapter;
-import com.doubanapp.hbj.douban.fragment.BaseFragment;
-import com.doubanapp.hbj.douban.fragment.BookFragment;
-import com.doubanapp.hbj.douban.fragment.HomeFragment;
-import com.doubanapp.hbj.douban.fragment.MovieFragment;
-import com.doubanapp.hbj.douban.fragment.MusicFragment;
 import com.doubanapp.hbj.douban.presenter.MainPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
@@ -69,6 +59,7 @@ public class MainActivity extends BaseActivity
     private List<String> permissionList = new ArrayList<>();
     private int navigationIndex = -1;
     private MainPresenter mainPresenter;
+    private FloatingClickedListener floatingClickedListener;
 
     public static void startAction(Context context, Map<String, String> isCheckedMap) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -214,16 +205,6 @@ public class MainActivity extends BaseActivity
     public void onDrawerStateChanged(int newState) {
     }
 
-    private FloatingClickedListener floatingClickedListener;
-
-    public interface FloatingClickedListener {
-        void onFloatingClicked();
-    }
-
-    public void setFloatingClickedListener(FloatingClickedListener listener) {
-        this.floatingClickedListener = listener;
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -285,5 +266,13 @@ public class MainActivity extends BaseActivity
     public void onNavigationItemClick(int index) {
         mainPresenter.doHideFragment();
         mainPresenter.doShowFragment(toolbar, index);
+    }
+
+    public interface FloatingClickedListener {
+        void onFloatingClicked();
+    }
+
+    public void setFloatingClickedListener(FloatingClickedListener listener) {
+        this.floatingClickedListener = listener;
     }
 }

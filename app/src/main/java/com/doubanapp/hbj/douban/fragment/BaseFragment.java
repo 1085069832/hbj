@@ -11,8 +11,11 @@ import android.widget.RelativeLayout;
 
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.activity.MainActivity;
-import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * BaseFragment
@@ -22,9 +25,13 @@ import com.doubanapp.hbj.douban.utils.MyUtils;
 
 public abstract class BaseFragment extends LazyFragment implements View.OnClickListener, MainActivity.FloatingClickedListener {
 
-    protected RecyclerView rc_base;
-    protected ProgressBar pb_loading;
-    protected RelativeLayout rl_error;
+    @BindView(R.id.rc_base)
+    RecyclerView rc_base;
+    @BindView(R.id.pb_loading)
+    ProgressBar pb_loading;
+    @BindView(R.id.rl_error)
+    RelativeLayout rl_error;
+    Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,14 +43,10 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         RelativeLayout relativeLayout = new RelativeLayout(MyUtils.getContext());
         View view = inflater.inflate(R.layout.fg_base, container, false);
-        rc_base = (RecyclerView) view.findViewById(R.id.rc_base);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        rl_error = (RelativeLayout) view.findViewById(R.id.rl_error);
+        unbinder = ButterKnife.bind(this, view);
         relativeLayout.addView(view);
-
         if (initChildView() != null)
             relativeLayout.addView(initChildView());
         return relativeLayout;
@@ -56,7 +59,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     }
 
     /*
-        * 隐藏状态改变重新设置floating监听*/
+     * 隐藏状态改变重新设置floating监听*/
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -66,4 +69,10 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     }
 
     protected abstract View initChildView();//子类添加不同的view,没有则为null
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }
