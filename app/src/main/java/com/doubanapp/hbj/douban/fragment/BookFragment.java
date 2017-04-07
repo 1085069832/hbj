@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.doubanapp.hbj.douban.IView.IBookFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.presenter.BookFragmentPresenter;
+import com.doubanapp.hbj.douban.constants.MyConstants;
+import com.doubanapp.hbj.douban.presenter.MyFragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -19,7 +21,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
 
     private static final String TAG = "BookFragment";
     private MultiTypeAdapter adapter;
-    private BookFragmentPresenter bookFragmentPresenter;
+    private MyFragmentPresenter bookFragmentPresenter;
 
     public static BookFragment newsInstance(int pos) {
         BookFragment fragment = new BookFragment();
@@ -32,8 +34,8 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     protected View initChildView() {
         MyLogUtils.i(TAG, "onCreateView");
-        bookFragmentPresenter = new BookFragmentPresenter(mContext, this);
-        bookFragmentPresenter.doRegisterMultitypeItem();
+        bookFragmentPresenter = new MyFragmentPresenter(mContext, this);
+        bookFragmentPresenter.doRegisterMultitypeItem(MyConstants.BOOK_SELECT_PAGE_INDEX);
         bookFragmentPresenter.doInitLayoutManager();
         return null;
     }
@@ -42,7 +44,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookFragmentPresenter.doConnectHttp();
+        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_SELECT_PAGE_INDEX);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                bookFragmentPresenter.doConnectHttp();
+                bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_SELECT_PAGE_INDEX);
                 break;
             default:
         }

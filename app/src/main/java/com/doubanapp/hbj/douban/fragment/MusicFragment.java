@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IMusicFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.activity.MainActivity;
-import com.doubanapp.hbj.douban.presenter.MusicFragmentPresenter;
-import com.doubanapp.hbj.douban.utils.MyUtils;
+import com.doubanapp.hbj.douban.constants.MyConstants;
+import com.doubanapp.hbj.douban.presenter.MyFragmentPresenter;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -22,7 +20,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
     private static final String TAG = "MusicFragment";
     private MultiTypeAdapter adapter;
-    private MusicFragmentPresenter musicFragmentPresenter;
+    private MyFragmentPresenter musicFragmentPresenter;
 
 
     public static MusicFragment newsInstance(int pos) {
@@ -36,8 +34,8 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     @Override
     protected View initChildView() {
         //Presenter
-        musicFragmentPresenter = new MusicFragmentPresenter(mContext, this);
-        musicFragmentPresenter.doRegisterMultitypeItem();
+        musicFragmentPresenter = new MyFragmentPresenter(mContext, this);
+        musicFragmentPresenter.doRegisterMultitypeItem(MyConstants.MUSIC_SELECT_PAGE_INDEX);
         musicFragmentPresenter.doInitLayoutManager();
         return null;
     }
@@ -45,7 +43,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        musicFragmentPresenter.doConnectHttp();
+        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_SELECT_PAGE_INDEX);
     }
 
     @Override
@@ -100,7 +98,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
         switch (v.getId()) {
             case R.id.rl_error:
-                musicFragmentPresenter.doConnectHttp();
+                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_SELECT_PAGE_INDEX);
                 break;
             default:
         }

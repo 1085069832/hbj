@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.drakeet.multitype.Items;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import rx.Subscriber;
@@ -27,6 +26,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
+ * 请求book数据
  * Created by Administrator on 2017/4/7 0007.
  */
 public class BookFragmentModel {
@@ -34,7 +34,6 @@ public class BookFragmentModel {
     private static final String TAG = "BookFragmentModel";
     private Context mContext;
     private IBookModel iBookModel;
-    private Items items;
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData3 = new ArrayList<>();
     private List<View> mData2 = new ArrayList<>();
@@ -100,7 +99,7 @@ public class BookFragmentModel {
                         for (int i = 0; i < 6; i++) {
                             mData3.add("感兴趣");
                         }
-                        iBookModel.onConnectNext(mData1, mData2, mData3);
+                        iBookModel.onBookConnectNext(mData1, mData2, mData3);
 
                     }
 

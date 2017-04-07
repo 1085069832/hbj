@@ -38,8 +38,8 @@ public class ContentIconProvider extends ItemViewProvider<ContentIconItem, Recyc
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final ContentIconItem contentViewPagerItem) {
 
-        if (contentViewPagerItem.startIndex == MyConstants.MOVIE_CONTENT_ICON_INDEX || contentViewPagerItem.startIndex == MyConstants.BOOK_CONTENT_ICON_INDEX) {
-            //电影
+        if (contentViewPagerItem.startIndex == MyConstants.MOVIE_CONTENT_ICON_INDEX || contentViewPagerItem.startIndex == MyConstants.BOOK_CONTENT_ICON_INDEX
+                || contentViewPagerItem.startIndex == MyConstants.MUSIC_CONTENT_ICON_INDEX) {
             //隐藏顶部
             ((VpItemViewHolder) holder).rl_content_icon_mt.setVisibility(View.GONE);
             ((VpItemViewHolder) holder).rl_content_des.setVisibility(View.VISIBLE);

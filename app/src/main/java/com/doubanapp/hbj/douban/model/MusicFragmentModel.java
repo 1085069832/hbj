@@ -1,8 +1,9 @@
 package com.doubanapp.hbj.douban.model;
 
 import android.content.Context;
+import android.view.View;
 
-import com.doubanapp.hbj.douban.IModel.IMusicFragmentModel;
+import com.doubanapp.hbj.douban.IModel.IMusicModel;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
@@ -22,6 +23,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
+ * 请求music数据
  * Created by Administrator
  * time: 2017-04-04.
  */
@@ -33,10 +35,11 @@ public class MusicFragmentModel {
     private List<String> mData3 = new ArrayList<>();
     private List<String> mData4 = new ArrayList<>();
     private List<String> mData5 = new ArrayList<>();
-    private IMusicFragmentModel iMusicFragmentModel;
+    private List<View> mData6 = new ArrayList<>();
+    private IMusicModel iMusicFragmentModel;
     private Context mContext;
 
-    public MusicFragmentModel(Context mContext, IMusicFragmentModel iMusicFragmentModel) {
+    public MusicFragmentModel(Context mContext, IMusicModel iMusicFragmentModel) {
         this.iMusicFragmentModel = iMusicFragmentModel;
         this.mContext = mContext;
         toConnectHttp();
@@ -100,7 +103,7 @@ public class MusicFragmentModel {
                         for (int i = 0; i < 6; i++) {
                             mData5.add("感兴趣");
                         }
-                        iMusicFragmentModel.onConnectNext(mData1, mData2, mData3, mData4, mData5);
+                        iMusicFragmentModel.onMusicConnectNext(mData1, mData6, mData2, mData3, mData4, mData5);
                     }
 
                     @Override

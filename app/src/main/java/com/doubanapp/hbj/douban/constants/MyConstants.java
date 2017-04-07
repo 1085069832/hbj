@@ -15,7 +15,7 @@ public class MyConstants {
     public static final int MOVIE_LIST_SELECTION_JK_INDEX = 6;
     public static final int MOVIE_MAY_YOU_LIKE_INDEX = 7;
     public static final int MOVIE_SELECT_MOVIE_INDEX = 8;
-    public static final int MOVIE_CONTENT_ICON_INDEX = 23;
+    public static final int MOVIE_CONTENT_ICON_INDEX = 0;
     //book条目
     public static final int BOOK_NEW_BOOK_INDEX = 9;
     public static final int BOOK_FICTION_BOOK_INDEX = 10;
@@ -23,7 +23,8 @@ public class MyConstants {
     public static final int BOOK_BESTSELLER_BOOK_INDEX = 12;
     public static final int BOOK_MAY_YOU_LIKE_BOOK_INDEX = 13;
     public static final int BOOK_SELECT_BOOK_INDEX = 14;
-    public static final int BOOK_CONTENT_ICON_INDEX = 24;
+    public static final int BOOK_CONTENT_ICON_INDEX = 1;
+    public static final int BOOK_SELECT_PAGE_INDEX = 32;
     //music条目
     public static final int MUSIC_NEW_MUSIC_INDEX = 15;
     public static final int MUSIC_HUAYU_MUSIC_INDEX = 16;
@@ -31,6 +32,8 @@ public class MyConstants {
     public static final int MUSIC_RIHAN_MUSIC_INDEX = 18;
     public static final int MUSIC_MAY_YOU_LIKE_MUSIC_INDEX = 19;
     public static final int MUSIC_SELECT_MUSIC_INDEX = 20;
+    public static final int MUSIC_SELECT_PAGE_INDEX = 31;
+    public static final int MUSIC_CONTENT_ICON_INDEX = 2;
     //home条目
     public static final int HOME_ANDROID_INDEX = 21;
     public static final int HOME_FRONT_INDEX = 22;
