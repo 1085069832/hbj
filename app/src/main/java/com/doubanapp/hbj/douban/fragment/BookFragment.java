@@ -8,7 +8,7 @@ import android.view.View;
 import com.doubanapp.hbj.douban.IView.IBookFragmentView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.constants.MyConstants;
-import com.doubanapp.hbj.douban.presenter.MyFragmentPresenter;
+import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -21,7 +21,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
 
     private static final String TAG = "BookFragment";
     private MultiTypeAdapter adapter;
-    private MyFragmentPresenter bookFragmentPresenter;
+    private FragmentPresenter bookFragmentPresenter;
 
     public static BookFragment newsInstance(int pos) {
         BookFragment fragment = new BookFragment();
@@ -34,8 +34,8 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     protected View initChildView() {
         MyLogUtils.i(TAG, "onCreateView");
-        bookFragmentPresenter = new MyFragmentPresenter(mContext, this);
-        bookFragmentPresenter.doRegisterMultitypeItem(MyConstants.BOOK_SELECT_PAGE_INDEX);
+        bookFragmentPresenter = new FragmentPresenter(mContext, this);
+        bookFragmentPresenter.doRegisterMultitypeItem(MyConstants.BOOK_REGISTER_PAGE_INDEX);
         bookFragmentPresenter.doInitLayoutManager();
         return null;
     }
@@ -44,7 +44,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_SELECT_PAGE_INDEX);
+        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_REGISTER_PAGE_INDEX);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_SELECT_PAGE_INDEX);
+                bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_REGISTER_PAGE_INDEX);
                 break;
             default:
         }

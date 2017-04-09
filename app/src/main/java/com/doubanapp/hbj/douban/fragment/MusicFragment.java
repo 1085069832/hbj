@@ -8,7 +8,7 @@ import android.view.View;
 import com.doubanapp.hbj.douban.IView.IMusicFragmentView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.constants.MyConstants;
-import com.doubanapp.hbj.douban.presenter.MyFragmentPresenter;
+import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -20,7 +20,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
     private static final String TAG = "MusicFragment";
     private MultiTypeAdapter adapter;
-    private MyFragmentPresenter musicFragmentPresenter;
+    private FragmentPresenter musicFragmentPresenter;
 
 
     public static MusicFragment newsInstance(int pos) {
@@ -34,8 +34,8 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     @Override
     protected View initChildView() {
         //Presenter
-        musicFragmentPresenter = new MyFragmentPresenter(mContext, this);
-        musicFragmentPresenter.doRegisterMultitypeItem(MyConstants.MUSIC_SELECT_PAGE_INDEX);
+        musicFragmentPresenter = new FragmentPresenter(mContext, this);
+        musicFragmentPresenter.doRegisterMultitypeItem(MyConstants.MUSIC_REGISTER_PAGE_INDEX);
         musicFragmentPresenter.doInitLayoutManager();
         return null;
     }
@@ -43,7 +43,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_SELECT_PAGE_INDEX);
+        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_REGISTER_PAGE_INDEX);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
         switch (v.getId()) {
             case R.id.rl_error:
-                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_SELECT_PAGE_INDEX);
+                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_REGISTER_PAGE_INDEX);
                 break;
             default:
         }

@@ -3,11 +3,8 @@ package com.doubanapp.hbj.douban.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -15,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.doubanapp.hbj.douban.IView.IDayRecommendFragmentView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
@@ -23,10 +21,6 @@ import com.doubanapp.hbj.douban.mtitem.ButtomItem;
 import com.doubanapp.hbj.douban.mtitem.ContentIconItem;
 import com.doubanapp.hbj.douban.mtitem.ContentTitleViewPagerItem;
 import com.doubanapp.hbj.douban.mtitem.NormalItem;
-import com.doubanapp.hbj.douban.mtprovider.ButtomProvider;
-import com.doubanapp.hbj.douban.mtprovider.ContentIconProvider;
-import com.doubanapp.hbj.douban.mtprovider.ContentTitleViewPagerProvider;
-import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
 import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
@@ -49,16 +43,12 @@ import rx.schedulers.Schedulers;
  * 每日推荐
  * Created by Administrator on 2017/3/31 0031.
  */
-public class HomeDayRecommendFragment extends LazyFragment {
+public class HomeDayRecommendFragment extends BaseFragment implements IDayRecommendFragmentView {
 
     private static final String TAG = "HomeDayRecommendFragment";
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
     private boolean isLoading = false;
-    private ProgressBar pb_loading;
-    private RecyclerView rc_home_day_recommend;
-    private RelativeLayout iv_error;
-    private Items items;
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData2 = new ArrayList<>();
     private List<View> mData3 = new ArrayList<>();
@@ -68,7 +58,6 @@ public class HomeDayRecommendFragment extends LazyFragment {
     private List<String> mData7 = new ArrayList<>();
     private List<View> mData8 = new ArrayList<>();
     private MultiTypeAdapter adapter;
-    private LinearLayoutManager manager;
 
     public static HomeDayRecommendFragment newsInstance(int pos) {
         HomeDayRecommendFragment fragment = new HomeDayRecommendFragment();
@@ -85,38 +74,12 @@ public class HomeDayRecommendFragment extends LazyFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MyLogUtils.i(TAG, "onCreateView");
-        //此处加载界面
-        View view = inflater.inflate(R.layout.fg_home_day_recommend, container, false);
-        rc_home_day_recommend = (RecyclerView) view.findViewById(R.id.rc_home_day_recommend);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
-        iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
-
-        manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        items = new Items();
-        //new一个MultiTypeAdapter
-        adapter = new MultiTypeAdapter(items);
-        //注册MultiTypeAdapter，绑定 Image.class和 ImageViewProvider，此处可以在application中使用GlobalMultiTypePool.register(Image.class, new ImageViewProvider())注册，然后在Activity中使用adapter.applyGlobalMultiTypePool()调用，方便整理代码
-        adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
-        adapter.register(NormalItem.class, new NormalProvider(mContext));
-        adapter.register(ContentIconItem.class, new ContentIconProvider(mContext));
-        adapter.register(ButtomItem.class, new ButtomProvider());
-        rc_home_day_recommend.setLayoutManager(manager);
-
+    protected View initChildView() {
 
         isCreateView = true;
         lazyLoad();
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        initEvent();
+        return null;
     }
 
     @Override
@@ -243,19 +206,55 @@ public class HomeDayRecommendFragment extends LazyFragment {
                 });
     }
 
-    private void initEvent() {
-
-        iv_error.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toConnectData();
-            }
-        });
-
-    }
-
     private KuaiDiJsonData parseJsonData(String data) {
         Gson gson = new Gson();
         return gson.fromJson(data, KuaiDiJsonData.class);
+    }
+
+    @Override
+    public void onFloatingClicked() {
+        rc_base.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_error:
+
+                break;
+        }
+    }
+
+    @Override
+    public void onRegisterMultitypeItem(MultiTypeAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    @Override
+    public void onInitLayoutManager(RecyclerView.LayoutManager manager) {
+        rc_base.setLayoutManager(manager);
+    }
+
+    @Override
+    public void onStartVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        rl_error.setVisibility(errorVisb);
+    }
+
+    @Override
+    public void onErrorVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        rl_error.setVisibility(errorVisb);
+    }
+
+    @Override
+    public void onCompletedVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        rl_error.setVisibility(errorVisb);
+    }
+
+    @Override
+    public void onSetAdapter() {
+        rc_base.setAdapter(adapter);
     }
 }
