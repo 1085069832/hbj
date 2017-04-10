@@ -21,7 +21,6 @@ public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public HomeViewPagerAdapter(FragmentManager fm) {
         super(fm);
-
         title = MyUtils.getResourcesArrayString(R.array.home_titlepage);
     }
 

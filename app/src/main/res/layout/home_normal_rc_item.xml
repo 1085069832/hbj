@@ -3,10 +3,10 @@
     android:id="@+id/ll_home_normal_centent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
     android:background="@drawable/setting_item_selector"
     android:clickable="true"
     android:orientation="vertical"
-    android:layout_marginTop="2dp"
     android:paddingBottom="3dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
@@ -34,7 +34,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。"
-            android:textColor="#333333"
+            android:textColor="#666666"
             android:textSize="20sp" />
 
         <ImageView

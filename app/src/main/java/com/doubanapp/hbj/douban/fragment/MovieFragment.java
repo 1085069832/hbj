@@ -9,6 +9,7 @@ import com.doubanapp.hbj.douban.IView.IMovieFragmentView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
+import com.doubanapp.hbj.douban.utils.MyLogUtils;
 
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -32,9 +33,22 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        MyLogUtils.i(TAG, "onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyLogUtils.i(TAG, "onResume");
+    }
+
+    @Override
     protected View initChildView() {
+        MyLogUtils.i(TAG, "initChildView");
         movieFragmentPresenter = new FragmentPresenter(mContext, this);
-        movieFragmentPresenter.doRegisterMultitypeItem(MyConstants.MOVIE_REGISTER_PAGE_INDEX);
+        movieFragmentPresenter.doRegisterMultitypeItem();
         movieFragmentPresenter.doInitLayoutManager();
         return null;
     }
@@ -46,7 +60,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_REGISTER_PAGE_INDEX);
+        movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
     }
 
     @Override
@@ -58,7 +72,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_REGISTER_PAGE_INDEX);
+                movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
                 break;
         }
     }

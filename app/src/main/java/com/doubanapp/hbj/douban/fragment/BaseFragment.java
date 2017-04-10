@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.activity.MainActivity;
+import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 
 import butterknife.BindView;
@@ -25,6 +26,8 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends LazyFragment implements View.OnClickListener, MainActivity.FloatingClickedListener {
 
+    private static final String TAG = "BaseFragment";
+    private boolean isCreate = false;
     @BindView(R.id.rc_base)
     RecyclerView rc_base;
     @BindView(R.id.pb_loading)
@@ -36,8 +39,9 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置监听
+        //设置Floating监听
         mContext.setFloatingClickedListener(this);
+        isCreate = true;
     }
 
     @Nullable
@@ -59,7 +63,19 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     }
 
     /*
-     * 隐藏状态改变重新设置floating监听*/
+    * viewpager fragment显示设置floating监听*/
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        MyLogUtils.i(TAG, "setUserVisibleHint:" + isVisibleToUser);
+        if (isVisible && isCreate) {
+            mContext.setFloatingClickedListener(this);
+        }
+    }
+
+    /*
+    fragment隐藏状态改变重新设置floating监听
+     */
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

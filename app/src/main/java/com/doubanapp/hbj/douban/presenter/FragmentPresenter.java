@@ -5,12 +5,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.doubanapp.hbj.douban.IModel.IBookModel;
+import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
 import com.doubanapp.hbj.douban.IModel.IMovieModel;
 import com.doubanapp.hbj.douban.IModel.IMusicModel;
 import com.doubanapp.hbj.douban.IPresenter.IFragmentPresenter;
 import com.doubanapp.hbj.douban.IView.IFragmentBaseView;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.model.BookFragmentModel;
+import com.doubanapp.hbj.douban.model.HomeDayRecommendFragmentModel;
 import com.doubanapp.hbj.douban.model.MovieFragmentModel;
 import com.doubanapp.hbj.douban.model.MusicFragmentModel;
 import com.doubanapp.hbj.douban.mtitem.ButtomItem;
@@ -37,7 +39,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * 电影，书籍，音乐的Presenter
  * Created by Administrator on 2017/4/7 0007.
  */
-public class FragmentPresenter implements IFragmentPresenter, IMovieModel, IBookModel, IMusicModel {
+public class FragmentPresenter implements IFragmentPresenter, IMovieModel, IBookModel, IMusicModel, IHomeDayRecommendModel {
 
     private Context mContext;
     private IFragmentBaseView iFragmentBaseView;
@@ -51,32 +53,19 @@ public class FragmentPresenter implements IFragmentPresenter, IMovieModel, IBook
     /*
     * 注册*/
     @Override
-    public void doRegisterMultitypeItem(int selectPage) {
+    public void doRegisterMultitypeItem() {
         items = new Items();
         MultiTypeAdapter adapter = new MultiTypeAdapter(items);
+        //注册
         adapter.register(NormalItem.class, new NormalProvider(mContext));
         adapter.register(ContentIconItem.class, new ContentIconProvider(mContext));
-        //注册各个页面特有布局
-        switch (selectPage) {
-            case MyConstants.MUSIC_REGISTER_PAGE_INDEX://音乐
-                adapter.register(MayYouLikeItem.class, new MayYouLikeProvider(mContext));
-                adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.MUSIC_SELECT_MUSIC_INDEX));
-                break;
-            case MyConstants.BOOK_REGISTER_PAGE_INDEX://书籍
-                adapter.register(MayYouLikeItem.class, new MayYouLikeProvider(mContext));
-                adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.BOOK_SELECT_BOOK_INDEX));
-                break;
-            case MyConstants.MOVIE_REGISTER_PAGE_INDEX://电影
-                adapter.register(MayYouLikeItem.class, new MayYouLikeProvider(mContext));
-                adapter.register(MovieListSelectionItem.class, new MovieListSelectionProvider(mContext));
-                adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.MOVIE_SELECT_MOVIE_INDEX));
-                break;
-            case MyConstants.HOME_DAYRECOMMEND_REGISTER_PAGE_INDEX://主页每日推荐
-                adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
-                adapter.register(ButtomItem.class, new ButtomProvider());
-                break;
-            default:
-        }
+        adapter.register(MayYouLikeItem.class, new MayYouLikeProvider(mContext));
+        adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.MUSIC_SELECT_MUSIC_INDEX));
+        adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.BOOK_SELECT_BOOK_INDEX));
+        adapter.register(SelectItem.class, new SelectProvider(mContext, MyConstants.MOVIE_SELECT_MOVIE_INDEX));
+        adapter.register(MovieListSelectionItem.class, new MovieListSelectionProvider(mContext));
+        adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
+        adapter.register(ButtomItem.class, new ButtomProvider());
         iFragmentBaseView.onRegisterMultitypeItem(adapter);
     }
 
@@ -93,14 +82,17 @@ public class FragmentPresenter implements IFragmentPresenter, IMovieModel, IBook
     @Override
     public void doConnectHttp(int selectPage) {
         switch (selectPage) {
-            case MyConstants.MUSIC_REGISTER_PAGE_INDEX:
-                new MusicFragmentModel(mContext, this);//获取音乐数据
+            case MyConstants.MUSIC_PRESENTER_PAGE_INDEX://获取音乐数据
+                new MusicFragmentModel(mContext, this);
                 break;
-            case MyConstants.BOOK_REGISTER_PAGE_INDEX:
-                new BookFragmentModel(mContext, this);//获取书籍数据
+            case MyConstants.BOOK_PRESENTER_PAGE_INDEX://获取书籍数据
+                new BookFragmentModel(mContext, this);
                 break;
-            case MyConstants.MOVIE_REGISTER_PAGE_INDEX:
-                new MovieFragmentModel(mContext, this);//获取电影数据
+            case MyConstants.MOVIE_PRESENTER_PAGE_INDEX://获取电影数据
+                new MovieFragmentModel(mContext, this);
+                break;
+            case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐
+                new HomeDayRecommendFragmentModel(mContext, this);
                 break;
             default:
         }
@@ -159,5 +151,20 @@ public class FragmentPresenter implements IFragmentPresenter, IMovieModel, IBook
         items.add(new MovieListSelectionItem(movieListSelectionData, "榜单精选"));
         items.add(new MayYouLikeItem(movieMayYouLikeData, "你可能感兴趣", MyConstants.MOVIE_MAY_YOU_LIKE_INDEX));
         items.add(new SelectItem("选电影"));
+    }
+
+    /*
+    * home每日推荐*/
+    @Override
+    public void onHomeDayRecommendConnectNext(List<View> vpTitleData, List<String> androidData, List<String> frontData, List<String> iosData, List<String> appData, List<View> restData, List<View> moreRecommendData, List<View> welFareData) {
+        items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_CONTENT_TITLE_VP_INDEX));
+        items.add(new NormalItem(androidData, "Android", MyConstants.HOME_ANDROID_INDEX));
+        items.add(new NormalItem(iosData, "iOS", MyConstants.HOME_IOS_INDEX));
+        items.add(new ContentIconItem(moreRecommendData, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));
+        items.add(new NormalItem(frontData, "前端", MyConstants.HOME_FRONT_INDEX));
+        items.add(new NormalItem(appData, "App", MyConstants.HOME_APP_INDEX));
+        items.add(new ContentIconItem(restData, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
+        items.add(new ContentIconItem(welFareData, "福利", MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX));
+        items.add(new ButtomItem());
     }
 }

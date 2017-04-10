@@ -21,6 +21,7 @@ import com.doubanapp.hbj.douban.mtitem.ButtomItem;
 import com.doubanapp.hbj.douban.mtitem.ContentIconItem;
 import com.doubanapp.hbj.douban.mtitem.ContentTitleViewPagerItem;
 import com.doubanapp.hbj.douban.mtitem.NormalItem;
+import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
@@ -47,17 +48,10 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
 
     private static final String TAG = "HomeDayRecommendFragment";
     private boolean isFirstCreate;//是否第一次加载
+    private boolean isCreate;
     private boolean isCreateView = false;//是否创建了视图
-    private boolean isLoading = false;
-    private List<String> mData1 = new ArrayList<>();
-    private List<String> mData2 = new ArrayList<>();
-    private List<View> mData3 = new ArrayList<>();
-    private List<View> mData4 = new ArrayList<>();
-    private List<View> mData5 = new ArrayList<>();
-    private List<String> mData6 = new ArrayList<>();
-    private List<String> mData7 = new ArrayList<>();
-    private List<View> mData8 = new ArrayList<>();
     private MultiTypeAdapter adapter;
+    private FragmentPresenter homeDayReFragmentPresenter;
 
     public static HomeDayRecommendFragment newsInstance(int pos) {
         HomeDayRecommendFragment fragment = new HomeDayRecommendFragment();
@@ -67,15 +61,20 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         return fragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        isFirstCreate = true;
         super.onCreate(savedInstanceState);
+        isFirstCreate = true;
+        isCreate = true;
+        MyLogUtils.i(TAG, "onCreate");
     }
 
     @Override
     protected View initChildView() {
+        MyLogUtils.i(TAG, "initChildView");
+        homeDayReFragmentPresenter = new FragmentPresenter(mContext, this);
+        homeDayReFragmentPresenter.doRegisterMultitypeItem();
+        homeDayReFragmentPresenter.doInitLayoutManager();
 
         isCreateView = true;
         lazyLoad();
@@ -91,124 +90,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
             //不加载数据
             return;
         }
-
-        toConnectData();
-
-    }
-
-    private void toConnectData() {
-        String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
-        //此处加载数据
-        Retrofit retrofit = MyUtils.getRetrofit(baseUrl);
-        //请求网络
-        retrofit.create(MyServiceInterface.class).toSearch("yuantong", "500379523313")
-                //ResponseBody数据保存，和转换
-                .map(new Func1<ResponseBody, KuaiDiJsonData>() {
-                    @Override
-                    public KuaiDiJsonData call(ResponseBody responseBody) {
-
-                        String stringJson = null;
-                        try {
-                            stringJson = responseBody.string();
-                            //保存json数据
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        return parseJsonData(stringJson);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<KuaiDiJsonData>() {
-                    @Override
-                    public void onCompleted() {
-                        //请求结束
-                        pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //错误回调
-                        pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.VISIBLE);
-                        Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(KuaiDiJsonData res) {
-                        //成功
-                        MyLogUtils.i(TAG, res.getData().get(0).getContext());
-                        for (int i = 0; i < 4; i++) {
-                            ImageView imageView = new ImageView(MyUtils.getContext());
-                            Glide.with(mContext).load(R.mipmap.navigation_title_icon).crossFade().centerCrop().into(imageView);
-                            mData4.add(imageView);
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData1.add("Android");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData2.add("前端");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData6.add("iOS");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData7.add("App");
-                        }
-                        for (int i = 0; i < 1; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("休息视频" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData3.add(textView);
-                        }
-                        for (int i = 0; i < 1; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("更多推荐" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData8.add(textView);
-                        }
-                        for (int i = 0; i < 1; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("福利" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData5.add(textView);
-                        }
-                        items.add(new ContentTitleViewPagerItem(mData4, MyConstants.HOME_CONTENT_TITLE_VP_INDEX));
-                        items.add(new NormalItem(mData1, "Android", MyConstants.HOME_ANDROID_INDEX));
-                        items.add(new NormalItem(mData6, "iOS", MyConstants.HOME_IOS_INDEX));
-                        items.add(new ContentIconItem(mData8, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));
-                        items.add(new NormalItem(mData2, "前端", MyConstants.HOME_FRONT_INDEX));
-                        items.add(new NormalItem(mData7, "App", MyConstants.HOME_APP_INDEX));
-                        items.add(new ContentIconItem(mData3, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
-                        items.add(new ContentIconItem(mData5, "福利", MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX));
-                        items.add(new ButtomItem());
-
-                        rc_home_day_recommend.setAdapter(adapter);
-
-                    }
-
-                    @Override
-                    public void onStart() {
-                        //开始
-                        MyLogUtils.i(TAG, "onStart");
-                        new BoubanAPIConnectCountAlert(mContext);
-                        //设置第一次加载变量
-                        isFirstCreate = false;
-                        pb_loading.setVisibility(View.VISIBLE);
-                        iv_error.setVisibility(View.GONE);
-                    }
-                });
-    }
-
-    private KuaiDiJsonData parseJsonData(String data) {
-        Gson gson = new Gson();
-        return gson.fromJson(data, KuaiDiJsonData.class);
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
     }
 
     @Override
@@ -220,7 +102,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-
+                homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
                 break;
         }
     }
@@ -239,6 +121,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     public void onStartVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        isFirstCreate = false;
     }
 
     @Override

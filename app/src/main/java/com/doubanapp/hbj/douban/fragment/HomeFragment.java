@@ -29,6 +29,7 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.vp_home)
     ViewPager vpHome;
     Unbinder unbinder;
+    private HomeViewPagerAdapter adapter;
 
     public static HomeFragment newsInstance(int pos) {
         HomeFragment fragment = new HomeFragment();
@@ -43,11 +44,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MyLogUtils.i(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fg_home, container, false);
-        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getFragmentManager());
+        unbinder = ButterKnife.bind(this, view);
+        adapter = new HomeViewPagerAdapter(getFragmentManager());
         vpHome.setAdapter(adapter);
         vpHome.setOffscreenPageLimit(4);
         tiHome.setViewPager(vpHome);
-        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -56,4 +57,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

@@ -35,7 +35,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     protected View initChildView() {
         //Presenter
         musicFragmentPresenter = new FragmentPresenter(mContext, this);
-        musicFragmentPresenter.doRegisterMultitypeItem(MyConstants.MUSIC_REGISTER_PAGE_INDEX);
+        musicFragmentPresenter.doRegisterMultitypeItem();
         musicFragmentPresenter.doInitLayoutManager();
         return null;
     }
@@ -43,7 +43,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_REGISTER_PAGE_INDEX);
+        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
         switch (v.getId()) {
             case R.id.rl_error:
-                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_REGISTER_PAGE_INDEX);
+                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX);
                 break;
             default:
         }

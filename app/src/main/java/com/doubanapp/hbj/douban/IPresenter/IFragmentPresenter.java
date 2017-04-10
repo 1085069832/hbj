@@ -7,7 +7,7 @@ package com.doubanapp.hbj.douban.IPresenter;
 
 public interface IFragmentPresenter {
 
-    void doRegisterMultitypeItem(int selectPage);
+    void doRegisterMultitypeItem();
 
     void doInitLayoutManager();
 
