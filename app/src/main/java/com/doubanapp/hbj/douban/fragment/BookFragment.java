@@ -79,20 +79,23 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
 
     @Override
     public void onStartVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.show();
     }
 
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onCompletedVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.dismiss();
     }
 
     @Override

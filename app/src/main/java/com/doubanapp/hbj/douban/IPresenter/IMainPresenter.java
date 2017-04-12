@@ -3,6 +3,8 @@ package com.doubanapp.hbj.douban.IPresenter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import java.util.Map;
 
 /**
@@ -22,5 +24,5 @@ public interface IMainPresenter {
 
     void doHideFragment();
 
-    void doShowFragment(Toolbar toolbar, int index);
+    void doShowFragment(Toolbar toolbar, FloatingActionButton fab, int index);
 }

@@ -68,24 +68,27 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     * 开始请求*/
     @Override
     public void onStartVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.show();
     }
 
     /*
     * 请求失败*/
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.dismiss();
     }
 
     /*
     * 请求结束*/
     @Override
     public void onCompletedVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.dismiss();
     }
 
     @Override

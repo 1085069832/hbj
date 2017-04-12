@@ -20,6 +20,7 @@ import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.google.gson.Gson;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class HomeWelFareFragment extends LazyFragment {
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
     private boolean isLoading = false;
-    private ProgressBar pb_loading;
+    private ProgressWheel pb_loading;
     private RecyclerView rc_home_welfare;
     private RelativeLayout iv_error;
     private List<String> mData = new ArrayList<>();
@@ -70,7 +71,7 @@ public class HomeWelFareFragment extends LazyFragment {
         //此处加载界面
         View view = inflater.inflate(R.layout.fg_home_welfare, container, false);
         rc_home_welfare = (RecyclerView) view.findViewById(R.id.rc_home_welfare);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
+        pb_loading = (ProgressWheel) view.findViewById(R.id.pb_loading);
         iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rc_home_welfare.setLayoutManager(manager);

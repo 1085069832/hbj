@@ -28,6 +28,7 @@ import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.google.gson.Gson;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class HomeAllFragment extends LazyFragment {
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
     private boolean isLoading = false;
-    private ProgressBar pb_loading;
+    private ProgressWheel pb_loading;
     private RecyclerView rc_home_all;
     private RelativeLayout iv_error;
     private DrawerLayout dl_fg_home_all;
@@ -86,7 +87,7 @@ public class HomeAllFragment extends LazyFragment {
         //此处加载界面
         View view = inflater.inflate(R.layout.fg_home_all, container, false);
         rc_home_all = (RecyclerView) view.findViewById(R.id.rc_home_all);
-        pb_loading = (ProgressBar) view.findViewById(R.id.pb_loading);
+        pb_loading = (ProgressWheel) view.findViewById(R.id.pb_loading);
         iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
         tv_home_all_title_type = (TextView) view.findViewById(R.id.tv_home_all_title_type);
         cb_home_all_select_class = (CheckBox) view.findViewById(R.id.cb_home_all_select_class);

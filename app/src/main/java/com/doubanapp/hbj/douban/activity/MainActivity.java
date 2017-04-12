@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +26,7 @@ import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,6 +123,16 @@ public class MainActivity extends BaseActivity
                 break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public void showFloating() {
+        if (fab.hasShadow())
+            fab.show(true);
+    }
+
+    public void hideFloating() {
+        if (fab.isShown())
+            fab.hide(false);
     }
 
     @Override
@@ -265,7 +275,7 @@ public class MainActivity extends BaseActivity
     @Override
     public void onNavigationItemClick(int index) {
         mainPresenter.doHideFragment();
-        mainPresenter.doShowFragment(toolbar, index);
+        mainPresenter.doShowFragment(toolbar, fab, index);
     }
 
     public interface FloatingClickedListener {

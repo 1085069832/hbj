@@ -33,18 +33,6 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        MyLogUtils.i(TAG, "onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MyLogUtils.i(TAG, "onResume");
-    }
-
-    @Override
     protected View initChildView() {
         MyLogUtils.i(TAG, "initChildView");
         movieFragmentPresenter = new FragmentPresenter(mContext, this);
@@ -89,20 +77,23 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
 
     @Override
     public void onStartVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.show();
     }
 
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.dismiss();
     }
 
     @Override
     public void onCompletedVisibility(int progressVisb, int errorVisb) {
-        pb_loading.setVisibility(progressVisb);
+        //pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        loadingDialog.dismiss();
     }
 
     @Override
