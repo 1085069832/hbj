@@ -48,7 +48,6 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
 
     private static final String TAG = "HomeDayRecommendFragment";
     private boolean isFirstCreate;//是否第一次加载
-    private boolean isCreate;
     private boolean isCreateView = false;//是否创建了视图
     private MultiTypeAdapter adapter;
     private FragmentPresenter homeDayReFragmentPresenter;
@@ -65,7 +64,6 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isFirstCreate = true;
-        isCreate = true;
         MyLogUtils.i(TAG, "onCreate");
     }
 
