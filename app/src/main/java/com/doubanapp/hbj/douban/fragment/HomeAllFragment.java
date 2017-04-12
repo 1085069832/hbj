@@ -53,7 +53,6 @@ public class HomeAllFragment extends LazyFragment {
     private static final String TAG = "HomeAllFragment";
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
-    private boolean isLoading = false;
     private ProgressWheel pb_loading;
     private RecyclerView rc_home_all;
     private RelativeLayout iv_error;
@@ -323,6 +322,11 @@ public class HomeAllFragment extends LazyFragment {
         });
     }
 
+
+    private KuaiDiJsonData parseJsonData(String data) {
+        Gson gson = new Gson();
+        return gson.fromJson(data, KuaiDiJsonData.class);
+    }
     private HomeDayRecommendJsonData parseContentJsonData(String data) {
         Gson gson = new Gson();
         return gson.fromJson(data, HomeDayRecommendJsonData.class);
@@ -333,8 +337,4 @@ public class HomeAllFragment extends LazyFragment {
         return gson.fromJson(data, DayHistoryJsonData.class);
     }
 
-    private KuaiDiJsonData parseJsonData(String data) {
-        Gson gson = new Gson();
-        return gson.fromJson(data, KuaiDiJsonData.class);
-    }
 }

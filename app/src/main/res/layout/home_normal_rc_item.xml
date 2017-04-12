@@ -1,76 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_home_normal_centent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
-    android:background="@drawable/setting_item_selector"
-    android:clickable="true"
-    android:orientation="vertical"
-    android:paddingBottom="3dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp">
-
-    <TextView
-        android:id="@+id/tv_home_normal_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Android"
-        android:textColor="#999999"
-        android:textSize="16sp" />
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_home_normal_des"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。"
-            android:textColor="#666666"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/iv_home_normal_image"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="@drawable/setting_item_selector"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:paddingTop="10dp">
-
+        android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/tv_home_normal_who"
+            android:id="@+id/tv_home_normal_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="name"
+            android:text="Android"
             android:textColor="#999999"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_home_normal_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="04-1"
-            android:textColor="#999999"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_home_normal_des"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。"
+                android:textColor="#666666"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_home_normal_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:padding="5dp"
+                android:src="@mipmap/ic_launcher" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_home_normal_who"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="name"
+                android:textColor="#999999"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_home_normal_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="04-1"
+                android:textColor="#999999"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
