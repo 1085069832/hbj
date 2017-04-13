@@ -41,7 +41,7 @@
                 android:layout_weight="5"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。"
+                android:text="MD 风格的相册选择工具，支持多选，拍照等功能，项目很规范、实用。"
                 android:textColor="#666666"
                 android:textSize="20sp" />
 

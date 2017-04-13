@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.doubanapp.hbj.douban.R;
@@ -40,6 +39,8 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     RelativeLayout rl_error;
     Unbinder unbinder;
     protected AlertDialog loadingDialog;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

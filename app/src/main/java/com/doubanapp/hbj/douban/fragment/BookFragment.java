@@ -99,7 +99,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     }
 
     @Override
-    public void onSetAdapter() {
+    public void onSetMTAdapter() {
         rc_base.setAdapter(adapter);
     }
 }

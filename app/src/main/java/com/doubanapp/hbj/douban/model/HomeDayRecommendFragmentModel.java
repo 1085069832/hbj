@@ -57,10 +57,9 @@ public class HomeDayRecommendFragmentModel {
     public HomeDayRecommendFragmentModel(Context mContext, IHomeDayRecommendModel iHomeDayRecommendModel) {
         this.mContext = mContext;
         this.iHomeDayRecommendModel = iHomeDayRecommendModel;
-        toConnectHttp();
     }
 
-    private void toConnectHttp() {
+    public void toConnectHttp() {
         iHomeDayRecommendModel.onConnectStart();
         //获取有内容的日期 http://gank.io/api/day/history
         gank_base_url = MyUtils.getResourcesString(R.string.gank_base_url);

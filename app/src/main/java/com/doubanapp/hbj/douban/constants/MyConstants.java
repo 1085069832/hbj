@@ -45,6 +45,7 @@ public class MyConstants {
     public static final int HOME_CONTENT_WELFARE_ICON_INDEX = 27;
     public static final int HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX = 29;
     public static final int HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX = 34;
+    public static final int HOME_ALL_PRESENTER_PAGE_INDEX = 35;
 
     //muvie select
     public static final String MOVIE_SELECT_JD_INDEX = "经典";

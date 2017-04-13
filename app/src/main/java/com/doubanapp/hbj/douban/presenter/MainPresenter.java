@@ -38,8 +38,8 @@ public class MainPresenter implements IMainPresenter {
     private MusicFragment musicFragment;
     private FragmentManager supportFragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private int[] color = {R.color.colorPrimary, R.color.default_line_indicator_selected_color,
-            R.color.vpi__bright_foreground_disabled_holo_dark, R.color.colorAccent};
+    private int[] color = {R.color.colorHome, R.color.colorMovie,
+            R.color.colorBook, R.color.colorMusic};
 
     public MainPresenter(MainActivity mContext, IMainView iMainView) {
         this.iMainView = iMainView;

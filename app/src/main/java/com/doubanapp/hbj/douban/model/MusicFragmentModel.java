@@ -42,10 +42,9 @@ public class MusicFragmentModel {
     public MusicFragmentModel(Context mContext, IMusicModel iMusicFragmentModel) {
         this.iMusicFragmentModel = iMusicFragmentModel;
         this.mContext = mContext;
-        toConnectHttp();
     }
 
-    private void toConnectHttp() {
+    public void toConnectHttp() {
 
         String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
         //此处加载数据

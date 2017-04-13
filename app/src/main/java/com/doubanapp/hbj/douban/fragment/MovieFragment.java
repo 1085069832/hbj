@@ -97,7 +97,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     }
 
     @Override
-    public void onSetAdapter() {
+    public void onSetMTAdapter() {
         rc_base.setAdapter(adapter);
     }
 }

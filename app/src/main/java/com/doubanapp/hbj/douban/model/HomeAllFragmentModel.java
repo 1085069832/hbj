@@ -3,10 +3,15 @@ package com.doubanapp.hbj.douban.model;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.doubanapp.hbj.douban.IModel.IMovieModel;
+import com.bumptech.glide.Glide;
+import com.doubanapp.hbj.douban.IModel.IHomeAllModel;
+import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
 import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.bean.DayHistoryJsonData;
+import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
@@ -18,6 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import rx.Subscriber;
@@ -29,20 +37,16 @@ import rx.schedulers.Schedulers;
  * 请求book数据
  * Created by Administrator on 2017/4/7 0007.
  */
-public class MovieFragmentModel {
+public class HomeAllFragmentModel {
 
-    private static final String TAG = "MovieFragmentModel";
+    private static final String TAG = "HomeAllFragmentModel";
     private Context mContext;
-    private IMovieModel iMovieModel;
-    private List<String> mData1 = new ArrayList<>();
-    private List<String> mData2 = new ArrayList<>();
-    private List<String> mData3 = new ArrayList<>();
-    private List<String> mData4 = new ArrayList<>();
-    private List<View> mData5 = new ArrayList<>();
+    private IHomeAllModel iHomeAllModela;
+    private List<String> mData = new ArrayList<>();
 
-    public MovieFragmentModel(Context mContext, IMovieModel iMovieModel) {
+    public HomeAllFragmentModel(Context mContext, IHomeAllModel iHomeAllModela) {
         this.mContext = mContext;
-        this.iMovieModel = iMovieModel;
+        this.iHomeAllModela = iHomeAllModela;
     }
 
     public void toConnectData() {
@@ -73,49 +77,29 @@ public class MovieFragmentModel {
                     @Override
                     public void onCompleted() {
                         //请求结束
-                        iMovieModel.onConnectCompleted();
+                        iHomeAllModela.onConnectCompleted();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         //错误回调
-                        iMovieModel.onConnectError();
+                        iHomeAllModela.onConnectError();
                     }
 
                     @Override
                     public void onNext(KuaiDiJsonData res) {
                         //成功
-                        MyLogUtils.i(TAG, res.getData().get(0).getContext());
-                        for (int i = 0; i < 10; i++) {
-                            mData1.add("正在热映");
+                        for (int i = 0; i < 30; i++) {
+                            mData.add("全部");
                         }
-                        for (int i = 0; i < 10; i++) {
-                            mData2.add("即将上映");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("强力推荐" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData5.add(textView);
-                        }
-                        mData3.add("Top250");
-                        mData3.add("新片");
-                        mData3.add("欧美");
-                        mData3.add("日韩");
-                        for (int i = 0; i < 6; i++) {
-                            mData4.add("感兴趣");
-                        }
-                        iMovieModel.onMovieConnectNext(mData1, mData2, mData3, mData4, mData5);
+                        iHomeAllModela.onHomeAllConnectNext(mData);
                     }
 
                     @Override
                     public void onStart() {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
-                        new BoubanAPIConnectCountAlert(mContext);
-                        //设置第一次加载变量
-                        iMovieModel.onConnectStart();
+                        iHomeAllModela.onConnectStart();
                     }
                 });
     }

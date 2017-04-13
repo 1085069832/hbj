@@ -92,7 +92,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     }
 
     @Override
-    public void onSetAdapter() {
+    public void onSetMTAdapter() {
         rc_base.setAdapter(adapter);
     }
 

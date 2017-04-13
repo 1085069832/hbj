@@ -41,10 +41,9 @@ public class BookFragmentModel {
     public BookFragmentModel(Context mContext, IBookModel iBookModel) {
         this.mContext = mContext;
         this.iBookModel = iBookModel;
-        toConnectData();
     }
 
-    private void toConnectData() {
+    public void toConnectData() {
         String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
         //此处加载数据
         Retrofit retrofit = MyUtils.getRetrofit(baseUrl);

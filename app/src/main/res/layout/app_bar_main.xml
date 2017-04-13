@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorHome"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -30,9 +30,9 @@
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="70dp"
         android:layout_marginRight="10dp"
-        android:elevation="12dp"
+        android:elevation="15dp"
         android:src="@mipmap/ic_floating_action_button_to_up"
-        app:fab_colorNormal="@color/colorPrimary"
+        app:fab_colorNormal="@color/colorHome"
         app:fab_colorPressed="@color/default_line_indicator_unselected_color"
         app:fab_colorRipple="@color/colorInactive"
         app:fab_type="mini" />
