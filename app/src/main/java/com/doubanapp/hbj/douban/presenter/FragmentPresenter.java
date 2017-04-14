@@ -14,9 +14,7 @@ import com.doubanapp.hbj.douban.IModel.IMovieModel;
 import com.doubanapp.hbj.douban.IModel.IMusicModel;
 import com.doubanapp.hbj.douban.IPresenter.IFragmentPresenter;
 import com.doubanapp.hbj.douban.IView.IFragmentBaseView;
-import com.doubanapp.hbj.douban.IView.IHomeAllFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.adapter.HomeNormalRcAdapter;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.model.BookFragmentModel;
 import com.doubanapp.hbj.douban.model.HomeAllFragmentModel;
@@ -43,13 +41,9 @@ import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
 import com.doubanapp.hbj.douban.mtprovider.SelectProvider;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.mingle.entity.MenuEntity;
-import com.mingle.sweetpick.BlurEffect;
-import com.mingle.sweetpick.CustomDelegate;
-import com.mingle.sweetpick.DimEffect;
 import com.mingle.sweetpick.NoneEffect;
 import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
-import com.mingle.sweetpick.ViewPagerDelegate;
 
 import java.util.List;
 
@@ -87,7 +81,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         //根据设置不同的 Delegate 来显示不同的风格.
         mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
         //根据设置不同Effect来设置背景效果:BlurEffect 模糊效果.DimEffect 变暗效果,NoneEffect 没有效果.
-        mSweetSheet.setBackgroundEffect(new DimEffect(1));
+        mSweetSheet.setBackgroundEffect(new NoneEffect());
         mSweetSheet.setBackgroundClickEnable(false);
         //设置菜单点击事件
         mSweetSheet.setOnMenuItemClickListener(this);
@@ -241,7 +235,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
                 break;
             default:
         }
-        homeAllFragmentModel.toConnectData();
+        //homeAllFragmentModel.toConnectData();
         Toast.makeText(MyUtils.getContext(), menuEntity.title + "  " + position, Toast.LENGTH_SHORT).show();
         return true;
     }
