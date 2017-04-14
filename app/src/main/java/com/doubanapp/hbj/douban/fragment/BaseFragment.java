@@ -55,6 +55,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         RelativeLayout relativeLayout = new RelativeLayout(MyUtils.getContext());
         View view = inflater.inflate(R.layout.fg_base, container, false);
         loadingDialog = new SpotsDialog(mContext);
+        loadingDialog.setCancelable(false);
         unbinder = ButterKnife.bind(this, view);
         relativeLayout.addView(view);
         if (initChildView() != null)

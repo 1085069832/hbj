@@ -1,44 +1,17 @@
 package com.doubanapp.hbj.douban.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IView.IDayRecommendFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
-import com.doubanapp.hbj.douban.interf.MyServiceInterface;
-import com.doubanapp.hbj.douban.mtitem.ButtomItem;
-import com.doubanapp.hbj.douban.mtitem.ContentIconItem;
-import com.doubanapp.hbj.douban.mtitem.ContentTitleViewPagerItem;
-import com.doubanapp.hbj.douban.mtitem.NormalItem;
 import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
-import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
-import com.doubanapp.hbj.douban.utils.MyUtils;
-import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * 每日推荐
