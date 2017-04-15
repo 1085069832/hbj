@@ -154,7 +154,6 @@ public class MainActivity extends BaseActivity
                             finish();
                         }
                     }).show();
-            super.onBackPressed();
         }
     }
 
