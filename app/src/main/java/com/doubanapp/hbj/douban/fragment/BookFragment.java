@@ -102,4 +102,10 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     public void onSetMTAdapter() {
         rc_base.setAdapter(adapter);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bookFragmentPresenter.doDestroy();
+    }
 }

@@ -100,4 +100,10 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     public void onSetMTAdapter() {
         rc_base.setAdapter(adapter);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        movieFragmentPresenter.doDestroy();
+    }
 }

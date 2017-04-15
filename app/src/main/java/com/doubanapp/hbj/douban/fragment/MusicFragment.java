@@ -50,6 +50,21 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     protected synchronized void lazyLoad() {
     }
 
+    @Override
+    public void onFloatingClicked() {
+        rc_base.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.rl_error:
+                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX);
+                break;
+            default:
+        }
+    }
     /*
     * multitype*/
     @Override
@@ -97,18 +112,8 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     }
 
     @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.rl_error:
-                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX);
-                break;
-            default:
-        }
-    }
-
-    @Override
-    public void onFloatingClicked() {
-        rc_base.smoothScrollToPosition(0);
+    public void onDestroy() {
+        super.onDestroy();
+        musicFragmentPresenter.doDestroy();
     }
 }

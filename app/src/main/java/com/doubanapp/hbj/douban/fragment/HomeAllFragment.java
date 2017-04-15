@@ -2,55 +2,16 @@ package com.doubanapp.hbj.douban.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ProgressBar;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IHomeAllFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.adapter.HomeNormalRcAdapter;
-import com.doubanapp.hbj.douban.bean.DayHistoryJsonData;
-import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
-import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
-import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
-import com.doubanapp.hbj.douban.utils.MyUtils;
-import com.google.gson.Gson;
-import com.mingle.entity.MenuEntity;
-import com.mingle.sweetpick.BlurEffect;
-import com.mingle.sweetpick.RecyclerViewDelegate;
-import com.mingle.sweetpick.SweetSheet;
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import me.drakeet.multitype.MultiTypeAdapter;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * 所有
@@ -152,4 +113,9 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
         rc_base.setAdapter(adapter);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        homeAllFragmentPresenter.doDestroy();
+    }
 }

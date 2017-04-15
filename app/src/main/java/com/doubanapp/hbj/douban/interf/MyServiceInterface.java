@@ -20,4 +20,5 @@ public interface MyServiceInterface {
     //动态url
     @GET
     Observable<ResponseBody> toConnecHomeDayRecommendData(@Url String url);
+
 }

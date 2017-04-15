@@ -35,6 +35,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /*
 * 主界面
@@ -72,6 +73,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
         //申请权限
         checkPermission();
@@ -141,6 +143,17 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("退出应用吗？")
+                    .showCancelButton(true)
+                    .setCancelText("取消")
+                    .setConfirmText("退出")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            finish();
+                        }
+                    }).show();
             super.onBackPressed();
         }
     }
@@ -285,4 +298,5 @@ public class MainActivity extends BaseActivity
     public void setFloatingClickedListener(FloatingClickedListener listener) {
         this.floatingClickedListener = listener;
     }
+
 }

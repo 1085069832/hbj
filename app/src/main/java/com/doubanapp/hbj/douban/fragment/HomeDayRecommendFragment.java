@@ -111,4 +111,10 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     public void onSetMTAdapter() {
         rc_base.setAdapter(adapter);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        homeDayReFragmentPresenter.doDestroy();
+    }
 }

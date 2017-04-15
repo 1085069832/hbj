@@ -64,6 +64,10 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private RelativeLayout rl;
     private RecyclerView rc;
     private HomeAllFragmentModel homeAllFragmentModel;
+    private HomeDayRecommendFragmentModel homeDayRecommendFragmentModel;
+    private MovieFragmentModel movieFragmentModel;
+    private BookFragmentModel bookFragmentModel;
+    private MusicFragmentModel musicFragmentModel;
 
     public FragmentPresenter(Context mContext, IFragmentBaseView iFragmentBaseView) {
         this.mContext = mContext;
@@ -122,19 +126,19 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void doConnectHttp(int selectPage) {
         switch (selectPage) {
             case MyConstants.MUSIC_PRESENTER_PAGE_INDEX://获取音乐数据
-                MusicFragmentModel musicFragmentModel = new MusicFragmentModel(mContext, this);
+                musicFragmentModel = new MusicFragmentModel(mContext, this);
                 musicFragmentModel.toConnectHttp();
                 break;
             case MyConstants.BOOK_PRESENTER_PAGE_INDEX://获取书籍数据
-                BookFragmentModel bookFragmentModel = new BookFragmentModel(mContext, this);
+                bookFragmentModel = new BookFragmentModel(mContext, this);
                 bookFragmentModel.toConnectData();
                 break;
             case MyConstants.MOVIE_PRESENTER_PAGE_INDEX://获取电影数据
-                MovieFragmentModel movieFragmentModel = new MovieFragmentModel(mContext, this);
+                movieFragmentModel = new MovieFragmentModel(mContext, this);
                 movieFragmentModel.toConnectData();
                 break;
             case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐
-                HomeDayRecommendFragmentModel homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
+                homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
                 homeDayRecommendFragmentModel.toConnectHttp();
                 break;
             case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://获取主页all
@@ -144,6 +148,18 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
             default:
         }
 
+    }
+
+    /*
+    * 取消网络请求*/
+    @Override
+    public void doDestroy() {
+        if (musicFragmentModel != null) musicFragmentModel.cancelHttpRequset();
+        if (bookFragmentModel != null) bookFragmentModel.cancelHttpRequset();
+        if (movieFragmentModel != null) movieFragmentModel.cancelHttpRequset();
+        if (homeDayRecommendFragmentModel != null)
+            homeDayRecommendFragmentModel.cancelHttpRequset();
+        if (homeAllFragmentModel != null) homeAllFragmentModel.cancelHttpRequset();
     }
 
     @Override

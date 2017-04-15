@@ -16,6 +16,7 @@ public interface IFragmentPresenter {
 
     void doInitLayoutManager();
 
-
     void doConnectHttp(int selectPage);
+
+    void doDestroy();
 }

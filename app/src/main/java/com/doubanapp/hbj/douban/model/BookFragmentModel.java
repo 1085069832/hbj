@@ -21,6 +21,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -37,6 +38,7 @@ public class BookFragmentModel {
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData3 = new ArrayList<>();
     private List<View> mData2 = new ArrayList<>();
+    private Subscription subscription;
 
     public BookFragmentModel(Context mContext, IBookModel iBookModel) {
         this.mContext = mContext;
@@ -47,8 +49,7 @@ public class BookFragmentModel {
         String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
         //此处加载数据
         Retrofit retrofit = MyUtils.getRetrofit(baseUrl);
-        //请求网络
-        retrofit.create(MyServiceInterface.class).toSearch("yuantong", "500379523313")
+        subscription = retrofit.create(MyServiceInterface.class).toSearch("yuantong", "500379523313")
                 //ResponseBody数据保存，和转换
                 .map(new Func1<ResponseBody, KuaiDiJsonData>() {
                     @Override
@@ -116,5 +117,12 @@ public class BookFragmentModel {
     private KuaiDiJsonData parseJsonData(String data) {
         Gson gson = new Gson();
         return gson.fromJson(data, KuaiDiJsonData.class);
+    }
+
+    /*
+    * 取消rxjava订阅*/
+    public void cancelHttpRequset() {
+        if (subscription != null)
+            subscription.unsubscribe();
     }
 }
