@@ -3,13 +3,16 @@ package com.doubanapp.hbj.douban.presenter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IModel.IBookModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAllModel;
+import com.doubanapp.hbj.douban.IModel.IHomeAndroidModel;
 import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
+import com.doubanapp.hbj.douban.IModel.IHomeWelFareModel;
 import com.doubanapp.hbj.douban.IModel.IMovieModel;
 import com.doubanapp.hbj.douban.IModel.IMusicModel;
 import com.doubanapp.hbj.douban.IPresenter.IFragmentPresenter;
@@ -18,7 +21,9 @@ import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.model.BookFragmentModel;
 import com.doubanapp.hbj.douban.model.HomeAllFragmentModel;
+import com.doubanapp.hbj.douban.model.HomeAndroidFragmentModel;
 import com.doubanapp.hbj.douban.model.HomeDayRecommendFragmentModel;
+import com.doubanapp.hbj.douban.model.HomeWelFareFragmentModel;
 import com.doubanapp.hbj.douban.model.MovieFragmentModel;
 import com.doubanapp.hbj.douban.model.MusicFragmentModel;
 import com.doubanapp.hbj.douban.mtitem.ButtomItem;
@@ -26,6 +31,7 @@ import com.doubanapp.hbj.douban.mtitem.ContentIconItem;
 import com.doubanapp.hbj.douban.mtitem.ContentTitleViewPagerItem;
 import com.doubanapp.hbj.douban.mtitem.HomeAllTitleItem;
 import com.doubanapp.hbj.douban.mtitem.HomeNormalItem;
+import com.doubanapp.hbj.douban.mtitem.HomeWelFareItem;
 import com.doubanapp.hbj.douban.mtitem.MayYouLikeItem;
 import com.doubanapp.hbj.douban.mtitem.MovieListSelectionItem;
 import com.doubanapp.hbj.douban.mtitem.NormalItem;
@@ -35,6 +41,7 @@ import com.doubanapp.hbj.douban.mtprovider.ContentIconProvider;
 import com.doubanapp.hbj.douban.mtprovider.ContentTitleViewPagerProvider;
 import com.doubanapp.hbj.douban.mtprovider.HomeAllTitleProvider;
 import com.doubanapp.hbj.douban.mtprovider.HomeNormalProvider;
+import com.doubanapp.hbj.douban.mtprovider.HomeWelFareProvider;
 import com.doubanapp.hbj.douban.mtprovider.MayYouLikeProvider;
 import com.doubanapp.hbj.douban.mtprovider.MovieListSelectionProvider;
 import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
@@ -55,7 +62,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * Created by Administrator on 2017/4/7 0007.
  */
 public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IFragmentPresenter, IMovieModel, IBookModel,
-        IMusicModel, IHomeDayRecommendModel, IHomeAllModel {
+        IMusicModel, IHomeDayRecommendModel, IHomeAllModel, IHomeAndroidModel, IHomeWelFareModel {
 
     private Context mContext;
     private IFragmentBaseView iFragmentBaseView;
@@ -68,6 +75,8 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private MovieFragmentModel movieFragmentModel;
     private BookFragmentModel bookFragmentModel;
     private MusicFragmentModel musicFragmentModel;
+    private HomeAndroidFragmentModel homeAndroidFragmentModel;
+    private HomeWelFareFragmentModel homeWelFareFragmentModel;
 
     public FragmentPresenter(Context mContext, IFragmentBaseView iFragmentBaseView) {
         this.mContext = mContext;
@@ -109,14 +118,21 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         adapter.register(ButtomItem.class, new ButtomProvider());
         adapter.register(HomeNormalItem.class, new HomeNormalProvider());
         adapter.register(HomeAllTitleItem.class, new HomeAllTitleProvider(mSweetSheet, rc));
+        adapter.register(HomeWelFareItem.class, new HomeWelFareProvider());
         iFragmentBaseView.onRegisterMultitypeItem(adapter);
     }
 
     /*
     * layoutManager*/
     @Override
-    public void doInitLayoutManager() {
+    public void doInitLinearLayoutManager() {
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        iFragmentBaseView.onInitLayoutManager(manager);
+    }
+
+    @Override
+    public void doInitStaggeredGridLayoutManager() {
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         iFragmentBaseView.onInitLayoutManager(manager);
     }
 
@@ -137,13 +153,21 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
                 movieFragmentModel = new MovieFragmentModel(mContext, this);
                 movieFragmentModel.toConnectData();
                 break;
-            case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐
+            case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐数据
                 homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
                 homeDayRecommendFragmentModel.toConnectHttp();
                 break;
-            case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://获取主页all
+            case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://获取主页all数据
                 homeAllFragmentModel = new HomeAllFragmentModel(mContext, this);
                 homeAllFragmentModel.toConnectData();
+                break;
+            case MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX://获取主页android数据
+                homeAndroidFragmentModel = new HomeAndroidFragmentModel(mContext, this);
+                homeAndroidFragmentModel.toConnectData();
+                break;
+            case MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX://获取主页福利数据
+                homeWelFareFragmentModel = new HomeWelFareFragmentModel(mContext, this);
+                homeWelFareFragmentModel.toConnectData();
                 break;
             default:
         }
@@ -160,6 +184,8 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         if (homeDayRecommendFragmentModel != null)
             homeDayRecommendFragmentModel.cancelHttpRequset();
         if (homeAllFragmentModel != null) homeAllFragmentModel.cancelHttpRequset();
+        if (homeAndroidFragmentModel != null) homeAndroidFragmentModel.cancelHttpRequset();
+        if (homeWelFareFragmentModel != null) homeWelFareFragmentModel.cancelHttpRequset();
     }
 
     @Override
@@ -232,7 +258,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     }
 
     /*
-    * homeall数据*/
+    * home all数据*/
     @Override
     public void onHomeAllConnectNext(List<String> allData) {
         items.add(new HomeAllTitleItem(""));
@@ -242,7 +268,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     }
 
     /*
-    * sweet条目选中*/
+    * homeall sweet条目选中*/
     @Override
     public boolean onItemClick(int position, MenuEntity menuEntity) {
         switch (position) {
@@ -254,5 +280,24 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         //homeAllFragmentModel.toConnectData();
         Toast.makeText(MyUtils.getContext(), menuEntity.title + "  " + position, Toast.LENGTH_SHORT).show();
         return true;
+    }
+
+    /*
+    * home Android数据*/
+    @Override
+    public void onHomeAndroidConnectNext(List<String> androidData) {
+        for (int i = 0; i < androidData.size(); i++) {
+            items.add(new HomeNormalItem(""));
+        }
+    }
+
+    /*
+    * home 福利数据*/
+    @Override
+    public void onHomeWelFareConnectNext(List<String> mData) {
+        for (int i = 0; i < mData.size(); i++) {
+            int addHeight = (int) (Math.random() * 50) + 260;//随机高度
+            items.add(new HomeWelFareItem(mData, addHeight));
+        }
     }
 }

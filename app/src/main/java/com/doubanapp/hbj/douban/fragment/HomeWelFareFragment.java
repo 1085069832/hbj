@@ -3,51 +3,27 @@ package com.doubanapp.hbj.douban.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.doubanapp.hbj.douban.IView.IHomeWelFareFragmentView;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.adapter.WelFareRcAdapter;
-import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
-import com.doubanapp.hbj.douban.interf.MyServiceInterface;
-import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
+import com.doubanapp.hbj.douban.constants.MyConstants;
+import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
-import com.doubanapp.hbj.douban.utils.MyUtils;
-import com.google.gson.Gson;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
  * 福利
  * Created by Administrator on 2017/3/31 0031.
  */
-public class HomeWelFareFragment extends LazyFragment {
+public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFragmentView{
 
     private static final String TAG = "HomeWelFareFragment";
     private boolean isFirstCreate;//是否第一次加载
     private boolean isCreateView = false;//是否创建了视图
-    private boolean isLoading = false;
-    private ProgressWheel pb_loading;
-    private RecyclerView rc_home_welfare;
-    private RelativeLayout iv_error;
-    private List<String> mData = new ArrayList<>();
-    private List<Integer> mHeight = new ArrayList<>();
+    private MultiTypeAdapter adapter;
+    private FragmentPresenter homeWelFareFragmentPresenter;
 
     public static HomeWelFareFragment newsInstance(int pos) {
         HomeWelFareFragment fragment = new HomeWelFareFragment();
@@ -57,36 +33,22 @@ public class HomeWelFareFragment extends LazyFragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         isFirstCreate = true;
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MyLogUtils.i(TAG, "onCreateView");
-        //此处加载界面
-        View view = inflater.inflate(R.layout.fg_home_welfare, container, false);
-        rc_home_welfare = (RecyclerView) view.findViewById(R.id.rc_home_welfare);
-        pb_loading = (ProgressWheel) view.findViewById(R.id.pb_loading);
-        iv_error = (RelativeLayout) view.findViewById(R.id.rl_error);
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        rc_home_welfare.setLayoutManager(manager);
+    protected View initChildView() {
+        homeWelFareFragmentPresenter = new FragmentPresenter(mContext, this);
+        homeWelFareFragmentPresenter.doRegisterMultitypeItem();
+        homeWelFareFragmentPresenter.doInitStaggeredGridLayoutManager();
 
 
         isCreateView = true;
         lazyLoad();
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        initEvent();
+        return null;
     }
 
     @Override
@@ -98,93 +60,61 @@ public class HomeWelFareFragment extends LazyFragment {
             //不加载数据
             return;
         }
-        toConnectData();
+        homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX);
     }
 
-    private void toConnectData() {
-        String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
-        //此处加载数据
-        Retrofit retrofit = MyUtils.getRetrofit(baseUrl);
-        //请求网络
-        retrofit.create(MyServiceInterface.class).toSearch("yuantong", "500379523313")
-                //ResponseBody数据保存，和转换
-                .map(new Func1<ResponseBody, KuaiDiJsonData>() {
-                    @Override
-                    public KuaiDiJsonData call(ResponseBody responseBody) {
-
-                        String stringJson = null;
-                        try {
-                            stringJson = responseBody.string();
-                            //保存json数据
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        return parseJsonData(stringJson);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<KuaiDiJsonData>() {
-                    @Override
-                    public void onCompleted() {
-                        //请求结束
-                        pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //错误回调
-                        pb_loading.setVisibility(View.GONE);
-                        iv_error.setVisibility(View.VISIBLE);
-                        Toast.makeText(MyUtils.getContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(KuaiDiJsonData res) {
-                        //成功
-                        MyLogUtils.i(TAG, res.getData().get(0).getContext());
-                        for (int i = 0; i < 30; i++) {
-                            mData.add("c");
-                        }
-                        for (int i = 0; i < mData.size(); i++) {
-                            int randomHeight = (int) (Math.random() * 50);
-                            mHeight.add(randomHeight);
-                        }
-                        WelFareRcAdapter adapter = new WelFareRcAdapter(mData, mHeight);
-                        rc_home_welfare.setAdapter(adapter);
-
-
-                    }
-
-                    @Override
-                    public void onStart() {
-                        //开始
-                        MyLogUtils.i(TAG, "onStart");
-                        new BoubanAPIConnectCountAlert(mContext);
-                        //设置第一次加载变量
-                        isFirstCreate = false;
-                        pb_loading.setVisibility(View.VISIBLE);
-                        iv_error.setVisibility(View.GONE);
-                    }
-                });
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_error:
+                homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX);
+                break;
+            default:
+        }
     }
 
-    private void initEvent() {
-
-        iv_error.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toConnectData();
-            }
-        });
-
+    @Override
+    public void onFloatingClicked() {
+        rc_base.smoothScrollToPosition(0);
     }
 
-    private KuaiDiJsonData parseJsonData(String data) {
-        Gson gson = new Gson();
-        return gson.fromJson(data, KuaiDiJsonData.class);
+    @Override
+    public void onRegisterMultitypeItem(MultiTypeAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    @Override
+    public void onInitLayoutManager(RecyclerView.LayoutManager manager) {
+        rc_base.setLayoutManager(manager);
+    }
+
+    @Override
+    public void onStartVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        rl_error.setVisibility(errorVisb);
+        isFirstCreate = false;
+    }
+
+    @Override
+    public void onErrorVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        rl_error.setVisibility(errorVisb);
+    }
+
+    @Override
+    public void onCompletedVisibility(int progressVisb, int errorVisb) {
+        pb_loading.setVisibility(progressVisb);
+        rl_error.setVisibility(errorVisb);
+    }
+
+    @Override
+    public void onSetMTAdapter() {
+        rc_base.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        homeWelFareFragmentPresenter.doDestroy();
     }
 }

@@ -116,7 +116,6 @@ public class HomeDayRecommendFragmentModel {
 
     private void toConnectContentData(String resultDay) {
         //此处加载数据
-        //Retrofit retrofit = MyUtils.getRetrofit(gank_base_url);
         contentSubscription = retrofit.create(MyServiceInterface.class).toConnecHomeDayRecommendData("api/day" + resultDay)
                 //ResponseBody数据保存，和转换
                 .map(new Func1<ResponseBody, HomeDayRecommendJsonData>() {

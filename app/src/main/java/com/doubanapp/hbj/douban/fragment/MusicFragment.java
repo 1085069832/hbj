@@ -36,7 +36,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
         //Presenter
         musicFragmentPresenter = new FragmentPresenter(mContext, this);
         musicFragmentPresenter.doRegisterMultitypeItem();
-        musicFragmentPresenter.doInitLayoutManager();
+        musicFragmentPresenter.doInitLinearLayoutManager();
         return null;
     }
 

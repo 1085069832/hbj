@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/douban_bg"
     android:orientation="vertical">
 
     <lib.homhomlib.design.SlidingLayout
@@ -27,16 +26,22 @@
                 android:text="字体大小" />
 
             <Button
+                android:id="@+id/bt_me_qxxfan"
+                style="@style/MeItemStyle"
+                android:drawableLeft="@mipmap/me_item_left_yellow"
+                android:text="悬浮按钮" />
+
+            <Button
                 android:id="@+id/bt_me_myliketag"
                 style="@style/MeItemStyle"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:drawableLeft="@mipmap/me_item_left_green"
                 android:text="兴趣标签" />
 
             <Button
                 android:id="@+id/bt_me_checknet"
                 style="@style/MeItemStyle"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:drawableLeft="@mipmap/me_item_left_red"
                 android:text="网络诊断" />
 
@@ -55,7 +60,7 @@
             <Button
                 android:id="@+id/bt_me_about"
                 style="@style/MeItemStyle"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:drawableLeft="@mipmap/me_item_left_gray"
                 android:text="关于" />
 

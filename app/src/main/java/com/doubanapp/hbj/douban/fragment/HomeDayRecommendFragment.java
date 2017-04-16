@@ -45,7 +45,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         MyLogUtils.i(TAG, "initChildView");
         homeDayReFragmentPresenter = new FragmentPresenter(mContext, this);
         homeDayReFragmentPresenter.doRegisterMultitypeItem();
-        homeDayReFragmentPresenter.doInitLayoutManager();
+        homeDayReFragmentPresenter.doInitLinearLayoutManager();
 
         isCreateView = true;
         lazyLoad();

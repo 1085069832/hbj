@@ -14,7 +14,9 @@ public interface IFragmentPresenter {
 
     void doRegisterMultitypeItem();
 
-    void doInitLayoutManager();
+    void doInitLinearLayoutManager();
+
+    void doInitStaggeredGridLayoutManager();
 
     void doConnectHttp(int selectPage);
 

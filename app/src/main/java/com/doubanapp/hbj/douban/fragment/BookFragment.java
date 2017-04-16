@@ -36,7 +36,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
         MyLogUtils.i(TAG, "onCreateView");
         bookFragmentPresenter = new FragmentPresenter(mContext, this);
         bookFragmentPresenter.doRegisterMultitypeItem();
-        bookFragmentPresenter.doInitLayoutManager();
+        bookFragmentPresenter.doInitLinearLayoutManager();
         return null;
     }
 

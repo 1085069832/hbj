@@ -44,7 +44,7 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
         homeAllFragmentPresenter = new FragmentPresenter(mContext, this);
         homeAllFragmentPresenter.doInitSweetSheet(rl, rc_base);
         homeAllFragmentPresenter.doRegisterMultitypeItem();
-        homeAllFragmentPresenter.doInitLayoutManager();
+        homeAllFragmentPresenter.doInitLinearLayoutManager();
 
 
         isCreateView = true;

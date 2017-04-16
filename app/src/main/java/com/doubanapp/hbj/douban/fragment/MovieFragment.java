@@ -37,7 +37,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
         MyLogUtils.i(TAG, "initChildView");
         movieFragmentPresenter = new FragmentPresenter(mContext, this);
         movieFragmentPresenter.doRegisterMultitypeItem();
-        movieFragmentPresenter.doInitLayoutManager();
+        movieFragmentPresenter.doInitLinearLayoutManager();
         return null;
     }
 
