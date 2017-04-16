@@ -1,12 +1,8 @@
 package com.doubanapp.hbj.douban.model;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.DayHistoryJsonData;
@@ -150,12 +146,12 @@ public class HomeDayRecommendFragmentModel {
 
                     @Override
                     public void onNext(HomeDayRecommendJsonData res) {
-                        for (int i = 0; i < 4; i++) {
+                        /*for (int i = 0; i < 4; i++) {
                             ImageView imageView = new ImageView(MyUtils.getContext());
                             Glide.with(mContext).load(R.mipmap.navigation_title_icon).crossFade().centerCrop().into(imageView);
                             mData4.add(imageView);
                         }
-                        for (int i = 0; i < 3; i++) {
+                        for (int i = 0; i < res.getResults().getAndroid().size(); i++) {
                             mData1.add("Android");
                         }
                         for (int i = 0; i < 3; i++) {
@@ -187,9 +183,8 @@ public class HomeDayRecommendFragmentModel {
                             textView.setTextSize(35);
                             textView.setTextColor(Color.BLUE);
                             mData5.add(textView);
-                        }
-                        iHomeDayRecommendModel.onHomeDayRecommendConnectNext(mData4, mData1, mData2, mData6, mData7,
-                                mData3, mData8, mData5);
+                        }*/
+                        iHomeDayRecommendModel.onHomeDayRecommendConnectNext(res);
                     }
 
                     @Override

@@ -8,9 +8,9 @@ import java.util.List;
 public class HomeDayRecommendJsonData {
 
     /**
-     * category : ["iOS","Android","瞎推荐","拓展资源","福利","休息视频"]
+     * category : ["Android","iOS","拓展资源","福利","休息视频","前端","App"]
      * error : false
-     * results : {"Android":[{"_id":"56cc6d23421aa95caa707a69","createdAt":"2015-08-06T07:15:52.65Z","desc":"类似Link Bubble的悬浮式操作设计","publishedAt":"2015-08-07T03:57:48.45Z","type":"Android","url":"https://github.com/recruit-lifestyle/FloatingView","used":true,"who":"mthli"},{"_id":"56cc6d23421aa95caa707a6f","createdAt":"2015-08-07T01:33:07.815Z","desc":"Android开发中，有哪些让你觉得相见恨晚的方法、类或接口？","publishedAt":"2015-08-07T03:57:47.317Z","type":"Android","url":"http://www.zhihu.com/question/33636939","used":true,"who":"lxxself"},{"_id":"56cc6d23421aa95caa707c69","createdAt":"2015-08-06T15:00:38.350Z","desc":"使用注解来处理Activity的状态恢复","publishedAt":"2015-08-07T03:57:48.76Z","type":"Android","url":"https://github.com/tom91136/Akatsuki","used":true,"who":"鲍永章"},{"_id":"56cc6d23421aa95caa707c71","createdAt":"2015-08-07T02:19:44.342Z","desc":"Android Lollipop联系人之PinnedListView简单使用","publishedAt":"2015-08-07T03:57:48.142Z","type":"Android","url":"https://git.oschina.net/way/PinnedHeaderListView","used":true,"who":"有时放纵"},{"_id":"56cc6d23421aa95caa707c78","createdAt":"2015-08-06T14:58:28.171Z","desc":"图片可以自动滚动的ImageView，可以实现视差效果。","publishedAt":"2015-08-07T03:57:48.73Z","type":"Android","url":"https://github.com/Q42/AndroidScrollingImageView","used":true,"who":"鲍永章"}],"iOS":[{"_id":"56cc6d1d421aa95caa707769","createdAt":"2015-08-07T01:32:51.588Z","desc":"LLVM 简介","publishedAt":"2015-08-07T03:57:48.70Z","type":"iOS","url":"http://adriansampson.net/blog/llvm.html","used":true,"who":"CallMeWhy"},{"_id":"56cc6d23421aa95caa707a6b","createdAt":"2015-08-06T14:45:18.733Z","desc":"基于TextKit的UILabel，支持超链接和自定义表达式。","publishedAt":"2015-08-07T03:57:47.242Z","type":"iOS","url":"https://github.com/molon/MLLabel","used":true,"who":"鲍永章"},{"_id":"56cc6d23421aa95caa707bea","createdAt":"2015-08-07T01:33:30.871Z","desc":"Swift 和 C 函数","publishedAt":"2015-08-07T03:57:48.83Z","type":"iOS","url":"http://chris.eidhof.nl/posts/swift-c-interop.html","used":true,"who":"CallMeWhy"},{"_id":"56cc6d23421aa95caa707c77","createdAt":"2015-08-07T01:34:00.984Z","desc":"Arrays Linked Lists 和性能比较","publishedAt":"2015-08-07T03:57:48.174Z","type":"iOS","url":"http://airspeedvelocity.net/2015/08/03/arrays-linked-lists-and-performance/","used":true,"who":"CallMeWhy"}],"休息视频":[{"_id":"56cc6d23421aa95caa707c68","createdAt":"2015-08-06T13:06:17.211Z","desc":"听到就心情大好的歌，简直妖魔哈哈哈哈哈，原地址\nhttp://v.youku.com/v_show/id_XMTQxODA5NDM2.html","publishedAt":"2015-08-07T03:57:48.104Z","type":"休息视频","url":"http://www.zhihu.com/question/21778055/answer/19905413?utm_source=weibo&utm_medium=weibo_share&utm_content=share_answer&utm_campaign=share_button","used":true,"who":"lxxself"}],"拓展资源":[{"_id":"56cc6d23421aa95caa707bdf","createdAt":"2015-08-07T01:36:06.932Z","desc":"Display GitHub code in tree format","publishedAt":"2015-08-07T03:57:48.81Z","type":"拓展资源","url":"https://github.com/buunguyen/octotree","used":true,"who":"lxxself"}],"瞎推荐":[{"_id":"56cc6d23421aa95caa707bd0","createdAt":"2015-08-07T01:52:30.267Z","desc":"程序员的电台FmM，这个页面chrome插件有问题啊哭，我写了回删除不了啊","publishedAt":"2015-08-07T03:57:48.84Z","type":"瞎推荐","url":"https://cmd.fm/","used":true,"who":"lxxself"}],"福利":[{"_id":"56cc6d23421aa95caa707c52","createdAt":"2015-08-07T01:21:06.112Z","desc":"8.7\u2014\u2014（1）","publishedAt":"2015-08-07T03:57:47.310Z","type":"福利","url":"http://ww2.sinaimg.cn/large/7a8aed7bgw1eutscfcqtcj20dw0i0q4l.jpg","used":true,"who":"张涵宇"},{"_id":"56cc6d23421aa95caa707c56","createdAt":"2015-08-07T01:21:33.518Z","desc":"8.7\u2014\u2014（2）","publishedAt":"2015-08-07T03:57:47.229Z","type":"福利","url":"http://ww2.sinaimg.cn/large/7a8aed7bgw1eutsd0pgiwj20go0p0djn.jpg","used":true,"who":"张涵宇"}]}
+     * results : {"Android":[{"_id":"58ef1a55421aa9544ed88936","createdAt":"2017-04-13T14:27:33.889Z","desc":"java8 以下，使用Stream Api。","publishedAt":"2017-04-14T11:46:48.47Z","source":"web","type":"Android","url":"https://github.com/aNNiMON/Lightweight-Stream-API","used":true,"who":"瘦纸好过夏"},{"_id":"58ef1b1a421aa9544b773fd3","createdAt":"2017-04-13T14:30:50.522Z","desc":"Android Toast 原理分析","publishedAt":"2017-04-14T11:46:48.47Z","source":"web","type":"Android","url":"http://qlm.pw/2017/04/13/android-toast-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90/","used":true,"who":"Linmin Qiu"},{"_id":"58efa248421aa954511ebe7e","createdAt":"2017-04-14T00:07:36.366Z","desc":"展示 Android 程序方法调用链的 gralde 插件，支持输出html文件和方法折叠","images":["http://img.gank.io/9be64918-c259-4f81-9ab5-341293a74fe4"],"publishedAt":"2017-04-14T11:46:48.47Z","source":"web","type":"Android","url":"https://github.com/CoXier/AppMethodTracking","used":true,"who":"CoXier"},{"_id":"58f01f07421aa954511ebe7f","createdAt":"2017-04-14T08:59:51.702Z","desc":"一个简单的 SQLite 和 Excel 互相转换的库子","publishedAt":"2017-04-14T11:46:48.47Z","source":"web","type":"Android","url":"https://github.com/li-yu/SQLiteToExcel","used":true,"who":"liyu"},{"_id":"58f04302421aa9544b773fdc","createdAt":"2017-04-14T11:33:22.130Z","desc":"遮罩对比图效果组件","images":["http://img.gank.io/6becd3af-df53-4935-bbd9-1099aae74ec6"],"publishedAt":"2017-04-14T11:46:48.47Z","source":"chrome","type":"Android","url":"https://github.com/pavel163/BifacialView","used":true,"who":"代码家"}],"App":[{"_id":"58eae3b8421aa9544825f83f","createdAt":"2017-04-10T09:45:28.617Z","desc":"Unsplash 的三方壁纸客户端","images":["http://img.gank.io/da234724-80ab-4059-ae3b-52831508e45c"],"publishedAt":"2017-04-10T12:11:14.794Z","source":"chrome","type":"App","url":"https://github.com/WangDaYeeeeee/Mysplash","used":true,"who":"咕咚"}],"iOS":[{"_id":"58ef3e73421aa9544ed88938","createdAt":"2017-04-13T17:01:39.812Z","desc":"FFmpeg，SDL2.0 C语言跨平台播放器实现（iOS Demo）","publishedAt":"2017-04-14T11:46:48.47Z","source":"web","type":"iOS","url":"http://www.jidongchen.com/post/ffmpeg-sdl2.0","used":true,"who":"Jidong Chen"},{"_id":"58f04362421aa9544b773fdd","createdAt":"2017-04-14T11:34:58.272Z","desc":"Swift 实现遮罩擦除效果，搞个红包抽奖刮刮卡什么效果的可能用得到。","images":["http://img.gank.io/6e914269-3cc5-4b36-b46e-814bebea1d73"],"publishedAt":"2017-04-14T11:46:48.47Z","source":"chrome","type":"iOS","url":"https://github.com/pgorzelany/ScratchCardView","used":true,"who":"啊呆"}],"休息视频":[{"_id":"58f0456a421aa9544825f875","createdAt":"2017-04-14T11:43:38.824Z","desc":"【实测】耳机之间的差别有多大?","publishedAt":"2017-04-14T11:46:48.47Z","source":"chrome","type":"休息视频","url":"http://www.bilibili.com/video/av8823143/","used":true,"who":"daimajia"}],"前端":[{"_id":"58e44c68421aa90d6119869a","createdAt":"2017-04-05T09:46:16.168Z","desc":"纯 JS 实现的 Tooltip 库","images":["http://img.gank.io/b0065957-6d0a-424e-869e-9e2aa42c909d"],"publishedAt":"2017-04-05T11:50:18.748Z","source":"chrome","type":"前端","url":"https://atomiks.github.io/tippyjs/","used":true,"who":"带马甲"}],"拓展资源":[{"_id":"58f04228421aa9544b773fdb","createdAt":"2017-04-14T11:29:44.766Z","desc":"基于 scrapy 实现的爬虫管理 Web UI。","images":["http://img.gank.io/abc37f88-d064-44c7-88bf-6201051d1dd6"],"publishedAt":"2017-04-14T11:46:48.47Z","source":"chrome","type":"拓展资源","url":"https://github.com/DormyMo/SpiderKeeper","used":true,"who":"代码家"},{"_id":"58f0426c421aa9544ed88940","createdAt":"2017-04-14T11:30:52.178Z","desc":"Chrome Headless 模式下的控制封装 Api","publishedAt":"2017-04-14T11:46:48.47Z","source":"chrome","type":"拓展资源","url":"https://github.com/cyrus-and/chrome-remote-interface","used":true,"who":"棒呆"}],"福利":[{"_id":"58f0438f421aa9544825f873","createdAt":"2017-04-14T11:35:43.995Z","desc":"4-14","publishedAt":"2017-04-14T11:46:48.47Z","source":"chrome","type":"福利","url":"http://7xi8d6.com1.z0.glb.clouddn.com/2017-04-14-17881962_1329090457138411_8289893708619317248_n.jpg","used":true,"who":"代码家"}]}
      */
 
     private boolean error;
@@ -43,10 +43,11 @@ public class HomeDayRecommendJsonData {
 
     public static class ResultsBean {
         private List<AndroidBean> Android;
+        private List<AppBean> App;
         private List<IOSBean> iOS;
         private List<休息视频Bean> 休息视频;
+        private List<前端Bean> 前端;
         private List<拓展资源Bean> 拓展资源;
-        private List<瞎推荐Bean> 瞎推荐;
         private List<福利Bean> 福利;
 
         public List<AndroidBean> getAndroid() {
@@ -55,6 +56,14 @@ public class HomeDayRecommendJsonData {
 
         public void setAndroid(List<AndroidBean> Android) {
             this.Android = Android;
+        }
+
+        public List<AppBean> getApp() {
+            return App;
+        }
+
+        public void setApp(List<AppBean> App) {
+            this.App = App;
         }
 
         public List<IOSBean> getIOS() {
@@ -73,20 +82,20 @@ public class HomeDayRecommendJsonData {
             this.休息视频 = 休息视频;
         }
 
+        public List<前端Bean> get前端() {
+            return 前端;
+        }
+
+        public void set前端(List<前端Bean> 前端) {
+            this.前端 = 前端;
+        }
+
         public List<拓展资源Bean> get拓展资源() {
             return 拓展资源;
         }
 
         public void set拓展资源(List<拓展资源Bean> 拓展资源) {
             this.拓展资源 = 拓展资源;
-        }
-
-        public List<瞎推荐Bean> get瞎推荐() {
-            return 瞎推荐;
-        }
-
-        public void set瞎推荐(List<瞎推荐Bean> 瞎推荐) {
-            this.瞎推荐 = 瞎推荐;
         }
 
         public List<福利Bean> get福利() {
@@ -99,24 +108,28 @@ public class HomeDayRecommendJsonData {
 
         public static class AndroidBean {
             /**
-             * _id : 56cc6d23421aa95caa707a69
-             * createdAt : 2015-08-06T07:15:52.65Z
-             * desc : 类似Link Bubble的悬浮式操作设计
-             * publishedAt : 2015-08-07T03:57:48.45Z
+             * _id : 58ef1a55421aa9544ed88936
+             * createdAt : 2017-04-13T14:27:33.889Z
+             * desc : java8 以下，使用Stream Api。
+             * publishedAt : 2017-04-14T11:46:48.47Z
+             * source : web
              * type : Android
-             * url : https://github.com/recruit-lifestyle/FloatingView
+             * url : https://github.com/aNNiMON/Lightweight-Stream-API
              * used : true
-             * who : mthli
+             * who : 瘦纸好过夏
+             * images : ["http://img.gank.io/9be64918-c259-4f81-9ab5-341293a74fe4"]
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
             private String who;
+            private List<String> images;
 
             public String get_id() {
                 return _id;
@@ -150,6 +163,14 @@ public class HomeDayRecommendJsonData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -180,29 +201,147 @@ public class HomeDayRecommendJsonData {
 
             public void setWho(String who) {
                 this.who = who;
+            }
+
+            public List<String> getImages() {
+                return images;
+            }
+
+            public void setImages(List<String> images) {
+                this.images = images;
+            }
+        }
+
+        public static class AppBean {
+            /**
+             * _id : 58eae3b8421aa9544825f83f
+             * createdAt : 2017-04-10T09:45:28.617Z
+             * desc : Unsplash 的三方壁纸客户端
+             * images : ["http://img.gank.io/da234724-80ab-4059-ae3b-52831508e45c"]
+             * publishedAt : 2017-04-10T12:11:14.794Z
+             * source : chrome
+             * type : App
+             * url : https://github.com/WangDaYeeeeee/Mysplash
+             * used : true
+             * who : 咕咚
+             */
+
+            private String _id;
+            private String createdAt;
+            private String desc;
+            private String publishedAt;
+            private String source;
+            private String type;
+            private String url;
+            private boolean used;
+            private String who;
+            private List<String> images;
+
+            public String get_id() {
+                return _id;
+            }
+
+            public void set_id(String _id) {
+                this._id = _id;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getDesc() {
+                return desc;
+            }
+
+            public void setDesc(String desc) {
+                this.desc = desc;
+            }
+
+            public String getPublishedAt() {
+                return publishedAt;
+            }
+
+            public void setPublishedAt(String publishedAt) {
+                this.publishedAt = publishedAt;
+            }
+
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public boolean isUsed() {
+                return used;
+            }
+
+            public void setUsed(boolean used) {
+                this.used = used;
+            }
+
+            public String getWho() {
+                return who;
+            }
+
+            public void setWho(String who) {
+                this.who = who;
+            }
+
+            public List<String> getImages() {
+                return images;
+            }
+
+            public void setImages(List<String> images) {
+                this.images = images;
             }
         }
 
         public static class IOSBean {
             /**
-             * _id : 56cc6d1d421aa95caa707769
-             * createdAt : 2015-08-07T01:32:51.588Z
-             * desc : LLVM 简介
-             * publishedAt : 2015-08-07T03:57:48.70Z
+             * _id : 58ef3e73421aa9544ed88938
+             * createdAt : 2017-04-13T17:01:39.812Z
+             * desc : FFmpeg，SDL2.0 C语言跨平台播放器实现（iOS Demo）
+             * publishedAt : 2017-04-14T11:46:48.47Z
+             * source : web
              * type : iOS
-             * url : http://adriansampson.net/blog/llvm.html
+             * url : http://www.jidongchen.com/post/ffmpeg-sdl2.0
              * used : true
-             * who : CallMeWhy
+             * who : Jidong Chen
+             * images : ["http://img.gank.io/6e914269-3cc5-4b36-b46e-814bebea1d73"]
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
             private String who;
+            private List<String> images;
 
             public String get_id() {
                 return _id;
@@ -236,6 +375,14 @@ public class HomeDayRecommendJsonData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -266,26 +413,35 @@ public class HomeDayRecommendJsonData {
 
             public void setWho(String who) {
                 this.who = who;
+            }
+
+            public List<String> getImages() {
+                return images;
+            }
+
+            public void setImages(List<String> images) {
+                this.images = images;
             }
         }
 
         public static class 休息视频Bean {
             /**
-             * _id : 56cc6d23421aa95caa707c68
-             * createdAt : 2015-08-06T13:06:17.211Z
-             * desc : 听到就心情大好的歌，简直妖魔哈哈哈哈哈，原地址
-             http://v.youku.com/v_show/id_XMTQxODA5NDM2.html
-             * publishedAt : 2015-08-07T03:57:48.104Z
+             * _id : 58f0456a421aa9544825f875
+             * createdAt : 2017-04-14T11:43:38.824Z
+             * desc : 【实测】耳机之间的差别有多大?
+             * publishedAt : 2017-04-14T11:46:48.47Z
+             * source : chrome
              * type : 休息视频
-             * url : http://www.zhihu.com/question/21778055/answer/19905413?utm_source=weibo&utm_medium=weibo_share&utm_content=share_answer&utm_campaign=share_button
+             * url : http://www.bilibili.com/video/av8823143/
              * used : true
-             * who : lxxself
+             * who : daimajia
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
@@ -323,6 +479,14 @@ public class HomeDayRecommendJsonData {
                 this.publishedAt = publishedAt;
             }
 
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
             public String getType() {
                 return type;
             }
@@ -353,29 +517,139 @@ public class HomeDayRecommendJsonData {
 
             public void setWho(String who) {
                 this.who = who;
+            }
+        }
+
+        public static class 前端Bean {
+            /**
+             * _id : 58e44c68421aa90d6119869a
+             * createdAt : 2017-04-05T09:46:16.168Z
+             * desc : 纯 JS 实现的 Tooltip 库
+             * images : ["http://img.gank.io/b0065957-6d0a-424e-869e-9e2aa42c909d"]
+             * publishedAt : 2017-04-05T11:50:18.748Z
+             * source : chrome
+             * type : 前端
+             * url : https://atomiks.github.io/tippyjs/
+             * used : true
+             * who : 带马甲
+             */
+
+            private String _id;
+            private String createdAt;
+            private String desc;
+            private String publishedAt;
+            private String source;
+            private String type;
+            private String url;
+            private boolean used;
+            private String who;
+            private List<String> images;
+
+            public String get_id() {
+                return _id;
+            }
+
+            public void set_id(String _id) {
+                this._id = _id;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getDesc() {
+                return desc;
+            }
+
+            public void setDesc(String desc) {
+                this.desc = desc;
+            }
+
+            public String getPublishedAt() {
+                return publishedAt;
+            }
+
+            public void setPublishedAt(String publishedAt) {
+                this.publishedAt = publishedAt;
+            }
+
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public boolean isUsed() {
+                return used;
+            }
+
+            public void setUsed(boolean used) {
+                this.used = used;
+            }
+
+            public String getWho() {
+                return who;
+            }
+
+            public void setWho(String who) {
+                this.who = who;
+            }
+
+            public List<String> getImages() {
+                return images;
+            }
+
+            public void setImages(List<String> images) {
+                this.images = images;
             }
         }
 
         public static class 拓展资源Bean {
             /**
-             * _id : 56cc6d23421aa95caa707bdf
-             * createdAt : 2015-08-07T01:36:06.932Z
-             * desc : Display GitHub code in tree format
-             * publishedAt : 2015-08-07T03:57:48.81Z
+             * _id : 58f04228421aa9544b773fdb
+             * createdAt : 2017-04-14T11:29:44.766Z
+             * desc : 基于 scrapy 实现的爬虫管理 Web UI。
+             * images : ["http://img.gank.io/abc37f88-d064-44c7-88bf-6201051d1dd6"]
+             * publishedAt : 2017-04-14T11:46:48.47Z
+             * source : chrome
              * type : 拓展资源
-             * url : https://github.com/buunguyen/octotree
+             * url : https://github.com/DormyMo/SpiderKeeper
              * used : true
-             * who : lxxself
+             * who : 代码家
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
             private String who;
+            private List<String> images;
 
             public String get_id() {
                 return _id;
@@ -409,90 +683,12 @@ public class HomeDayRecommendJsonData {
                 this.publishedAt = publishedAt;
             }
 
-            public String getType() {
-                return type;
+            public String getSource() {
+                return source;
             }
 
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
-            public boolean isUsed() {
-                return used;
-            }
-
-            public void setUsed(boolean used) {
-                this.used = used;
-            }
-
-            public String getWho() {
-                return who;
-            }
-
-            public void setWho(String who) {
-                this.who = who;
-            }
-        }
-
-        public static class 瞎推荐Bean {
-            /**
-             * _id : 56cc6d23421aa95caa707bd0
-             * createdAt : 2015-08-07T01:52:30.267Z
-             * desc : 程序员的电台FmM，这个页面chrome插件有问题啊哭，我写了回删除不了啊
-             * publishedAt : 2015-08-07T03:57:48.84Z
-             * type : 瞎推荐
-             * url : https://cmd.fm/
-             * used : true
-             * who : lxxself
-             */
-
-            private String _id;
-            private String createdAt;
-            private String desc;
-            private String publishedAt;
-            private String type;
-            private String url;
-            private boolean used;
-            private String who;
-
-            public String get_id() {
-                return _id;
-            }
-
-            public void set_id(String _id) {
-                this._id = _id;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public String getDesc() {
-                return desc;
-            }
-
-            public void setDesc(String desc) {
-                this.desc = desc;
-            }
-
-            public String getPublishedAt() {
-                return publishedAt;
-            }
-
-            public void setPublishedAt(String publishedAt) {
-                this.publishedAt = publishedAt;
+            public void setSource(String source) {
+                this.source = source;
             }
 
             public String getType() {
@@ -525,25 +721,35 @@ public class HomeDayRecommendJsonData {
 
             public void setWho(String who) {
                 this.who = who;
+            }
+
+            public List<String> getImages() {
+                return images;
+            }
+
+            public void setImages(List<String> images) {
+                this.images = images;
             }
         }
 
         public static class 福利Bean {
             /**
-             * _id : 56cc6d23421aa95caa707c52
-             * createdAt : 2015-08-07T01:21:06.112Z
-             * desc : 8.7——（1）
-             * publishedAt : 2015-08-07T03:57:47.310Z
+             * _id : 58f0438f421aa9544825f873
+             * createdAt : 2017-04-14T11:35:43.995Z
+             * desc : 4-14
+             * publishedAt : 2017-04-14T11:46:48.47Z
+             * source : chrome
              * type : 福利
-             * url : http://ww2.sinaimg.cn/large/7a8aed7bgw1eutscfcqtcj20dw0i0q4l.jpg
+             * url : http://7xi8d6.com1.z0.glb.clouddn.com/2017-04-14-17881962_1329090457138411_8289893708619317248_n.jpg
              * used : true
-             * who : 张涵宇
+             * who : 代码家
              */
 
             private String _id;
             private String createdAt;
             private String desc;
             private String publishedAt;
+            private String source;
             private String type;
             private String url;
             private boolean used;
@@ -579,6 +785,14 @@ public class HomeDayRecommendJsonData {
 
             public void setPublishedAt(String publishedAt) {
                 this.publishedAt = publishedAt;
+            }
+
+            public String getSource() {
+                return source;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
             }
 
             public String getType() {

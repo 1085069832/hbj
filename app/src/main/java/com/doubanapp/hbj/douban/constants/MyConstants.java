@@ -36,11 +36,11 @@ public class MyConstants {
     public static final int MUSIC_PRESENTER_PAGE_INDEX = 31;
     public static final int MUSIC_CONTENT_ICON_INDEX = 2;
     //home条目
-    public static final int HOME_ANDROID_INDEX = 21;
-    public static final int HOME_FRONT_INDEX = 22;
-    public static final int HOME_APP_INDEX = 30;
-    public static final int HOME_IOS_INDEX = 28;
-    public static final int HOME_CONTENT_TITLE_VP_INDEX = 25;
+    public static final int HOME_DR_ANDROID_INDEX = 21;//每日推荐安卓
+    public static final int HOME_DR_FRONT_INDEX = 22;//每日推荐前端
+    public static final int HOME_DR_APP_INDEX = 30;//每日推荐app
+    public static final int HOME_DR_IOS_INDEX = 28;//每日推荐ios
+    public static final int HOME_DR_CONTENT_TITLE_VP_INDEX = 25;//每日推荐vp图片
     public static final int HOME_CONTENT_REST_ICON_INDEX = 26;
     public static final int HOME_CONTENT_WELFARE_ICON_INDEX = 27;
     public static final int HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX = 29;

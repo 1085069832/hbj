@@ -18,6 +18,7 @@ import com.doubanapp.hbj.douban.IModel.IMusicModel;
 import com.doubanapp.hbj.douban.IPresenter.IFragmentPresenter;
 import com.doubanapp.hbj.douban.IView.IFragmentBaseView;
 import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.model.BookFragmentModel;
 import com.doubanapp.hbj.douban.model.HomeAllFragmentModel;
@@ -245,16 +246,18 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     /*
     * home每日推荐*/
     @Override
-    public void onHomeDayRecommendConnectNext(List<View> vpTitleData, List<String> androidData, List<String> frontData, List<String> iosData, List<String> appData, List<View> restData, List<View> moreRecommendData, List<View> welFareData) {
-        items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_CONTENT_TITLE_VP_INDEX));
-        items.add(new NormalItem(androidData, "Android", MyConstants.HOME_ANDROID_INDEX));
-        items.add(new NormalItem(iosData, "iOS", MyConstants.HOME_IOS_INDEX));
+    public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res) {
+        //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
+        if (res.getResults().getAndroid() != null) {//homedayrecommend android
+            items.add(new NormalItem(res.getResults(),MyConstants.HOME_DR_ANDROID_INDEX));
+        }
+        /*items.add(new NormalItem(iosData, "iOS", MyConstants.HOME_DR_IOS_INDEX));
         items.add(new ContentIconItem(moreRecommendData, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));
-        items.add(new NormalItem(frontData, "前端", MyConstants.HOME_FRONT_INDEX));
-        items.add(new NormalItem(appData, "App", MyConstants.HOME_APP_INDEX));
+        items.add(new NormalItem(frontData, "前端", MyConstants.HOME_DR_FRONT_INDEX));
+        items.add(new NormalItem(appData, "App", MyConstants.HOME_DR_APP_INDEX));
         items.add(new ContentIconItem(restData, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
         items.add(new ContentIconItem(welFareData, "福利", MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX));
-        items.add(new ButtomItem());
+        items.add(new ButtomItem());*/
     }
 
     /*

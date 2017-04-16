@@ -9,6 +9,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
+import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 
 import java.util.ArrayList;
@@ -19,38 +21,55 @@ import java.util.List;
  */
 public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<String> mData = new ArrayList<>();
+    private HomeDayRecommendJsonData.ResultsBean mData;
+    private List<String> data = new ArrayList<>();
+    private int startIndex;
 
-    public NormalRcAdapter(List<String> mData) {
+    /*
+    *HomeDayRecommend数据 */
+    public NormalRcAdapter(HomeDayRecommendJsonData.ResultsBean mData, int startIndex) {
         this.mData = mData;
+        this.startIndex = startIndex;
+    }
+
+    public NormalRcAdapter(List<String> data) {
+        this.data = data;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(MyUtils.getContext()).inflate(R.layout.normal_rc_item, parent, false);
-        MovieItemViewHolder holder = new MovieItemViewHolder(view);
+        NormalItemViewHolder holder = new NormalItemViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ((MovieItemViewHolder) holder).tv_normal_rc_item.setText(mData.get(position));
+
+        if (startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {//homedayrecommend android
+            ((NormalItemViewHolder) holder).tv_normal_rc_item.setText(mData.getAndroid().get(position).getWho());
+        } else {
+            ((NormalItemViewHolder) holder).tv_normal_rc_item.setText(data.get(position));
+        }
         Animation animation = AnimationUtils.loadAnimation(MyUtils.getContext(), R.anim.horizontal_rc_anim);
-        ((MovieItemViewHolder) holder).tv_normal_rc_item.startAnimation(animation);
+        ((NormalItemViewHolder) holder).tv_normal_rc_item.startAnimation(animation);
 
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if (startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {
+            return mData.getAndroid().size();
+        } else {
+            return data.size();
+        }
     }
 
-    private class MovieItemViewHolder extends RecyclerView.ViewHolder {
+    private class NormalItemViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tv_normal_rc_item;
 
-        public MovieItemViewHolder(View itemView) {
+        public NormalItemViewHolder(View itemView) {
             super(itemView);
             tv_normal_rc_item = (TextView) itemView.findViewById(R.id.tv_normal_rc_item);
         }

@@ -40,17 +40,17 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final NormalItem normalItem) {
 
-        //Normal条目点击更多监听
+        //点击更多监听
         ((NormalItemViewHolder) holder).tv_normal_look_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (normalItem.startIndex == MyConstants.HOME_ANDROID_INDEX) {
+                if (normalItem.startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {
                     Toast.makeText(mContext, "点击了ANDROID", Toast.LENGTH_SHORT).show();
-                } else if (normalItem.startIndex == MyConstants.HOME_IOS_INDEX) {
+                } else if (normalItem.startIndex == MyConstants.HOME_DR_IOS_INDEX) {
                     Toast.makeText(mContext, "点击了IOS", Toast.LENGTH_SHORT).show();
-                } else if (normalItem.startIndex == MyConstants.HOME_FRONT_INDEX) {
+                } else if (normalItem.startIndex == MyConstants.HOME_DR_FRONT_INDEX) {
                     Toast.makeText(mContext, "点击了前端", Toast.LENGTH_SHORT).show();
-                } else if (normalItem.startIndex == MyConstants.HOME_APP_INDEX) {
+                } else if (normalItem.startIndex == MyConstants.HOME_DR_APP_INDEX) {
                     Toast.makeText(mContext, "点击了APP", Toast.LENGTH_SHORT).show();
                 } else {
                     TopicActivity.startAction(mContext, normalItem.startIndex);
@@ -58,11 +58,19 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
             }
         });
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
+        //设置适配器
+        NormalRcAdapter adapter;
+        switch (normalItem.startIndex) {//homedayrecommend android
+            case MyConstants.HOME_DR_ANDROID_INDEX:
+                adapter = new NormalRcAdapter(normalItem.rbContent, MyConstants.HOME_DR_ANDROID_INDEX);
+                break;
+            default:
+                adapter = new NormalRcAdapter(normalItem.content);
+        }
 
-        NormalRcAdapter adapter = new NormalRcAdapter(normalItem.content);
         LinearLayoutManager manager = new LinearLayoutManager(MyUtils.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        ((NormalItemViewHolder) holder).rc_normal_item.setAdapter(adapter);
         ((NormalItemViewHolder) holder).rc_normal_item.setLayoutManager(manager);
+        ((NormalItemViewHolder) holder).rc_normal_item.setAdapter(adapter);
     }
 
     private class NormalItemViewHolder extends RecyclerView.ViewHolder {
