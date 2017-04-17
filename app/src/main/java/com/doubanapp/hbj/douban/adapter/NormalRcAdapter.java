@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
@@ -47,12 +49,22 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {//homedayrecommend android
-            ((NormalItemViewHolder) holder).tv_normal_rc_item.setText(mData.getAndroid().get(position).getWho());
+            ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(mData.getAndroid().get(position).getDesc());
+            List<String> images = mData.getAndroid().get(position).getImages();
+            if (images != null) {//有图片
+                Glide.with(MyUtils.getContext())
+                        .load(images.get(0))
+                        .centerCrop()
+                        .crossFade()
+                        .placeholder(R.mipmap.pic_placeholder_default)
+                        .error(R.mipmap.pic_placeholder_default)
+                        .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
+            }
         } else {
-            ((NormalItemViewHolder) holder).tv_normal_rc_item.setText(data.get(position));
+            ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(data.get(position));
         }
         Animation animation = AnimationUtils.loadAnimation(MyUtils.getContext(), R.anim.horizontal_rc_anim);
-        ((NormalItemViewHolder) holder).tv_normal_rc_item.startAnimation(animation);
+        ((NormalItemViewHolder) holder).tv_normal_rc_item_des.startAnimation(animation);
 
     }
 
@@ -67,11 +79,13 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private class NormalItemViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView tv_normal_rc_item;
+        private final TextView tv_normal_rc_item_des;
+        private final ImageView iv_normal_rc_item_image;
 
         public NormalItemViewHolder(View itemView) {
             super(itemView);
-            tv_normal_rc_item = (TextView) itemView.findViewById(R.id.tv_normal_rc_item);
+            tv_normal_rc_item_des = (TextView) itemView.findViewById(R.id.tv_normal_rc_item_des);
+            iv_normal_rc_item_image = (ImageView) itemView.findViewById(R.id.iv_normal_rc_item_image);
         }
     }
 }

@@ -249,7 +249,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res) {
         //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
         if (res.getResults().getAndroid() != null) {//homedayrecommend android
-            items.add(new NormalItem(res.getResults(),MyConstants.HOME_DR_ANDROID_INDEX));
+            items.add(new NormalItem(res.getResults(), "Android", MyConstants.HOME_DR_ANDROID_INDEX));
         }
         /*items.add(new NormalItem(iosData, "iOS", MyConstants.HOME_DR_IOS_INDEX));
         items.add(new ContentIconItem(moreRecommendData, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));

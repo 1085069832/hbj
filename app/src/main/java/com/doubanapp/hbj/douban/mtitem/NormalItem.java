@@ -23,9 +23,10 @@ public class NormalItem implements Item {
         this.startIndex = startIndex;
     }
 
-    public NormalItem(final HomeDayRecommendJsonData.ResultsBean rbContent, int startIndex) {
+    public NormalItem(final HomeDayRecommendJsonData.ResultsBean rbContent, String title, int startIndex) {
         //需要数据的类型
         this.rbContent = rbContent;
+        this.title = title;
         this.startIndex = startIndex;
     }
 }
