@@ -1,7 +1,6 @@
 package com.doubanapp.hbj.douban.model;
 
 import android.content.Context;
-import android.view.View;
 
 import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
 import com.doubanapp.hbj.douban.R;
@@ -13,8 +12,6 @@ import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -33,14 +30,6 @@ public class HomeDayRecommendFragmentModel {
     private static final String TAG = "MovieFragmentModel";
     private Context mContext;
     private IHomeDayRecommendModel iHomeDayRecommendModel;
-    private List<String> mData1 = new ArrayList<>();
-    private List<String> mData2 = new ArrayList<>();
-    private List<View> mData3 = new ArrayList<>();
-    private List<View> mData4 = new ArrayList<>();
-    private List<View> mData5 = new ArrayList<>();
-    private List<String> mData6 = new ArrayList<>();
-    private List<String> mData7 = new ArrayList<>();
-    private List<View> mData8 = new ArrayList<>();
     private String gank_base_url;
     private Subscription contentSubscription;
     private Subscription daySubscription;
@@ -89,14 +78,9 @@ public class HomeDayRecommendFragmentModel {
                     @Override
                     public void onNext(DayHistoryJsonData dayHistoryJsonData) {
                         //2017-03-31
-                        String nearestDay = dayHistoryJsonData.getResults().get(0);
-                        String[] split = nearestDay.split("-");
-                        String resultDay = "";
-                        for (int i = 0; i < split.length; i++) {
-                            resultDay += ("/" + split[i]);// /2017/3/31
-                        }
+                        String nearestDay = dayHistoryJsonData.getResults().get(0).replace("-", "/");
                         //获取有内容日期的数据
-                        toConnectContentData(resultDay);
+                        toConnectDayRecommendData(nearestDay);
                     }
 
                     @Override
@@ -110,9 +94,9 @@ public class HomeDayRecommendFragmentModel {
 
     }
 
-    private void toConnectContentData(String resultDay) {
+    private void toConnectDayRecommendData(String nearestDay) {
         //此处加载数据
-        contentSubscription = retrofit.create(MyServiceInterface.class).toConnecHomeDayRecommendData("api/day" + resultDay)
+        contentSubscription = retrofit.create(MyServiceInterface.class).toConnecHomeDayRecommendData("api/day/" + nearestDay)
                 //ResponseBody数据保存，和转换
                 .map(new Func1<ResponseBody, HomeDayRecommendJsonData>() {
                     @Override
@@ -146,44 +130,6 @@ public class HomeDayRecommendFragmentModel {
 
                     @Override
                     public void onNext(HomeDayRecommendJsonData res) {
-                        /*for (int i = 0; i < 4; i++) {
-                            ImageView imageView = new ImageView(MyUtils.getContext());
-                            Glide.with(mContext).load(R.mipmap.navigation_title_icon).crossFade().centerCrop().into(imageView);
-                            mData4.add(imageView);
-                        }
-                        for (int i = 0; i < res.getResults().getAndroid().size(); i++) {
-                            mData1.add("Android");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData2.add("前端");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData6.add("iOS");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            mData7.add("App");
-                        }
-                        for (int i = 0; i < 1; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("休息视频" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData3.add(textView);
-                        }
-                        for (int i = 0; i < 1; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("更多推荐" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData8.add(textView);
-                        }
-                        for (int i = 0; i < 1; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("福利" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData5.add(textView);
-                        }*/
                         iHomeDayRecommendModel.onHomeDayRecommendConnectNext(res);
                     }
 

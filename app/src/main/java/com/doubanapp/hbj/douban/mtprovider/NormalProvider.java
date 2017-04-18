@@ -63,7 +63,7 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
         switch (normalItem.startIndex) {//homedayrecommend android
             case MyConstants.HOME_DR_ANDROID_INDEX:
                 ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
-                adapter = new NormalRcAdapter(normalItem.rbContent, MyConstants.HOME_DR_ANDROID_INDEX);
+                adapter = new NormalRcAdapter(normalItem.homeDayRecommendDataRes, MyConstants.HOME_DR_ANDROID_INDEX);
                 break;
             default:
                 adapter = new NormalRcAdapter(normalItem.content);

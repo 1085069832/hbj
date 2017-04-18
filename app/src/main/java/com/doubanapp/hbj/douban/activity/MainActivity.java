@@ -16,7 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IMainView;
@@ -57,10 +59,13 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
 
     private static Map<String, String> mIsCheckedMap = new HashMap<>();//guid选中的标签
+    @BindView(R.id.iv_toolbar_bg)
+    ImageView ivToolbarBg;
     private List<String> permissionList = new ArrayList<>();
     private int navigationIndex = -1;
     private MainPresenter mainPresenter;
     private FloatingClickedListener floatingClickedListener;
+    private int toolbarHeight;
 
     public static void startAction(Context context, Map<String, String> isCheckedMap) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -93,6 +98,7 @@ public class MainActivity extends BaseActivity
         mainPresenter.doGuidMapCheckResult(mIsCheckedMap);//guid选中的tag
         mainPresenter.doInitNavigationBottom();//bottom
         mainPresenter.doInitDefaultFragment();//默认显示HomeFragment
+        toolbarHeight = 50;
     }
 
     /*
@@ -135,6 +141,37 @@ public class MainActivity extends BaseActivity
     public void hideFloating() {
         if (fab.isShown())
             fab.hide(false);
+    }
+
+    /*
+    * 隐藏toolbar*/
+    public void hideToolbar(int dy) {
+        ivToolbarBg.setVisibility(View.VISIBLE);
+        ViewGroup.LayoutParams ivToolbarBgLayoutParams = ivToolbarBg.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        layoutParams.height = layoutParams.height - dy;
+        ivToolbarBgLayoutParams.height = layoutParams.height;
+        if (layoutParams.height <= 0) {
+            layoutParams.height = 0;
+            ivToolbarBgLayoutParams.height = 0;
+            toolbar.setLayoutParams(layoutParams);
+            ivToolbarBg.setLayoutParams(ivToolbarBgLayoutParams);
+            return;
+        }
+        toolbar.setLayoutParams(layoutParams);
+        ivToolbarBg.setLayoutParams(ivToolbarBgLayoutParams);
+    }
+
+    /*
+    * 显示toolbar*/
+    public void showToolbar() {
+        ivToolbarBg.setVisibility(View.GONE);
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        if (layoutParams.height == toolbarHeight) {
+            return;
+        }
+        layoutParams.height = toolbarHeight;
+        toolbar.setLayoutParams(layoutParams);
     }
 
     @Override

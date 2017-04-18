@@ -12,7 +12,7 @@ import me.drakeet.multitype.Item;
 public class NormalItem implements Item {
 
     public List<String> content;
-    public HomeDayRecommendJsonData.ResultsBean rbContent;
+    public HomeDayRecommendJsonData homeDayRecommendDataRes;
     public String title;
     public int startIndex;
 
@@ -23,9 +23,9 @@ public class NormalItem implements Item {
         this.startIndex = startIndex;
     }
 
-    public NormalItem(final HomeDayRecommendJsonData.ResultsBean rbContent, String title, int startIndex) {
+    public NormalItem(final HomeDayRecommendJsonData homeDayRecommendDataRes, String title, int startIndex) {
         //需要数据的类型
-        this.rbContent = rbContent;
+        this.homeDayRecommendDataRes = homeDayRecommendDataRes;
         this.title = title;
         this.startIndex = startIndex;
     }

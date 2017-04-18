@@ -71,27 +71,39 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         rc_base.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
+                if (hasFocus) {
                     mContext.setFloatingClickedListener(BaseFragment.this);
+                    mContext.showToolbar();
+                }
             }
         });
-        //设置floating的显示隐藏
+
+        //设置Toolbar和floating的显示隐藏
         rc_base.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mContext.showFloating();
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        mContext.showFloating();
+                        break;
+                    default:
                 }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 5) {
-                    mContext.hideFloating();
+                if (dy > 0) {
+                    if (dy > 5) {
+                        mContext.hideFloating();
+                    }
+                    mContext.hideToolbar(dy);
                 } else if (dy < 0) {
-                    mContext.showFloating();
+                    if (dy < -5) {
+                        mContext.showFloating();
+                    }
+                    mContext.showToolbar();
                 }
             }
         });

@@ -37,6 +37,7 @@ import com.doubanapp.hbj.douban.mtitem.MayYouLikeItem;
 import com.doubanapp.hbj.douban.mtitem.MovieListSelectionItem;
 import com.doubanapp.hbj.douban.mtitem.NormalItem;
 import com.doubanapp.hbj.douban.mtitem.SelectItem;
+import com.doubanapp.hbj.douban.mtitem.TopItem;
 import com.doubanapp.hbj.douban.mtprovider.ButtomProvider;
 import com.doubanapp.hbj.douban.mtprovider.ContentIconProvider;
 import com.doubanapp.hbj.douban.mtprovider.ContentTitleViewPagerProvider;
@@ -47,6 +48,7 @@ import com.doubanapp.hbj.douban.mtprovider.MayYouLikeProvider;
 import com.doubanapp.hbj.douban.mtprovider.MovieListSelectionProvider;
 import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
 import com.doubanapp.hbj.douban.mtprovider.SelectProvider;
+import com.doubanapp.hbj.douban.mtprovider.TopProvider;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.NoneEffect;
@@ -117,6 +119,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         adapter.register(MovieListSelectionItem.class, new MovieListSelectionProvider(mContext));
         adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
         adapter.register(ButtomItem.class, new ButtomProvider());
+        adapter.register(TopItem.class, new TopProvider());
         adapter.register(HomeNormalItem.class, new HomeNormalProvider());
         adapter.register(HomeAllTitleItem.class, new HomeAllTitleProvider(mSweetSheet, rc));
         adapter.register(HomeWelFareItem.class, new HomeWelFareProvider());
@@ -209,6 +212,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 书籍数据*/
     @Override
     public void onBookConnectNext(List<String> newBookData, List<View> newBookData1, List<String> newBookData2) {
+        items.add(new TopItem());
         items.add(new NormalItem(newBookData, "新书速递", MyConstants.BOOK_NEW_BOOK_INDEX));
         items.add(new NormalItem(newBookData, "虚构类图书", MyConstants.BOOK_FICTION_BOOK_INDEX));
         items.add(new ContentIconItem(newBookData1, "热点", MyConstants.BOOK_CONTENT_ICON_INDEX));
@@ -222,6 +226,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 音乐数据*/
     @Override
     public void onMusicConnectNext(List<String> newMusicData, List<View> musicHotData, List<String> mandoPopMusicData, List<String> westernMusicData, List<String> jSKMusicData, List<String> mayYouLikeMusicData) {
+        items.add(new TopItem());
         items.add(new NormalItem(newMusicData, "新曲", MyConstants.MUSIC_NEW_MUSIC_INDEX));
         items.add(new ContentIconItem(musicHotData, "热点", MyConstants.MUSIC_CONTENT_ICON_INDEX));
         items.add(new NormalItem(mandoPopMusicData, "华语歌曲", MyConstants.MUSIC_HUAYU_MUSIC_INDEX));
@@ -235,6 +240,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 电影数据*/
     @Override
     public void onMovieConnectNext(List<String> movieHotShowData, List<String> movieComingSoonData, List<String> movieListSelectionData, List<String> movieMayYouLikeData, List<View> movieSelectData) {
+        items.add(new TopItem());
         items.add(new NormalItem(movieHotShowData, "正在热映", MyConstants.MOVIE_HOT_SHOW_INDEX));
         items.add(new ContentIconItem(movieSelectData, "热点", MyConstants.MOVIE_CONTENT_ICON_INDEX));
         items.add(new NormalItem(movieComingSoonData, "即将上映", MyConstants.MOVIE_COMING_SOON_INDEX));
@@ -247,9 +253,10 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * home每日推荐*/
     @Override
     public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res) {
+        items.add(new TopItem());
         //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
         if (res.getResults().getAndroid() != null) {//homedayrecommend android
-            items.add(new NormalItem(res.getResults(), "Android", MyConstants.HOME_DR_ANDROID_INDEX));
+            items.add(new NormalItem(res, "Android", MyConstants.HOME_DR_ANDROID_INDEX));
         }
         /*items.add(new NormalItem(iosData, "iOS", MyConstants.HOME_DR_IOS_INDEX));
         items.add(new ContentIconItem(moreRecommendData, "更多推荐", MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX));

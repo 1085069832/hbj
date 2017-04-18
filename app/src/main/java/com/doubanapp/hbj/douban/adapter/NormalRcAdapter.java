@@ -19,19 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 条目适配器
  * Created by Administrator on 2017/3/24 0024.
  */
 public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private HomeDayRecommendJsonData.ResultsBean mData;
     private List<String> data = new ArrayList<>();
     private int startIndex;
+    private List<HomeDayRecommendJsonData.ResultsBean.AndroidBean> homeDayRecommendAndroid;
 
     /*
     *HomeDayRecommend数据 */
-    public NormalRcAdapter(HomeDayRecommendJsonData.ResultsBean mData, int startIndex) {
-        this.mData = mData;
+    public NormalRcAdapter(HomeDayRecommendJsonData mHomeDayRecommendData, int startIndex) {
         this.startIndex = startIndex;
+        //安卓
+        homeDayRecommendAndroid = mHomeDayRecommendData.getResults().getAndroid();
     }
 
     public NormalRcAdapter(List<String> data) {
@@ -49,8 +51,8 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {//homedayrecommend android
-            ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(mData.getAndroid().get(position).getDesc());
-            List<String> images = mData.getAndroid().get(position).getImages();
+            ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendAndroid.get(position).getDesc());
+            List<String> images = homeDayRecommendAndroid.get(position).getImages();
             if (images != null) {//有图片
                 Glide.with(MyUtils.getContext())
                         .load(images.get(0))
@@ -71,7 +73,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         if (startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {
-            return mData.getAndroid().size();
+            return homeDayRecommendAndroid.size();
         } else {
             return data.size();
         }
