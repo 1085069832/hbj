@@ -11,9 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.mtitem.ContentIconItem;
+import com.doubanapp.hbj.douban.utils.MyUtils;
 
 import me.drakeet.multitype.ItemViewProvider;
 
@@ -21,6 +23,8 @@ import me.drakeet.multitype.ItemViewProvider;
  * Created by Administrator on 2017/3/24 0024.
  */
 public class ContentIconProvider extends ItemViewProvider<ContentIconItem, RecyclerView.ViewHolder> {
+
+    private static final String TAG = "ContentIconProvider";
     private Context mContext;
 
     public ContentIconProvider(Context mContext) {
@@ -54,21 +58,23 @@ public class ContentIconProvider extends ItemViewProvider<ContentIconItem, Recyc
         ((VpItemViewHolder) holder).tv_content_icon_mt_look_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (contentViewPagerItem.startIndex == MyConstants.HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX) {
+                if (contentViewPagerItem.startIndex == MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX) {
                     //更多推荐
                     Toast.makeText(mContext, "点击了更多推荐", Toast.LENGTH_SHORT).show();
-                } else if (contentViewPagerItem.startIndex == MyConstants.HOME_CONTENT_REST_ICON_INDEX) {
-                    //更多休息视频
-                    Toast.makeText(mContext, "点击了更多休息视频", Toast.LENGTH_SHORT).show();
-                } else if (contentViewPagerItem.startIndex == MyConstants.HOME_CONTENT_WELFARE_ICON_INDEX) {
+                } else if (contentViewPagerItem.startIndex == MyConstants.HOME_DR_WELFARE_INDEX) {
                     //更多福利
                     Toast.makeText(mContext, "点击了更多福利", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        ((VpItemViewHolder) holder).iv_content_icon_mt_item.setBackgroundResource(R.mipmap.navigation_title_icon);
-
+        Glide.with(MyUtils.getContext())
+                .load(contentViewPagerItem.url)
+                .centerCrop()
+                .crossFade()
+                .placeholder(R.mipmap.pic_placeholder_default)
+                .error(R.mipmap.pic_placeholder_default)
+                .into(((VpItemViewHolder) holder).iv_content_icon_mt_item);
     }
 
     private class VpItemViewHolder extends RecyclerView.ViewHolder {

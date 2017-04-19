@@ -12,7 +12,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
+ * 豆瓣接口请求次数提示
  * Created by Administrator on 2017/3/24 0024.
  */
 public class BoubanAPIConnectCountAlert {
@@ -58,17 +61,11 @@ public class BoubanAPIConnectCountAlert {
                     //在一小时内
                     if (count >= 140) {
                         MyLogUtils.i("BoubanAPIConnectCountAlert", "currentTimes - lastTimes <= 60000 , count >= 1");
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-                        alertDialog.setCancelable(false);
-                        alertDialog.setTitle("注意");
-                        alertDialog.setMessage("请求api超过了" + count + "次/小时");
-                        alertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                        alertDialog.create().show();
+                        new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("先歇歇吧!")
+                                .setContentText("请求豆瓣数据的频率超过了" + count + "次/小时(上限为150次每小时)")
+                                .setConfirmText("确定")
+                                .show();
                     }
                     count++;
                     writeToFile(file);

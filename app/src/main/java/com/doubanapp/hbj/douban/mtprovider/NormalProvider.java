@@ -52,6 +52,8 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
                     Toast.makeText(mContext, "点击了前端", Toast.LENGTH_SHORT).show();
                 } else if (normalItem.startIndex == MyConstants.HOME_DR_APP_INDEX) {
                     Toast.makeText(mContext, "点击了APP", Toast.LENGTH_SHORT).show();
+                } else if (normalItem.startIndex == MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX) {
+                    Toast.makeText(mContext, "点击了扩展资源", Toast.LENGTH_SHORT).show();
                 } else {
                     TopicActivity.startAction(mContext, normalItem.startIndex);
                 }
@@ -59,15 +61,11 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
         });
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
         //设置适配器
-        NormalRcAdapter adapter;
-        switch (normalItem.startIndex) {//homedayrecommend android
-            case MyConstants.HOME_DR_ANDROID_INDEX:
-                ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
-                adapter = new NormalRcAdapter(normalItem.homeDayRecommendDataRes, MyConstants.HOME_DR_ANDROID_INDEX);
-                break;
-            default:
-                adapter = new NormalRcAdapter(normalItem.content);
-        }
+
+        ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
+        NormalRcAdapter adapter = new NormalRcAdapter(normalItem.homeDayRecommendDataRes, normalItem.startIndex);
+
+        //adapter = new NormalRcAdapter(normalItem.content);
 
         LinearLayoutManager manager = new LinearLayoutManager(MyUtils.getContext(), LinearLayoutManager.HORIZONTAL, false);
         ((NormalItemViewHolder) holder).rc_normal_item.setLayoutManager(manager);

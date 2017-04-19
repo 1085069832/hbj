@@ -2,9 +2,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#949496"
+    android:background="#a9a9ae"
+    android:drawableBottom="@mipmap/ic_sliding_layout_buttom"
+    android:drawableTop="@mipmap/ic_sliding_layout_top"
     android:gravity="top|center_horizontal"
     android:padding="16dp"
-    android:text="github.com/1085069832/hbj"
     android:textColor="#f5f3f3"
     android:textSize="12sp" />

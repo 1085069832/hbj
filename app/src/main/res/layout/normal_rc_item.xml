@@ -29,7 +29,16 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
-        android:text="ccc"
-        android:textColor="#565555"
+        android:textColor="#696767"
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_normal_rc_item_who"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="2dp"
+        android:textColor="#edaca8a8"
+        android:textSize="8sp" />
 </LinearLayout>

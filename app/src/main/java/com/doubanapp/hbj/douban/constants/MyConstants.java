@@ -41,9 +41,9 @@ public class MyConstants {
     public static final int HOME_DR_APP_INDEX = 30;//每日推荐app
     public static final int HOME_DR_IOS_INDEX = 28;//每日推荐ios
     public static final int HOME_DR_CONTENT_TITLE_VP_INDEX = 25;//每日推荐vp图片
-    public static final int HOME_CONTENT_REST_ICON_INDEX = 26;
-    public static final int HOME_CONTENT_WELFARE_ICON_INDEX = 27;
-    public static final int HOME_CONTENT_MORE_RECOMMEND_ICON_INDEX = 29;
+    public static final int HOME_DR_REST_INDEX = 26;
+    public static final int HOME_DR_WELFARE_INDEX = 27;
+    public static final int HOME_DR_EXTENDS_RESOURCE_INDEX = 29;
     public static final int HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX = 34;
     public static final int HOME_ALL_PRESENTER_PAGE_INDEX = 35;
     public static final int HOME_ANDROID_PRESENTER_PAGE_INDEX = 36;

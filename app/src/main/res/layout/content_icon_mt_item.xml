@@ -5,10 +5,7 @@
 
     <RelativeLayout
         android:id="@+id/rl_content_icon_mt"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="15dp"
-        android:gravity="center_vertical">
+        style="@style/ItemTitleLayout">
 
         <TextView
             android:id="@+id/tv_content_icon_mt_title"
