@@ -1,6 +1,7 @@
 package com.doubanapp.hbj.douban.activity;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IView.IMainView;
@@ -59,13 +61,11 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
 
     private static Map<String, String> mIsCheckedMap = new HashMap<>();//guid选中的标签
-    @BindView(R.id.iv_toolbar_bg)
-    ImageView ivToolbarBg;
     private List<String> permissionList = new ArrayList<>();
     private int navigationIndex = -1;
     private MainPresenter mainPresenter;
     private FloatingClickedListener floatingClickedListener;
-    private int toolbarHeight;
+    private ObjectAnimator animator;
 
     public static void startAction(Context context, Map<String, String> isCheckedMap) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        //ButterKnife.bind(this);
 
         //申请权限
         checkPermission();
@@ -98,11 +97,12 @@ public class MainActivity extends BaseActivity
         mainPresenter.doGuidMapCheckResult(mIsCheckedMap);//guid选中的tag
         mainPresenter.doInitNavigationBottom();//bottom
         mainPresenter.doInitDefaultFragment();//默认显示HomeFragment
-        toolbarHeight = 50;
+        //bottomNavigationView显示和隐藏动画
+        animator = ObjectAnimator.ofFloat(bottomNavigationView, "translationY", 0);
     }
 
     /*
-    * 申请权限*/
+            * 申请权限*/
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -133,45 +133,38 @@ public class MainActivity extends BaseActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    /*
+    * 显示floating*/
     public void showFloating() {
         if (fab.hasShadow())
             fab.show(true);
     }
 
+    /*
+    * 隐藏floating*/
     public void hideFloating() {
         if (fab.isShown())
-            fab.hide(false);
+            fab.hide(true);
     }
 
     /*
-    * 隐藏toolbar*/
-    public void hideToolbar(int dy) {
-        ivToolbarBg.setVisibility(View.VISIBLE);
-        ViewGroup.LayoutParams ivToolbarBgLayoutParams = ivToolbarBg.getLayoutParams();
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        layoutParams.height = layoutParams.height - dy;
-        ivToolbarBgLayoutParams.height = layoutParams.height;
-        if (layoutParams.height <= 0) {
-            layoutParams.height = 0;
-            ivToolbarBgLayoutParams.height = 0;
-            toolbar.setLayoutParams(layoutParams);
-            ivToolbarBg.setLayoutParams(ivToolbarBgLayoutParams);
+    * 隐藏BottomNavigation*/
+    public void hideBottomNavigation() {
+        if (animator.isStarted() || animator.isRunning())
             return;
-        }
-        toolbar.setLayoutParams(layoutParams);
-        ivToolbarBg.setLayoutParams(ivToolbarBgLayoutParams);
+        animator.setFloatValues(150);
+        animator.setDuration(150);
+        animator.start();
     }
 
     /*
-    * 显示toolbar*/
-    public void showToolbar() {
-        ivToolbarBg.setVisibility(View.GONE);
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        if (layoutParams.height == toolbarHeight) {
+    * 显示BottomNavigation*/
+    public void showBottomNavigation() {
+        if (animator.isStarted() || animator.isRunning())
             return;
-        }
-        layoutParams.height = toolbarHeight;
-        toolbar.setLayoutParams(layoutParams);
+        animator.setFloatValues(0);
+        animator.setDuration(150);
+        animator.start();
     }
 
     @Override
@@ -180,6 +173,7 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            //提示关闭app
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("退出应用吗？")
                     .showCancelButton(true)

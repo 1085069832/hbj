@@ -212,7 +212,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 书籍数据*/
     @Override
     public void onBookConnectNext(List<String> newBookData, List<View> newBookData1, List<String> newBookData2) {
-        items.add(new TopItem());
+        //items.add(new TopItem());
         items.add(new NormalItem(newBookData, "新书速递", MyConstants.BOOK_NEW_BOOK_INDEX));
         items.add(new NormalItem(newBookData, "虚构类图书", MyConstants.BOOK_FICTION_BOOK_INDEX));
         items.add(new ContentIconItem(newBookData1, "热点", MyConstants.BOOK_CONTENT_ICON_INDEX));
@@ -226,7 +226,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 音乐数据*/
     @Override
     public void onMusicConnectNext(List<String> newMusicData, List<View> musicHotData, List<String> mandoPopMusicData, List<String> westernMusicData, List<String> jSKMusicData, List<String> mayYouLikeMusicData) {
-        items.add(new TopItem());
+        //items.add(new TopItem());
         items.add(new NormalItem(newMusicData, "新曲", MyConstants.MUSIC_NEW_MUSIC_INDEX));
         items.add(new ContentIconItem(musicHotData, "热点", MyConstants.MUSIC_CONTENT_ICON_INDEX));
         items.add(new NormalItem(mandoPopMusicData, "华语歌曲", MyConstants.MUSIC_HUAYU_MUSIC_INDEX));
@@ -240,7 +240,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 电影数据*/
     @Override
     public void onMovieConnectNext(List<String> movieHotShowData, List<String> movieComingSoonData, List<String> movieListSelectionData, List<String> movieMayYouLikeData, List<View> movieSelectData) {
-        items.add(new TopItem());
+        //items.add(new TopItem());
         items.add(new NormalItem(movieHotShowData, "正在热映", MyConstants.MOVIE_HOT_SHOW_INDEX));
         items.add(new ContentIconItem(movieSelectData, "热点", MyConstants.MOVIE_CONTENT_ICON_INDEX));
         items.add(new NormalItem(movieComingSoonData, "即将上映", MyConstants.MOVIE_COMING_SOON_INDEX));
@@ -253,7 +253,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * home每日推荐*/
     @Override
     public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res) {
-        items.add(new TopItem());
+        //items.add(new TopItem());
         //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
         if (res.getResults().getAndroid() != null) {//homedayrecommend android
             items.add(new NormalItem(res, "Android", MyConstants.HOME_DR_ANDROID_INDEX));

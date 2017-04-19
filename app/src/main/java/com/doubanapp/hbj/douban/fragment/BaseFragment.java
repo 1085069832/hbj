@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dmax.dialog.SpotsDialog;
+import lib.homhomlib.design.SlidingLayout;
 
 import static android.support.v7.widget.RecyclerView.OnFocusChangeListener;
 
@@ -41,6 +42,8 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     protected AlertDialog loadingDialog;
     @BindView(R.id.rl)
     RelativeLayout rl;
+    @BindView(R.id.sl_base)
+    SlidingLayout slBase;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     mContext.setFloatingClickedListener(BaseFragment.this);
-                    mContext.showToolbar();
+                    mContext.showBottomNavigation();
                 }
             }
         });
@@ -83,12 +86,6 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        mContext.showFloating();
-                        break;
-                    default:
-                }
             }
 
             @Override
@@ -97,13 +94,14 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
                 if (dy > 0) {
                     if (dy > 5) {
                         mContext.hideFloating();
+                        mContext.hideBottomNavigation();
                     }
-                    mContext.hideToolbar(dy);
-                } else if (dy < 0) {
+
+                } else if (dy <= 0) {
                     if (dy < -5) {
                         mContext.showFloating();
+                        mContext.showBottomNavigation();
                     }
-                    mContext.showToolbar();
                 }
             }
         });
