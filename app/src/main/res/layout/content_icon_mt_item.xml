@@ -20,7 +20,8 @@
     <ImageView
         android:id="@+id/iv_content_icon_mt_item"
         android:layout_width="match_parent"
-        android:layout_height="130dp">
+        android:layout_height="130dp"
+        android:scaleType="fitXY">
 
     </ImageView>
 

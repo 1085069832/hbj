@@ -2,10 +2,12 @@ package com.doubanapp.hbj.douban.model;
 
 import android.content.Context;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.DayHistoryJsonData;
 import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
+import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
@@ -40,7 +42,14 @@ public class HomeDayRecommendFragmentModel {
         this.iHomeDayRecommendModel = iHomeDayRecommendModel;
     }
 
-    public void toConnectHttp() {
+    public void toConnectHttp(final int pagePosition) {
+        //判断是否订阅了
+        if (daySubscription != null && !daySubscription.isUnsubscribed() || contentSubscription != null
+                && !contentSubscription.isUnsubscribed()) {
+            MyLogUtils.i(TAG, "已经在加载了");
+            return;
+        }
+        MyLogUtils.i(TAG, "toConnectHttp");
         gank_base_url = MyUtils.getResourcesString(R.string.gank_base_url);
         //获取有内容的日期 http://gank.io/api/day/history
         retrofit = MyUtils.getRetrofit(gank_base_url);
@@ -78,7 +87,7 @@ public class HomeDayRecommendFragmentModel {
                     @Override
                     public void onNext(DayHistoryJsonData dayHistoryJsonData) {
                         //2017-03-31
-                        String nearestDay = dayHistoryJsonData.getResults().get(0).replace("-", "/");
+                        String nearestDay = dayHistoryJsonData.getResults().get(pagePosition).replace("-", "/");
                         //获取有内容日期的数据
                         toConnectDayRecommendData(nearestDay);
                     }
@@ -94,7 +103,7 @@ public class HomeDayRecommendFragmentModel {
 
     }
 
-    private void toConnectDayRecommendData(String nearestDay) {
+    private void toConnectDayRecommendData(final String nearestDay) {
         //此处加载数据
         contentSubscription = retrofit.create(MyServiceInterface.class).toConnecHomeDayRecommendData("api/day/" + nearestDay)
                 //ResponseBody数据保存，和转换
@@ -130,7 +139,7 @@ public class HomeDayRecommendFragmentModel {
 
                     @Override
                     public void onNext(HomeDayRecommendJsonData res) {
-                        iHomeDayRecommendModel.onHomeDayRecommendConnectNext(res);
+                        iHomeDayRecommendModel.onHomeDayRecommendConnectNext(res, nearestDay);
                     }
 
                     @Override

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.utils.MyUtils;

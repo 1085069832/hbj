@@ -7,7 +7,9 @@ import me.drakeet.multitype.Item;
  */
 public class ButtomItem implements Item {
 
-    public ButtomItem() {
+    public String day;
 
+    public ButtomItem(String day) {
+        this.day = day;
     }
 }

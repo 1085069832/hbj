@@ -2,11 +2,14 @@ package com.doubanapp.hbj.douban.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IView.IDayRecommendFragmentView;
 import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
@@ -47,6 +50,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         homeDayReFragmentPresenter.doRegisterMultitypeItem();
         homeDayReFragmentPresenter.doInitLinearLayoutManager();
 
+
         isCreateView = true;
         lazyLoad();
         return null;
@@ -81,11 +85,34 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     @Override
     public void onRegisterMultitypeItem(MultiTypeAdapter adapter) {
         this.adapter = adapter;
+        rc_base.setAdapter(adapter);
     }
 
     @Override
-    public void onInitLayoutManager(RecyclerView.LayoutManager manager) {
+    public void onInitLayoutManager(final RecyclerView.LayoutManager manager) {
         rc_base.setLayoutManager(manager);
+        //加载更多监听
+        rc_base.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            private int lastVisibleItemPosition;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                lastVisibleItemPosition = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
+                MyLogUtils.i(TAG, manager.getItemCount() + "");
+                MyLogUtils.i(TAG, lastVisibleItemPosition + "");
+                if (lastVisibleItemPosition == manager.getItemCount() - 1) {
+                    MyLogUtils.i(TAG, "加载数据");
+                    homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
@@ -108,8 +135,8 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     }
 
     @Override
-    public void onSetMTAdapter() {
-        rc_base.setAdapter(adapter);
+    public void onNotifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -117,4 +144,5 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         super.onDestroy();
         homeDayReFragmentPresenter.doDestroy();
     }
+
 }

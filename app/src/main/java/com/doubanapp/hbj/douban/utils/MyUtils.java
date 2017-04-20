@@ -74,6 +74,14 @@ public class MyUtils {
         return getContext().getSharedPreferences(MyConstants.MYSPF, Context.MODE_PRIVATE).getString(key, defaultvalue);
     }
 
+    public static void putIntSPF(String key, int value) {
+        getContext().getSharedPreferences(MyConstants.MYSPF, Context.MODE_PRIVATE).edit().putInt(key, value).apply();
+    }
+
+    public static int getIntSPF(String key, int defaultvalue) {
+        return getContext().getSharedPreferences(MyConstants.MYSPF, Context.MODE_PRIVATE).getInt(key, defaultvalue);
+    }
+
     public static void putBooleanSPF(String key, boolean value) {
         getContext().getSharedPreferences(MyConstants.MYSPF, Context.MODE_PRIVATE).edit().putBoolean(key, value).apply();
     }

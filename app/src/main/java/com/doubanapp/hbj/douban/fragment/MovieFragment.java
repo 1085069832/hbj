@@ -68,6 +68,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     @Override
     public void onRegisterMultitypeItem(MultiTypeAdapter adapter) {
         this.adapter = adapter;
+        rc_base.setAdapter(adapter);
     }
 
     @Override
@@ -97,8 +98,8 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     }
 
     @Override
-    public void onSetMTAdapter() {
-        rc_base.setAdapter(adapter);
+    public void onNotifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IModel.IBookModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAllModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAndroidModel;
@@ -47,6 +48,7 @@ import com.doubanapp.hbj.douban.mtprovider.MayYouLikeProvider;
 import com.doubanapp.hbj.douban.mtprovider.MovieListSelectionProvider;
 import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
 import com.doubanapp.hbj.douban.mtprovider.SelectProvider;
+import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.NoneEffect;
@@ -79,6 +81,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private MusicFragmentModel musicFragmentModel;
     private HomeAndroidFragmentModel homeAndroidFragmentModel;
     private HomeWelFareFragmentModel homeWelFareFragmentModel;
+    private int position = 0;//记录加载更多索引
 
     public FragmentPresenter(Context mContext, IFragmentBaseView iFragmentBaseView) {
         this.mContext = mContext;
@@ -118,7 +121,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         adapter.register(MovieListSelectionItem.class, new MovieListSelectionProvider(mContext));
         adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
         adapter.register(ButtomItem.class, new ButtomProvider());
-        adapter.register(HomeNormalItem.class, new HomeNormalProvider());
+        adapter.register(HomeNormalItem.class, new HomeNormalProvider(mContext));
         adapter.register(HomeAllTitleItem.class, new HomeAllTitleProvider(mSweetSheet, rc));
         adapter.register(HomeWelFareItem.class, new HomeWelFareProvider());
         iFragmentBaseView.onRegisterMultitypeItem(adapter);
@@ -144,36 +147,44 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void doConnectHttp(int selectPage) {
         switch (selectPage) {
             case MyConstants.MUSIC_PRESENTER_PAGE_INDEX://获取音乐数据
-                musicFragmentModel = new MusicFragmentModel(mContext, this);
+                if (musicFragmentModel == null)
+                    musicFragmentModel = new MusicFragmentModel(mContext, this);
                 musicFragmentModel.toConnectHttp();
                 break;
             case MyConstants.BOOK_PRESENTER_PAGE_INDEX://获取书籍数据
-                bookFragmentModel = new BookFragmentModel(mContext, this);
+                if (bookFragmentModel == null)
+                    bookFragmentModel = new BookFragmentModel(mContext, this);
                 bookFragmentModel.toConnectData();
                 break;
             case MyConstants.MOVIE_PRESENTER_PAGE_INDEX://获取电影数据
-                movieFragmentModel = new MovieFragmentModel(mContext, this);
+                if (movieFragmentModel == null)
+                    movieFragmentModel = new MovieFragmentModel(mContext, this);
                 movieFragmentModel.toConnectData();
                 break;
             case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐数据
-                homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
-                homeDayRecommendFragmentModel.toConnectHttp();
+                MyLogUtils.i(TAG, "isLoading加载数据");
+                if (homeDayRecommendFragmentModel == null)
+                    homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
+                homeDayRecommendFragmentModel.toConnectHttp(position);
+                position++;
                 break;
             case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://获取主页all数据
-                homeAllFragmentModel = new HomeAllFragmentModel(mContext, this);
+                if (homeAllFragmentModel == null)
+                    homeAllFragmentModel = new HomeAllFragmentModel(mContext, this);
                 homeAllFragmentModel.toConnectData();
                 break;
             case MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX://获取主页android数据
-                homeAndroidFragmentModel = new HomeAndroidFragmentModel(mContext, this);
+                if (homeAndroidFragmentModel == null)
+                    homeAndroidFragmentModel = new HomeAndroidFragmentModel(mContext, this);
                 homeAndroidFragmentModel.toConnectData();
                 break;
             case MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX://获取主页福利数据
-                homeWelFareFragmentModel = new HomeWelFareFragmentModel(mContext, this);
+                if (homeWelFareFragmentModel == null)
+                    homeWelFareFragmentModel = new HomeWelFareFragmentModel(mContext, this);
                 homeWelFareFragmentModel.toConnectData();
                 break;
             default:
         }
-
     }
 
     /*
@@ -209,7 +220,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     @Override
     public void onConnectCompleted() {
         iFragmentBaseView.onCompletedVisibility(View.GONE, View.GONE);
-        iFragmentBaseView.onSetMTAdapter();
+        iFragmentBaseView.onNotifyDataSetChanged();
     }
 
     /*
@@ -253,30 +264,35 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     /*
     * home每日推荐*/
     @Override
-    public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res) {
+    public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res, String day) {
         //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
         //每日推荐安卓
-        if (res.getResults().getAndroid() != null)
-            items.add(new NormalItem(res, "Android", MyConstants.HOME_DR_ANDROID_INDEX));
+        items.add(new ButtomItem(day));
+        if (res.getResults().getAndroid() != null) {
+            for (int i = 0; i < res.getResults().getAndroid().size(); i++) {
+                items.add(new HomeNormalItem(res, "Android", i));
+            }
+        }
+        //items.add(new NormalItem(res, "Android", MyConstants.HOME_DR_ANDROID_INDEX));
 
-        if (res.getResults().getIOS() != null)
-            items.add(new NormalItem(res, "iOS", MyConstants.HOME_DR_IOS_INDEX));
-
-        if (res.getResults().get福利() != null)
-            items.add(new ContentIconItem(res.getResults().get福利().get(0).getUrl(), "福利", MyConstants.HOME_DR_WELFARE_INDEX));
-
-        if (res.getResults().get拓展资源() != null)
-            items.add(new NormalItem(res, "扩展资源", MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX));
-
-//        MyLogUtils.i(TAG, res.getResults().getWelFare().get(0).getUrl());
-//        MyLogUtils.i(TAG, "福利" + res.getResults().getWelFare().size());
-//        MyLogUtils.i(TAG, "安卓" + res.getResults().getAndroid().size());
+//        if (res.getResults().getIOS() != null)
+//            items.add(new NormalItem(res, "iOS", MyConstants.HOME_DR_IOS_INDEX));
 //
-//        items.add(new NormalItem(frontData, "前端", MyConstants.HOME_DR_FRONT_INDEX));
-//        items.add(new NormalItem(appData, "App", MyConstants.HOME_DR_APP_INDEX));
-//        items.add(new ContentIconItem(restData, "休息视频", MyConstants.HOME_CONTENT_REST_ICON_INDEX));
+//        if (res.getResults().get福利() != null)
+//            items.add(new ContentIconItem(res.getResults().get福利().get(0).getUrl(), "福利", MyConstants.HOME_DR_WELFARE_INDEX));
 //
-//        items.add(new ButtomItem());
+//        if (res.getResults().get拓展资源() != null)
+//            items.add(new NormalItem(res, "扩展资源", MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX));
+//
+//        if (res.getResults().get前端() != null)
+//            items.add(new NormalItem(res, "前端", MyConstants.HOME_DR_FRONT_INDEX));
+//
+//        if (res.getResults().getApp() != null)
+//            items.add(new NormalItem(res, "App", MyConstants.HOME_DR_APP_INDEX));
+//
+//        if (res.getResults().get休息视频() != null)
+//            items.add(new NormalItem(res, "休息视频", MyConstants.HOME_DR_REST_INDEX));
+
     }
 
     /*
@@ -285,7 +301,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void onHomeAllConnectNext(List<String> allData) {
         items.add(new HomeAllTitleItem(""));
         for (int i = 0; i < allData.size(); i++) {
-            items.add(new HomeNormalItem(""));
+            items.add(new HomeNormalItem("", i));
         }
     }
 
@@ -309,7 +325,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     @Override
     public void onHomeAndroidConnectNext(List<String> androidData) {
         for (int i = 0; i < androidData.size(); i++) {
-            items.add(new HomeNormalItem(""));
+            items.add(new HomeNormalItem("", i));
         }
     }
 

@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IView.IMainView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.presenter.MainPresenter;

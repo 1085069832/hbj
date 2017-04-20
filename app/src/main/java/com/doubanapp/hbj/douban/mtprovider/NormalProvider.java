@@ -54,17 +54,20 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
                     Toast.makeText(mContext, "点击了APP", Toast.LENGTH_SHORT).show();
                 } else if (normalItem.startIndex == MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX) {
                     Toast.makeText(mContext, "点击了扩展资源", Toast.LENGTH_SHORT).show();
+                } else if (normalItem.startIndex == MyConstants.HOME_DR_REST_INDEX) {
+                    Toast.makeText(mContext, "休息视频", Toast.LENGTH_SHORT).show();
+                } else if (normalItem.startIndex == MyConstants.HOME_DR_WELFARE_INDEX) {
+                    Toast.makeText(mContext, "福利", Toast.LENGTH_SHORT).show();
                 } else {
                     TopicActivity.startAction(mContext, normalItem.startIndex);
                 }
             }
         });
+        //设置标题
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
         //设置适配器
-
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
         NormalRcAdapter adapter = new NormalRcAdapter(normalItem.homeDayRecommendDataRes, normalItem.startIndex);
-
         //adapter = new NormalRcAdapter(normalItem.content);
 
         LinearLayoutManager manager = new LinearLayoutManager(MyUtils.getContext(), LinearLayoutManager.HORIZONTAL, false);

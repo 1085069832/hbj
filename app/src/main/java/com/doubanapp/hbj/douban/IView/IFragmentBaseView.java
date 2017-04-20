@@ -22,6 +22,6 @@ public interface IFragmentBaseView {
 
     void onCompletedVisibility(int progressVisb, int errorVisb);
 
-    void onSetMTAdapter();
+    void onNotifyDataSetChanged();
 
 }

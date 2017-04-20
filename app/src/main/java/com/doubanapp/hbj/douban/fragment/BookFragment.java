@@ -70,6 +70,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     public void onRegisterMultitypeItem(MultiTypeAdapter adapter) {
         this.adapter = adapter;
+        rc_base.setAdapter(adapter);
     }
 
     @Override
@@ -99,8 +100,8 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     }
 
     @Override
-    public void onSetMTAdapter() {
-        rc_base.setAdapter(adapter);
+    public void onNotifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override

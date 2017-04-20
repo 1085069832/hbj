@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.mtitem.ButtomItem;
@@ -26,14 +27,16 @@ public class ButtomProvider extends ItemViewProvider<ButtomItem, RecyclerView.Vi
 
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final ButtomItem buttomItem) {
-
+        ((ButtomItemViewHolder) holder).tv_day.setText(buttomItem.day);
     }
 
     private class ButtomItemViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView tv_day;
+
         public ButtomItemViewHolder(View itemView) {
             super(itemView);
-
+            tv_day = (TextView) itemView.findViewById(R.id.tv_day);
         }
     }
 }

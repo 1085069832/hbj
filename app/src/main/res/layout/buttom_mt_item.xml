@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MyLayoutStyle"
-    android:layout_height="65dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -14,11 +15,11 @@
         android:textColor="#999999"
         android:textSize="15sp" />
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:text="每天为你推荐新的内容~"
         android:textColor="#999999"
-        android:textSize="20sp" />
+        android:textSize="20sp" />-->
 </LinearLayout>

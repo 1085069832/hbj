@@ -72,6 +72,7 @@ public class ContentIconProvider extends ItemViewProvider<ContentIconItem, Recyc
                 .load(contentViewPagerItem.url)
                 .centerCrop()
                 .crossFade()
+                .override(100, 100)
                 .placeholder(R.mipmap.pic_placeholder_default)
                 .error(R.mipmap.pic_placeholder_default)
                 .into(((VpItemViewHolder) holder).iv_content_icon_mt_item);
