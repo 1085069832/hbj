@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,11 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItemPosition = ((LinearLayoutManager) rc_base.getLayoutManager()).findLastVisibleItemPosition();
+                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+                    lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                } else if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+                    //lastVisibleItemPosition = ((StaggeredGridLayoutManager) ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPositions();
+                }
                 if (dy > 0) {
                     if (dy > 5) {
                         mContext.hideFloating();

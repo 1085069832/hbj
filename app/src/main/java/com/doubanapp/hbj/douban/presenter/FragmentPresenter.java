@@ -214,8 +214,9 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     @Override
     public void onConnectError() {
         iFragmentBaseView.onErrorVisibility(View.GONE, View.VISIBLE);
+        //提示网络状态
         Snackbar snackbar = Snackbar.make(rc, R.string.snakebar_text, Snackbar.LENGTH_LONG);
-        snackbar.getView().setBackgroundColor(Color.WHITE);
+        snackbar.getView().setBackgroundColor(Color.LTGRAY);
         snackbar.setAction("重试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
