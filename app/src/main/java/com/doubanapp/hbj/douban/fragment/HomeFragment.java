@@ -13,6 +13,10 @@ import com.doubanapp.hbj.douban.adapter.HomeViewPagerAdapter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.viewpagerindicator.TabPageIndicator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * 主界面
  * Created by Administrator on 2017/3/17 0017.
@@ -20,6 +24,11 @@ import com.viewpagerindicator.TabPageIndicator;
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
+    @BindView(R.id.ti_home)
+    TabPageIndicator tiHome;
+    @BindView(R.id.vp_home)
+    ViewPager vpHome;
+    Unbinder unbinder;
 
     public static HomeFragment newsInstance(int pos) {
         HomeFragment fragment = new HomeFragment();
@@ -34,13 +43,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MyLogUtils.i(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fg_home, container, false);
-        TabPageIndicator ti_home = (TabPageIndicator) view.findViewById(R.id.ti_home);
-        ViewPager vp_home = (ViewPager) view.findViewById(R.id.vp_home);
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getFragmentManager());
-        vp_home.setAdapter(adapter);
-        vp_home.setOffscreenPageLimit(4);
-        ti_home.setViewPager(vp_home);
+        vpHome.setAdapter(adapter);
+        vpHome.setOffscreenPageLimit(4);
+        tiHome.setViewPager(vpHome);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

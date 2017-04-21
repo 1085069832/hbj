@@ -5,11 +5,11 @@ package com.doubanapp.hbj.douban.IPresenter;
  * time: 2017-04-04.
  */
 
-public interface IBaseFragmentPresenter {
+public interface IFragmentPresenter {
 
-    void doRegisterMultitypeItem();
+    void doRegisterMultitypeItem(int selectPage);
 
     void doInitLayoutManager();
 
-    void doConnectHttp();
+    void doConnectHttp(int selectPage);
 }

@@ -1,13 +1,16 @@
 package com.doubanapp.hbj.douban.model;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.TextView;
 
-import com.doubanapp.hbj.douban.IModel.IMusicModel;
+import com.doubanapp.hbj.douban.IModel.IBookModel;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
+import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.google.gson.Gson;
 
@@ -23,30 +26,25 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * 请求music数据
- * Created by Administrator
- * time: 2017-04-04.
+ * 请求book数据
+ * Created by Administrator on 2017/4/7 0007.
  */
+public class BookFragmentModel {
 
-public class MusicFragmentModel {
-
-    private List<String> mData1 = new ArrayList<>();
-    private List<String> mData2 = new ArrayList<>();
-    private List<String> mData3 = new ArrayList<>();
-    private List<String> mData4 = new ArrayList<>();
-    private List<String> mData5 = new ArrayList<>();
-    private List<View> mData6 = new ArrayList<>();
-    private IMusicModel iMusicFragmentModel;
+    private static final String TAG = "BookFragmentModel";
     private Context mContext;
+    private IBookModel iBookModel;
+    private List<String> mData1 = new ArrayList<>();
+    private List<String> mData3 = new ArrayList<>();
+    private List<View> mData2 = new ArrayList<>();
 
-    public MusicFragmentModel(Context mContext, IMusicModel iMusicFragmentModel) {
-        this.iMusicFragmentModel = iMusicFragmentModel;
+    public BookFragmentModel(Context mContext, IBookModel iBookModel) {
         this.mContext = mContext;
-        toConnectHttp();
+        this.iBookModel = iBookModel;
+        toConnectData();
     }
 
-    private void toConnectHttp() {
-
+    private void toConnectData() {
         String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
         //此处加载数据
         Retrofit retrofit = MyUtils.getRetrofit(baseUrl);
@@ -56,6 +54,7 @@ public class MusicFragmentModel {
                 .map(new Func1<ResponseBody, KuaiDiJsonData>() {
                     @Override
                     public KuaiDiJsonData call(ResponseBody responseBody) {
+
                         String stringJson = null;
                         try {
                             stringJson = responseBody.string();
@@ -73,49 +72,47 @@ public class MusicFragmentModel {
                     @Override
                     public void onCompleted() {
                         //请求结束
-                        iMusicFragmentModel.onConnectCompleted();
+                        iBookModel.onConnectCompleted();
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         //错误回调
-                        iMusicFragmentModel.onConnectError();
+                        iBookModel.onConnectError();
                     }
 
                     @Override
                     public void onNext(KuaiDiJsonData res) {
                         //成功
-                        //MyLogUtils.i(TAG, res.getData().get(0).getContext());
-                        String context = res.getData().get(0).getContext();
-
+                        MyLogUtils.i(TAG, res.getData().get(0).getContext());
                         for (int i = 0; i < 10; i++) {
-                            mData1.add("新曲");
+                            mData1.add("新书");
                         }
-                        for (int i = 0; i < 10; i++) {
-                            mData2.add("华语");
-                        }
-                        for (int i = 0; i < 10; i++) {
-                            mData3.add("欧美");
-                        }
-                        for (int i = 0; i < 10; i++) {
-                            mData4.add("日韩");
+                        for (int i = 0; i < 4; i++) {
+                            TextView textView = new TextView(MyUtils.getContext());
+                            textView.setText("四大名著" + i);
+                            textView.setTextSize(35);
+                            textView.setTextColor(Color.BLUE);
+                            mData2.add(textView);
                         }
                         for (int i = 0; i < 6; i++) {
-                            mData5.add("感兴趣");
+                            mData3.add("感兴趣");
                         }
-                        iMusicFragmentModel.onMusicConnectNext(mData1, mData6, mData2, mData3, mData4, mData5);
+                        iBookModel.onBookConnectNext(mData1, mData2, mData3);
+
                     }
 
                     @Override
                     public void onStart() {
                         //开始
+                        MyLogUtils.i(TAG, "onStart");
                         new BoubanAPIConnectCountAlert(mContext);
-                        // MyLogUtils.i(TAG, "onStart");
-                        iMusicFragmentModel.onConnectStart();
+                        //设置第一次加载变量
+                        iBookModel.onConnectStart();
                     }
                 });
     }
-
 
     private KuaiDiJsonData parseJsonData(String data) {
         Gson gson = new Gson();
