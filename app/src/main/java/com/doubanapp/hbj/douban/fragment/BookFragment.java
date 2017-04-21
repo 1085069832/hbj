@@ -1,7 +1,9 @@
 package com.doubanapp.hbj.douban.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -35,7 +37,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     protected View initChildView() {
         MyLogUtils.i(TAG, "onCreateView");
         bookFragmentPresenter = new FragmentPresenter(mContext, this);
-        bookFragmentPresenter.doRegisterMultitypeItem();
+        bookFragmentPresenter.doRegisterMultitypeItem(rc_base);
         bookFragmentPresenter.doInitLinearLayoutManager();
         return null;
     }
@@ -88,8 +90,18 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
         //pb_loading.setVisibility(progressVisb);
-        rl_error.setVisibility(errorVisb);
         loadingDialog.dismiss();
+        Snackbar snackbar = Snackbar.make(rc_base, R.string.snakebar_text, Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(Color.WHITE);
+        snackbar.show();
+        if (adapter.getItemCount() == 0) {
+            rl_error.setVisibility(errorVisb);
+        }
+    }
+
+    @Override
+    public void onErrorSnakeBarAction() {
+        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX);
     }
 
     @Override

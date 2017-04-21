@@ -8,6 +8,7 @@ import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.BoubanAPIConnectCountAlert;
+import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.google.gson.Gson;
 
@@ -30,7 +31,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class MusicFragmentModel {
-
+    private static final String TAG = "MusicFragmentModel";
     private List<String> mData1 = new ArrayList<>();
     private List<String> mData2 = new ArrayList<>();
     private List<String> mData3 = new ArrayList<>();
@@ -47,7 +48,11 @@ public class MusicFragmentModel {
     }
 
     public void toConnectHttp() {
-
+        //判断是否订阅了
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            MyLogUtils.i(TAG, "已经在加载了");
+            return;
+        }
         String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
         //此处加载数据
         Retrofit retrofit = MyUtils.getRetrofit(baseUrl);

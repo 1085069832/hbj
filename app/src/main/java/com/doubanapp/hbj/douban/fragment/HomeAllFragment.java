@@ -1,7 +1,9 @@
 package com.doubanapp.hbj.douban.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -35,15 +37,15 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        isFirstCreate = true;
         super.onCreate(savedInstanceState);
+        isFirstCreate = true;
     }
 
     @Override
     protected View initChildView() {
         homeAllFragmentPresenter = new FragmentPresenter(mContext, this);
-        homeAllFragmentPresenter.doInitSweetSheet(rl, rc_base);
-        homeAllFragmentPresenter.doRegisterMultitypeItem();
+        homeAllFragmentPresenter.doInitSweetSheet(rl);
+        homeAllFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeAllFragmentPresenter.doInitLinearLayoutManager();
 
 
@@ -100,7 +102,17 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
-        rl_error.setVisibility(errorVisb);
+        Snackbar snackbar = Snackbar.make(rc_base, R.string.snakebar_text, Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(Color.WHITE);
+        snackbar.show();
+        if (adapter.getItemCount() == 0) {
+            rl_error.setVisibility(errorVisb);
+        }
+    }
+
+    @Override
+    public void onErrorSnakeBarAction() {
+        homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.doubanapp.hbj.douban.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,7 +19,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * 福利
  * Created by Administrator on 2017/3/31 0031.
  */
-public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFragmentView{
+public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFragmentView {
 
     private static final String TAG = "HomeWelFareFragment";
     private boolean isFirstCreate;//是否第一次加载
@@ -42,7 +44,7 @@ public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFra
     @Override
     protected View initChildView() {
         homeWelFareFragmentPresenter = new FragmentPresenter(mContext, this);
-        homeWelFareFragmentPresenter.doRegisterMultitypeItem();
+        homeWelFareFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeWelFareFragmentPresenter.doInitStaggeredGridLayoutManager();
 
 
@@ -99,7 +101,17 @@ public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFra
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
-        rl_error.setVisibility(errorVisb);
+        Snackbar snackbar = Snackbar.make(rc_base, R.string.snakebar_text, Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(Color.WHITE);
+        snackbar.show();
+        if (adapter.getItemCount() == 0) {
+            rl_error.setVisibility(errorVisb);
+        }
+    }
+
+    @Override
+    public void onErrorSnakeBarAction() {
+        homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX);
     }
 
     @Override

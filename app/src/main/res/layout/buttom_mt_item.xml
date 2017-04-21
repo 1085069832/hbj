@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#f6dfdddd"
     android:orientation="vertical">
 
     <TextView
@@ -11,15 +12,17 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="没有更多的内容了"
-        android:textColor="#999999"
-        android:textSize="15sp" />
+        android:text="4月21日"
+        android:textColor="#565555"
+        android:textSize="17sp" />
 
-    <!--<TextView
+    <TextView
+        android:id="@+id/tv_year"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="每天为你推荐新的内容~"
-        android:textColor="#999999"
-        android:textSize="20sp" />-->
+        android:padding="2dp"
+        android:text="2017"
+        android:textColor="#8c8c8c"
+        android:textSize="12sp" />
 </LinearLayout>

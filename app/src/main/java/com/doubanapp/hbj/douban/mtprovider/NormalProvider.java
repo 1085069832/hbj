@@ -67,7 +67,7 @@ public class NormalProvider extends ItemViewProvider<NormalItem, RecyclerView.Vi
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
         //设置适配器
         ((NormalItemViewHolder) holder).tv_normal_title.setText(normalItem.title);
-        NormalRcAdapter adapter = new NormalRcAdapter(normalItem.homeDayRecommendDataRes, normalItem.startIndex);
+        NormalRcAdapter adapter = new NormalRcAdapter(mContext,normalItem.homeDayRecommendDataRes, normalItem.startIndex);
         //adapter = new NormalRcAdapter(normalItem.content);
 
         LinearLayoutManager manager = new LinearLayoutManager(MyUtils.getContext(), LinearLayoutManager.HORIZONTAL, false);

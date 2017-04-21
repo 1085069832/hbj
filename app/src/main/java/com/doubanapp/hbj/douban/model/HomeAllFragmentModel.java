@@ -40,6 +40,11 @@ public class HomeAllFragmentModel {
     }
 
     public void toConnectData() {
+        //判断是否订阅了
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            MyLogUtils.i(TAG, "已经在加载了");
+            return;
+        }
         String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
         //此处加载数据
         Retrofit retrofit = MyUtils.getRetrofit(baseUrl);

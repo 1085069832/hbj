@@ -2,12 +2,10 @@ package com.doubanapp.hbj.douban.model;
 
 import android.content.Context;
 
-import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.IModel.IHomeDayRecommendModel;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.DayHistoryJsonData;
 import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
-import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
@@ -36,13 +34,14 @@ public class HomeDayRecommendFragmentModel {
     private Subscription contentSubscription;
     private Subscription daySubscription;
     private Retrofit retrofit;
+    private int pagePosition = -1;//记录加载更多索引
 
     public HomeDayRecommendFragmentModel(Context mContext, IHomeDayRecommendModel iHomeDayRecommendModel) {
         this.mContext = mContext;
         this.iHomeDayRecommendModel = iHomeDayRecommendModel;
     }
 
-    public void toConnectHttp(final int pagePosition) {
+    public void toConnectHttp() {
         //判断是否订阅了
         if (daySubscription != null && !daySubscription.isUnsubscribed() || contentSubscription != null
                 && !contentSubscription.isUnsubscribed()) {
@@ -97,6 +96,7 @@ public class HomeDayRecommendFragmentModel {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
                         iHomeDayRecommendModel.onConnectStart();
+                        pagePosition++;
                     }
                 });
 

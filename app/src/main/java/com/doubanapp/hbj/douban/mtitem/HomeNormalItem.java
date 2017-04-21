@@ -11,6 +11,7 @@ public class HomeNormalItem implements Item {
 
     public String title;
     public int position;
+    public int pageIndex;
     public HomeDayRecommendJsonData res;
 
     public HomeNormalItem(String title, int position) {
@@ -18,9 +19,9 @@ public class HomeNormalItem implements Item {
         this.position = position;
     }
 
-    public HomeNormalItem(HomeDayRecommendJsonData res, String title, int position) {
-        this.title = title;
-        this.position = position;
+    public HomeNormalItem(HomeDayRecommendJsonData res, String title, int pageIndex) {
         this.res = res;
+        this.title = title;
+        this.pageIndex = pageIndex;
     }
 }

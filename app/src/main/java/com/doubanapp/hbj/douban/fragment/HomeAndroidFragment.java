@@ -1,7 +1,9 @@
 package com.doubanapp.hbj.douban.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -42,7 +44,7 @@ public class HomeAndroidFragment extends BaseFragment implements IHomeAndroidFra
     @Override
     protected View initChildView() {
         homeAndroidFragmentPresenter = new FragmentPresenter(mContext, this);
-        homeAndroidFragmentPresenter.doRegisterMultitypeItem();
+        homeAndroidFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeAndroidFragmentPresenter.doInitLinearLayoutManager();
 
 
@@ -99,7 +101,17 @@ public class HomeAndroidFragment extends BaseFragment implements IHomeAndroidFra
     @Override
     public void onErrorVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
-        rl_error.setVisibility(errorVisb);
+        Snackbar snackbar = Snackbar.make(rc_base, R.string.snakebar_text, Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(Color.WHITE);
+        snackbar.show();
+        if (adapter.getItemCount() == 0) {
+            rl_error.setVisibility(errorVisb);
+        }
+    }
+
+    @Override
+    public void onErrorSnakeBarAction() {
+        homeAndroidFragmentPresenter.doConnectHttp(MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX);
     }
 
     @Override

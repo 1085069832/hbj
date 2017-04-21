@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.mtitem.ContentIconItem;
-import com.doubanapp.hbj.douban.utils.MyUtils;
 
 import me.drakeet.multitype.ItemViewProvider;
 
@@ -67,15 +66,15 @@ public class ContentIconProvider extends ItemViewProvider<ContentIconItem, Recyc
                 }
             }
         });
-
-        Glide.with(MyUtils.getContext())
-                .load(contentViewPagerItem.url)
-                .centerCrop()
-                .crossFade()
-                .override(100, 100)
-                .placeholder(R.mipmap.pic_placeholder_default)
-                .error(R.mipmap.pic_placeholder_default)
-                .into(((VpItemViewHolder) holder).iv_content_icon_mt_item);
+        if (contentViewPagerItem.url != null) {
+            Glide.with(mContext)
+                    .load(contentViewPagerItem.url)
+                    .centerCrop()
+                    .crossFade()
+                    .placeholder(R.mipmap.pic_placeholder_default)
+                    .error(R.mipmap.pic_placeholder_default)
+                    .into(((VpItemViewHolder) holder).iv_content_icon_mt_item);
+        }
     }
 
     private class VpItemViewHolder extends RecyclerView.ViewHolder {

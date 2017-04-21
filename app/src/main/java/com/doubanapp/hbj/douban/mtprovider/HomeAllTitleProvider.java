@@ -1,28 +1,20 @@
 package com.doubanapp.hbj.douban.mtprovider;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.mtitem.HomeAllTitleItem;
-import com.doubanapp.hbj.douban.mtitem.HomeNormalItem;
-import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
-import com.mingle.entity.MenuEntity;
-import com.mingle.sweetpick.BlurEffect;
-import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
 
 import me.drakeet.multitype.ItemViewProvider;
-
-import static com.doubanapp.hbj.douban.R.id.rc_base;
-import static com.doubanapp.hbj.douban.global.MyApplication.mContext;
 
 /**
  * Created by Administrator on 2017/3/24 0024.
@@ -30,12 +22,12 @@ import static com.doubanapp.hbj.douban.global.MyApplication.mContext;
 public class HomeAllTitleProvider extends ItemViewProvider<HomeAllTitleItem, RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private SweetSheet mSweetSheet;
-    private RecyclerView rc;
     private TextView tv_home_all_title;
+    private MainActivity mContext;
 
-    public HomeAllTitleProvider(SweetSheet mSweetSheet, RecyclerView rc) {
+    public HomeAllTitleProvider(Context mContext, SweetSheet mSweetSheet) {
+        this.mContext = (MainActivity) mContext;
         this.mSweetSheet = mSweetSheet;
-        this.rc = rc;
     }
 
     @NonNull
@@ -55,8 +47,11 @@ public class HomeAllTitleProvider extends ItemViewProvider<HomeAllTitleItem, Rec
     public synchronized void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_home_all_title:
-                if (!mSweetSheet.isShow())
+                if (!mSweetSheet.isShow()) {
+                    mContext.hideBottomNavigation();
+                    mContext.hideFloating();
                     mSweetSheet.show();
+                }
                 break;
             default:
         }

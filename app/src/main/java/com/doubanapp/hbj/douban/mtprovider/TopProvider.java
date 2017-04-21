@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.mtitem.ButtomItem;
+import com.doubanapp.hbj.douban.mtitem.TopItem;
 
 import me.drakeet.multitype.ItemViewProvider;
 
 /**
  * Created by Administrator on 2017/3/24 0024.
  */
-public class ButtomProvider extends ItemViewProvider<ButtomItem, RecyclerView.ViewHolder> {
+public class TopProvider extends ItemViewProvider<TopItem, RecyclerView.ViewHolder> {
 
     @NonNull
     @Override
@@ -26,17 +26,21 @@ public class ButtomProvider extends ItemViewProvider<ButtomItem, RecyclerView.Vi
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final ButtomItem buttomItem) {
-        ((ButtomItemViewHolder) holder).tv_day.setText(buttomItem.day);
+    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final TopItem topItem) {
+        String day = topItem.day.replace("/", "月");
+        ((ButtomItemViewHolder) holder).tv_day.setText(day.substring(5) + "日");
+        ((ButtomItemViewHolder) holder).tv_year.setText(day.substring(0, day.indexOf("月")));
     }
 
     private class ButtomItemViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tv_day;
+        private final TextView tv_year;
 
         public ButtomItemViewHolder(View itemView) {
             super(itemView);
             tv_day = (TextView) itemView.findViewById(R.id.tv_day);
+            tv_year = (TextView) itemView.findViewById(R.id.tv_year);
         }
     }
 }

@@ -10,9 +10,9 @@ import android.widget.RelativeLayout;
 
 public interface IFragmentPresenter {
 
-    void doInitSweetSheet(RelativeLayout rl, RecyclerView rc);
+    void doInitSweetSheet(RelativeLayout rl);
 
-    void doRegisterMultitypeItem();
+    void doRegisterMultitypeItem(RecyclerView rc);
 
     void doInitLinearLayoutManager();
 

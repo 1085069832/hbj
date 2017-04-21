@@ -1,5 +1,6 @@
 package com.doubanapp.hbj.douban.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final String TAG = "NormalRcAdapter";
     private List<String> data = new ArrayList<>();
     private int startIndex;
+    private Context mContext;
     private List<HomeDayRecommendJsonData.ResultsBean.AndroidBean> homeDayRecommendAndroid;
     private List<HomeDayRecommendJsonData.ResultsBean.IOSBean> homeDayRecommendIos;
     private List<HomeDayRecommendJsonData.ResultsBean.拓展资源Bean> homeDayRecommendExtendsResource;
@@ -40,8 +42,9 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     /*
     *HomeDayRecommend数据 */
-    public NormalRcAdapter(HomeDayRecommendJsonData mHomeDayRecommendData, int startIndex) {
+    public NormalRcAdapter(Context mContext,HomeDayRecommendJsonData mHomeDayRecommendData, int startIndex) {
         this.startIndex = startIndex;
+        this.mContext = mContext;
         switch (startIndex) {
             case MyConstants.HOME_DR_ANDROID_INDEX:
                 homeDayRecommendAndroid = mHomeDayRecommendData.getResults().getAndroid();
@@ -84,14 +87,13 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (startIndex) {
             case MyConstants.HOME_DR_ANDROID_INDEX://homedayrecommend android
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendAndroid.get(position).getDesc());
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("-- -- " + homeDayRecommendAndroid.get(position).getWho());
+                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("作者: " + homeDayRecommendAndroid.get(position).getWho());
                 List<String> androidImages = homeDayRecommendAndroid.get(position).getImages();
                 if (androidImages != null) {//有图片
-                    Glide.with(MyUtils.getContext())
+                    Glide.with(mContext)
                             .load(androidImages.get(0))
                             .centerCrop()
                             .crossFade()
-                            .override(iconWidth, iconHeigth)
                             .placeholder(R.mipmap.pic_placeholder_default)
                             .error(R.mipmap.pic_placeholder_default)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
@@ -99,14 +101,13 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case MyConstants.HOME_DR_IOS_INDEX://homedayrecommend ios
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendIos.get(position).getDesc());
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("-- -- " + homeDayRecommendIos.get(position).getWho());
+                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("作者: " + homeDayRecommendIos.get(position).getWho());
                 List<String> iOSImages = homeDayRecommendIos.get(position).getImages();
                 if (iOSImages != null) {//有图片
-                    Glide.with(MyUtils.getContext())
+                    Glide.with(mContext)
                             .load(iOSImages.get(0))
                             .centerCrop()
                             .crossFade()
-                            .override(iconWidth, iconHeigth)
                             .placeholder(R.mipmap.pic_placeholder_default)
                             .error(R.mipmap.pic_placeholder_default)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
@@ -114,14 +115,13 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX://homedayrecommend 扩展资源
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendExtendsResource.get(position).getDesc());
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("-- -- " + homeDayRecommendExtendsResource.get(position).getWho());
+                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("作者: " + homeDayRecommendExtendsResource.get(position).getWho());
                 List<String> extendsResourceImages = homeDayRecommendExtendsResource.get(position).getImages();
                 if (extendsResourceImages != null) {//有图片
-                    Glide.with(MyUtils.getContext())
+                    Glide.with(mContext)
                             .load(extendsResourceImages.get(0))
                             .centerCrop()
                             .crossFade()
-                            .override(iconWidth, iconHeigth)
                             .placeholder(R.mipmap.pic_placeholder_default)
                             .error(R.mipmap.pic_placeholder_default)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
@@ -129,14 +129,13 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case MyConstants.HOME_DR_FRONT_INDEX://homedayrecommend 前端
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendFront.get(position).getDesc());
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("-- -- " + homeDayRecommendFront.get(position).getWho());
+                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("作者: " + homeDayRecommendFront.get(position).getWho());
                 List<String> frontImages = homeDayRecommendFront.get(position).getImages();
                 if (frontImages != null) {//有图片
-                    Glide.with(MyUtils.getContext())
+                    Glide.with(mContext)
                             .load(frontImages.get(0))
                             .centerCrop()
                             .crossFade()
-                            .override(iconWidth, iconHeigth)
                             .placeholder(R.mipmap.pic_placeholder_default)
                             .error(R.mipmap.pic_placeholder_default)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
@@ -144,33 +143,17 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case MyConstants.HOME_DR_APP_INDEX://homedayrecommend app
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendApp.get(position).getDesc());
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("-- -- " + homeDayRecommendApp.get(position).getWho());
+                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("作者: " + homeDayRecommendApp.get(position).getWho());
                 List<String> appImages = homeDayRecommendApp.get(position).getImages();
                 if (appImages != null) {//有图片
-                    Glide.with(MyUtils.getContext())
+                    Glide.with(mContext)
                             .load(appImages.get(0))
                             .centerCrop()
                             .crossFade()
-                            .override(iconWidth, iconHeigth)
                             .placeholder(R.mipmap.pic_placeholder_default)
                             .error(R.mipmap.pic_placeholder_default)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
                 }
-                break;
-            case MyConstants.HOME_DR_REST_INDEX://homedayrecommend 休息视频
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendRest.get(position).getDesc());
-                ((NormalItemViewHolder) holder).tv_normal_rc_item_who.setText("-- -- " + homeDayRecommendRest.get(position).getWho());
-                /*List<String> restImages = homeDayRecommendRest.get(position).getImages();
-                if (restImages != null) {//有图片
-                    Glide.with(MyUtils.getContext())
-                            .load(restImages.get(0))
-                            .centerCrop()
-                            .crossFade()
-                            .override(iconWidth, iconHeigth)
-                            .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
-                            .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
-                }*/
                 break;
             default:
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(data.get(position));
