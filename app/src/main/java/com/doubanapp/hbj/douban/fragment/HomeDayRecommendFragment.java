@@ -11,6 +11,7 @@ import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 
+import lib.homhomlib.design.SlidingLayout;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
@@ -46,6 +47,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         homeDayReFragmentPresenter = new FragmentPresenter(mContext, this);
         homeDayReFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeDayReFragmentPresenter.doInitLinearLayoutManager();
+        slBase.setSlidingMode(SlidingLayout.SLIDING_MODE_TOP);
 
         isCreateView = true;
         lazyLoad();

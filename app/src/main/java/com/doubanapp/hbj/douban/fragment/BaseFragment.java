@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.activity.MainActivity;
+import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -60,7 +61,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         RelativeLayout relativeLayout = new RelativeLayout(MyUtils.getContext());
         View view = inflater.inflate(R.layout.fg_base, container, false);
-        loadingDialog = new SpotsDialog(mContext);
+        loadingDialog = new SpotsDialog(mContext);//正在加载提示
         loadingDialog.setCancelable(false);
         unbinder = ButterKnife.bind(this, view);
         relativeLayout.addView(view);
@@ -83,12 +84,13 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
                 }
             }
         });
-        //slidinglayout监听
+        //slidinglayout监听，上拉加载更多
         slBase.setSlidingListener(new SlidingLayout.SlidingListener() {
             @Override
             public void onSlidingOffset(View view, float delta) {
-                //加载更多
-                if (delta < 0 && lastVisibleItemPosition >= rc_base.getAdapter().getItemCount() - 1) {
+                MyLogUtils.i(TAG, "delta   " + delta);
+                //上拉加载更多
+                if (lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1 && delta < 0) {
                     loadMore();
                 }
             }
@@ -101,7 +103,8 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             public void onSlidingChangePointer(View view, int pointerId) {
             }
         });
-        //设置Toolbar和floating的显示隐藏
+
+        //设置Toolbar和floating的显示隐藏，上拉加载更多
         rc_base.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -117,6 +120,11 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
                 } else if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
                     //lastVisibleItemPosition = ((StaggeredGridLayoutManager) ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPositions();
                 }
+                //滑动到最后一个item加载更多
+                if (lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1 && dy > 0) {
+                    loadMore();
+                }
+                MyLogUtils.i(TAG, "onScrolled----" + dy);
                 if (dy > 0) {
                     if (dy > 5) {
                         mContext.hideFloating();

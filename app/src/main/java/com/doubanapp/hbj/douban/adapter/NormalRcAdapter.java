@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -158,8 +156,8 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             default:
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(data.get(position));
         }
-        Animation animation = AnimationUtils.loadAnimation(MyUtils.getContext(), R.anim.horizontal_rc_anim);
-        ((NormalItemViewHolder) holder).tv_normal_rc_item_des.startAnimation(animation);
+//        Animation animation = AnimationUtils.loadAnimation(MyUtils.getContext(), R.anim.horizontal_rc_anim);
+//        ((NormalItemViewHolder) holder).tv_normal_rc_item_des.startAnimation(animation);
 
     }
 

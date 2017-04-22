@@ -79,18 +79,18 @@ public class MovieFragmentModel {
                     @Override
                     public void onCompleted() {
                         //请求结束
-                        //iMovieModel.onConnectCompleted();
+                        iMovieModel.onConnectCompleted();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         //错误回调
-                        //iMovieModel.onConnectError();
+                        iMovieModel.onConnectError();
                     }
 
                     @Override
                     public void onNext(KuaiDiJsonData res) {
-                        /*//成功
+                        //成功
                         MyLogUtils.i(TAG, res.getData().get(0).getContext());
                         for (int i = 0; i < 10; i++) {
                             mData1.add("正在热映");
@@ -112,7 +112,7 @@ public class MovieFragmentModel {
                         for (int i = 0; i < 6; i++) {
                             mData4.add("感兴趣");
                         }
-                        iMovieModel.onMovieConnectNext(mData1, mData2, mData3, mData4, mData5);*/
+                        iMovieModel.onMovieConnectNext(mData1, mData2, mData3, mData4, mData5);
                     }
 
                     @Override
@@ -121,31 +121,7 @@ public class MovieFragmentModel {
                         MyLogUtils.i(TAG, "onStart");
                         new BoubanAPIConnectCountAlert(mContext);
                         //设置第一次加载变量
-                        iMovieModel.onConnectStart();
-
-
-                        for (int i = 0; i < 10; i++) {
-                            mData1.add("正在热映");
-                        }
-                        for (int i = 0; i < 10; i++) {
-                            mData2.add("即将上映");
-                        }
-                        for (int i = 0; i < 3; i++) {
-                            TextView textView = new TextView(MyUtils.getContext());
-                            textView.setText("强力推荐" + i);
-                            textView.setTextSize(35);
-                            textView.setTextColor(Color.BLUE);
-                            mData5.add(textView);
-                        }
-                        mData3.add("Top250");
-                        mData3.add("新片");
-                        mData3.add("欧美");
-                        mData3.add("日韩");
-                        for (int i = 0; i < 6; i++) {
-                            mData4.add("感兴趣");
-                        }
-                        iMovieModel.onMovieConnectNext(mData1, mData2, mData3, mData4, mData5);
-                        iMovieModel.onConnectCompleted();
+                        iMovieModel.onConnectStart(false);
                     }
                 });
     }

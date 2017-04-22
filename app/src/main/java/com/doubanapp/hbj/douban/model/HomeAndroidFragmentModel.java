@@ -93,7 +93,7 @@ public class HomeAndroidFragmentModel {
                     public void onStart() {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
-                        iHomeAndroidModel.onConnectStart();
+                        iHomeAndroidModel.onConnectStart(false);
                     }
                 });
     }

@@ -6,7 +6,7 @@ package com.doubanapp.hbj.douban.IModel;
  */
 
 public interface IBaseModel {
-    void onConnectStart();
+    void onConnectStart(boolean isLoadMore);
 
     void onConnectError();
 

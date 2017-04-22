@@ -113,8 +113,7 @@ public class BookFragmentModel {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
                         new BoubanAPIConnectCountAlert(mContext);
-                        //设置第一次加载变量
-                        iBookModel.onConnectStart();
+                        iBookModel.onConnectStart(false);
                     }
                 });
     }

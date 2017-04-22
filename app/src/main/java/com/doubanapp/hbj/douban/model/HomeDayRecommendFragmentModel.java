@@ -95,8 +95,9 @@ public class HomeDayRecommendFragmentModel {
                     public void onStart() {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
-                        iHomeDayRecommendModel.onConnectStart();
                         pagePosition++;
+                        if (pagePosition > 0)
+                            iHomeDayRecommendModel.onConnectStart(true);
                     }
                 });
 

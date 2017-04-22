@@ -93,7 +93,7 @@ public class HomeAllFragmentModel {
                     public void onStart() {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
-                        iHomeAllModela.onConnectStart();
+                        iHomeAllModela.onConnectStart(false);
                     }
                 });
     }

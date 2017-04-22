@@ -94,7 +94,7 @@ public class HomeWelFareFragmentModel {
                     @Override
                     public void onStart() {
                         //开始
-                        iHomeWelFareModel.onConnectStart();
+                        iHomeWelFareModel.onConnectStart(false);
                     }
                 });
     }

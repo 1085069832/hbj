@@ -9,6 +9,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doubanapp.hbj.douban.IModel.IBookModel;
@@ -36,6 +37,7 @@ import com.doubanapp.hbj.douban.mtitem.ContentTitleViewPagerItem;
 import com.doubanapp.hbj.douban.mtitem.HomeAllTitleItem;
 import com.doubanapp.hbj.douban.mtitem.HomeNormalItem;
 import com.doubanapp.hbj.douban.mtitem.HomeWelFareItem;
+import com.doubanapp.hbj.douban.mtitem.LoadMoreItem;
 import com.doubanapp.hbj.douban.mtitem.MayYouLikeItem;
 import com.doubanapp.hbj.douban.mtitem.MovieListSelectionItem;
 import com.doubanapp.hbj.douban.mtitem.NormalItem;
@@ -46,6 +48,7 @@ import com.doubanapp.hbj.douban.mtprovider.ContentTitleViewPagerProvider;
 import com.doubanapp.hbj.douban.mtprovider.HomeAllTitleProvider;
 import com.doubanapp.hbj.douban.mtprovider.HomeNormalProvider;
 import com.doubanapp.hbj.douban.mtprovider.HomeWelFareProvider;
+import com.doubanapp.hbj.douban.mtprovider.LoadMoreProvider;
 import com.doubanapp.hbj.douban.mtprovider.MayYouLikeProvider;
 import com.doubanapp.hbj.douban.mtprovider.MovieListSelectionProvider;
 import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
@@ -83,6 +86,8 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private MusicFragmentModel musicFragmentModel;
     private HomeAndroidFragmentModel homeAndroidFragmentModel;
     private HomeWelFareFragmentModel homeWelFareFragmentModel;
+    private String loadState;
+    private MultiTypeAdapter adapter;
 
     public FragmentPresenter(Context mContext, IFragmentBaseView iFragmentBaseView) {
         this.mContext = mContext;
@@ -112,7 +117,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void doRegisterMultitypeItem(RecyclerView rc) {
         this.rc = rc;
         items = new Items();
-        MultiTypeAdapter adapter = new MultiTypeAdapter(items);
+        adapter = new MultiTypeAdapter(items);
         //注册
         adapter.register(NormalItem.class, new NormalProvider(mContext));
         adapter.register(ContentIconItem.class, new ContentIconProvider(mContext));
@@ -123,6 +128,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         adapter.register(MovieListSelectionItem.class, new MovieListSelectionProvider(mContext));
         adapter.register(ContentTitleViewPagerItem.class, new ContentTitleViewPagerProvider());
         adapter.register(TopItem.class, new TopProvider());
+        adapter.register(LoadMoreItem.class, new LoadMoreProvider());
         adapter.register(HomeNormalItem.class, new HomeNormalProvider(mContext));
         adapter.register(HomeAllTitleItem.class, new HomeAllTitleProvider(mContext, mSweetSheet));
         adapter.register(HomeWelFareItem.class, new HomeWelFareProvider());
@@ -205,8 +211,17 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     /*
     * 开始请求*/
     @Override
-    public void onConnectStart() {
-        iFragmentBaseView.onStartVisibility(View.VISIBLE, View.GONE);
+    public void onConnectStart(boolean isLoadMore) {
+        if (isLoadMore) {
+            iFragmentBaseView.onStartVisibility(View.GONE, View.GONE);
+            if (!items.isEmpty()) {//不为空，先删除加载更多条目再添加
+                items.remove(items.size() - 1);
+                items.add(items.size(), new LoadMoreItem("正在加载"));
+                adapter.notifyDataSetChanged();
+            }
+        } else {
+            iFragmentBaseView.onStartVisibility(View.VISIBLE, View.GONE);
+        }
     }
 
     /*
@@ -214,9 +229,18 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     @Override
     public void onConnectError() {
         iFragmentBaseView.onErrorVisibility(View.GONE, View.VISIBLE);
+        //为空就不是加载更多的错误返回不需要操作加载更多，不为空则是加载更多的错误返回，先删除加载更多条目再添加
+        if (!items.isEmpty()) {
+            items.remove(items.size() - 1);
+            items.add(items.size(), new LoadMoreItem("上拉加载"));
+            adapter.notifyDataSetChanged();
+        }
         //提示网络状态
         Snackbar snackbar = Snackbar.make(rc, R.string.snakebar_text, Snackbar.LENGTH_LONG);
-        snackbar.getView().setBackgroundColor(Color.LTGRAY);
+        View view = snackbar.getView();
+        view.setBackgroundColor(Color.LTGRAY);
+        TextView snakeText = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        snakeText.setTextColor(Color.parseColor("#333333"));
         snackbar.setAction("重试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,6 +302,10 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res, String day) {
         //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
         //每日推荐安卓
+
+        if (!items.isEmpty()) {//不为空，先删除加载更多条目再添加
+            items.remove(items.size() - 1);
+        }
         items.add(new TopItem(day));
         if (res.getResults().getAndroid() != null)
             items.add(new NormalItem(res, "Android", MyConstants.HOME_DR_ANDROID_INDEX));
@@ -300,6 +328,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         if (res.getResults().getApp() != null)
             items.add(new NormalItem(res, "App", MyConstants.HOME_DR_APP_INDEX));
 
+        items.add(items.size(), new LoadMoreItem("正在加载"));
     }
 
     /*
