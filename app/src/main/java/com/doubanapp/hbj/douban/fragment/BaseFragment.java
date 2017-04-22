@@ -90,7 +90,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             public void onSlidingOffset(View view, float delta) {
                 MyLogUtils.i(TAG, "delta   " + delta);
                 //上拉加载更多
-                if (lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1 && delta < 0) {
+                if (delta < 0 && lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1) {
                     loadMore();
                 }
             }
@@ -107,24 +107,26 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         //设置Toolbar和floating的显示隐藏，上拉加载更多
         rc_base.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
+            private int mDy = 0;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                //滑动到最后一个item加载更多
+                if (lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1 && mDy > 0) {
+                    loadMore();
+                }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                mDy = dy;
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                } else if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+                } else {
                     //lastVisibleItemPosition = ((StaggeredGridLayoutManager) ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPositions();
                 }
-                //滑动到最后一个item加载更多
-                if (lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1 && dy > 0) {
-                    loadMore();
-                }
-                MyLogUtils.i(TAG, "onScrolled----" + dy);
                 if (dy > 0) {
                     if (dy > 5) {
                         mContext.hideFloating();

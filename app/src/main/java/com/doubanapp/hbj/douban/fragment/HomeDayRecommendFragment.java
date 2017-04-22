@@ -47,7 +47,6 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         homeDayReFragmentPresenter = new FragmentPresenter(mContext, this);
         homeDayReFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeDayReFragmentPresenter.doInitLinearLayoutManager();
-        slBase.setSlidingMode(SlidingLayout.SLIDING_MODE_TOP);
 
         isCreateView = true;
         lazyLoad();

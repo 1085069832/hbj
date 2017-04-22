@@ -8,8 +8,7 @@
     <lib.homhomlib.design.SlidingLayout
         android:id="@+id/sl_base"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:background_view="@layout/sliding_layout_text">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_base"

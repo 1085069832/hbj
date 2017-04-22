@@ -229,7 +229,8 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     @Override
     public void onConnectError() {
         iFragmentBaseView.onErrorVisibility(View.GONE, View.VISIBLE);
-        //为空就不是加载更多的错误返回不需要操作加载更多，不为空则是加载更多的错误返回，先删除加载更多条目再添加
+        //为空就不是加载更多的错误返回不需要操作加载更多，
+        // 不为空则是加载更多的错误返回，先删除加载更多条目再添加
         if (!items.isEmpty()) {
             items.remove(items.size() - 1);
             items.add(items.size(), new LoadMoreItem("上拉加载"));
