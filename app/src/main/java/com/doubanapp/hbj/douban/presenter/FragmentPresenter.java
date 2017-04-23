@@ -217,7 +217,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
             if (!items.isEmpty()) {//不为空，先删除加载更多条目再添加
                 items.remove(items.size() - 1);
                 items.add(items.size(), new LoadMoreItem("正在加载"));
-                adapter.notifyDataSetChanged();
+                iFragmentBaseView.onNotifyDataSetChanged();
             }
         } else {
             iFragmentBaseView.onStartVisibility(View.VISIBLE, View.GONE);
@@ -234,7 +234,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         if (!items.isEmpty()) {
             items.remove(items.size() - 1);
             items.add(items.size(), new LoadMoreItem("上拉加载"));
-            adapter.notifyDataSetChanged();
+            iFragmentBaseView.onNotifyDataSetChanged();
         }
         //提示网络状态
         Snackbar snackbar = Snackbar.make(rc, R.string.snakebar_text, Snackbar.LENGTH_LONG);
