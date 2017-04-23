@@ -96,6 +96,7 @@ public class MainActivity extends BaseActivity
         mainPresenter.doInitDefaultFragment();//默认显示HomeFragment
         //bottomNavigationView显示和隐藏动画
         animator = ObjectAnimator.ofFloat(bottomNavigationView, "translationY", 0);
+
     }
 
     /*

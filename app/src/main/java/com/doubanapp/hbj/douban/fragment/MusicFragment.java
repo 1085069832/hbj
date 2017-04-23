@@ -101,7 +101,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX);
     }
 

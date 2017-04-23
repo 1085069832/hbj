@@ -20,7 +20,7 @@ public interface IFragmentBaseView {
 
     void onErrorVisibility(int progressVisb, int errorVisb);
 
-    void onErrorSnakeBarAction();
+    void onErrorAppMsgClick();
 
     void onCompletedVisibility(int progressVisb, int errorVisb);
 

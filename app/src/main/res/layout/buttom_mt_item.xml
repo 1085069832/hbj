@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f6dfdddd"
+    android:background="#f6efeaea"
     android:orientation="vertical">
 
     <TextView
@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:padding="5dp"
+        android:gravity="center_horizontal"
+        android:padding="3dp"
         android:text="4月21日"
-        android:textColor="#565555"
+        android:textColor="#646363"
         android:textSize="17sp" />
 
     <TextView

@@ -11,7 +11,6 @@ import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.presenter.FragmentPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 
-import lib.homhomlib.design.SlidingLayout;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
@@ -48,9 +47,17 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         homeDayReFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeDayReFragmentPresenter.doInitLinearLayoutManager();
 
+
         isCreateView = true;
         lazyLoad();
         return null;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //设置swipelayout可用
+        srBase.setEnabled(true);
     }
 
     @Override
@@ -77,6 +84,12 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
                 homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
                 break;
         }
+    }
+
+    @Override
+    protected void onRefresh() {
+        super.onRefresh();
+
     }
 
     @Override
@@ -112,7 +125,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
     }
 

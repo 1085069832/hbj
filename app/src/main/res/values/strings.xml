@@ -10,8 +10,8 @@
 
     <string-array name="home_titlepage">
         <item>每日推荐</item>
-        <item>全部</item>
-        <item>Android</item>
+        <item>分类</item>
+        <item>安卓</item>
         <item>福利</item>
     </string-array>
 </resources>

@@ -93,7 +93,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
     }
 

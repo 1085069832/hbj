@@ -105,7 +105,7 @@ public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFra
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX);
     }
 

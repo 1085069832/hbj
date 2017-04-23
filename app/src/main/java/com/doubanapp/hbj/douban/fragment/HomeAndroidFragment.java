@@ -105,7 +105,7 @@ public class HomeAndroidFragment extends BaseFragment implements IHomeAndroidFra
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         homeAndroidFragmentPresenter.doConnectHttp(MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX);
     }
 

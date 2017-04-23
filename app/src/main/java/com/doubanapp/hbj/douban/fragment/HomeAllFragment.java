@@ -46,7 +46,6 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
         homeAllFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeAllFragmentPresenter.doInitLinearLayoutManager();
 
-
         isCreateView = true;
         lazyLoad();
         return null;
@@ -106,7 +105,7 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX);
     }
 

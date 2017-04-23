@@ -3,9 +3,9 @@ package com.doubanapp.hbj.douban.fragment;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +35,8 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         MainActivity.FloatingClickedListener {
 
     private static final String TAG = "BaseFragment";
+    @BindView(R.id.sr_base)
+    SwipeRefreshLayout srBase;
     private int lastVisibleItemPosition;
     @BindView(R.id.rc_base)
     RecyclerView rc_base;
@@ -73,6 +75,15 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //设置swipelayout不可用,及监听刷新事件
+        srBase.setEnabled(false);
+        srBase.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onRefresh();
+            }
+        });
+
         rl_error.setOnClickListener(this);
         //rc_base获取到焦点就设置floating监听
         rc_base.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -80,23 +91,29 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     mContext.setFloatingClickedListener(BaseFragment.this);
+                    mContext.showFloating();
                     mContext.showBottomNavigation();
                 }
             }
         });
         //slidinglayout监听，上拉加载更多
         slBase.setSlidingListener(new SlidingLayout.SlidingListener() {
+            private float mDelta = 0;
+
             @Override
             public void onSlidingOffset(View view, float delta) {
+                mDelta = delta;
                 MyLogUtils.i(TAG, "delta   " + delta);
-                //上拉加载更多
-                if (delta < 0 && lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1) {
-                    loadMore();
-                }
             }
 
             @Override
             public void onSlidingStateChange(View view, int state) {
+                //上拉加载更多
+                if (state == SlidingLayout.STATE_IDLE && mDelta < 0 && lastVisibleItemPosition == rc_base.getAdapter().getItemCount() - 1) {
+                    mContext.hideFloating();
+                    mContext.hideBottomNavigation();
+                    loadMore();
+                }
             }
 
             @Override
@@ -107,26 +124,24 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         //设置Toolbar和floating的显示隐藏，上拉加载更多
         rc_base.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            private int mDy = 0;
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                //滑动到最后一个item加载更多
-                if (lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1 && mDy > 0) {
-                    loadMore();
-                }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mDy = dy;
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
                 } else {
                     //lastVisibleItemPosition = ((StaggeredGridLayoutManager) ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPositions();
                 }
+                //滑动到最后一个item加载更多
+                if (lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1 && dy > 0) {
+                    loadMore();
+                }
+
                 if (dy > 0) {
                     if (dy > 5) {
                         mContext.hideFloating();
@@ -145,7 +160,10 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
 
     protected abstract View initChildView();//子类添加不同的view,没有则为null
 
-    protected void loadMore() {//子类覆盖此方法加载更多
+    protected void loadMore() {//子类覆盖此方法上拉加载更多
+    }
+
+    protected void onRefresh() {//子类覆盖此方法下拉刷新更多数据
     }
 
     @Override

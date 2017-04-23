@@ -1,17 +1,16 @@
 package com.doubanapp.hbj.douban.presenter;
 
+
 import android.content.Context;
-import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.devspark.appmsg.AppMsg;
 import com.doubanapp.hbj.douban.IModel.IBookModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAllModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAndroidModel;
@@ -54,7 +53,6 @@ import com.doubanapp.hbj.douban.mtprovider.MovieListSelectionProvider;
 import com.doubanapp.hbj.douban.mtprovider.NormalProvider;
 import com.doubanapp.hbj.douban.mtprovider.SelectProvider;
 import com.doubanapp.hbj.douban.mtprovider.TopProvider;
-import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.NoneEffect;
@@ -78,7 +76,6 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private IFragmentBaseView iFragmentBaseView;
     private Items items;
     private SweetSheet mSweetSheet;
-    private RecyclerView rc;
     private HomeAllFragmentModel homeAllFragmentModel;
     private HomeDayRecommendFragmentModel homeDayRecommendFragmentModel;
     private MovieFragmentModel movieFragmentModel;
@@ -86,28 +83,27 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private MusicFragmentModel musicFragmentModel;
     private HomeAndroidFragmentModel homeAndroidFragmentModel;
     private HomeWelFareFragmentModel homeWelFareFragmentModel;
-    private String loadState;
     private MultiTypeAdapter adapter;
+
 
     public FragmentPresenter(Context mContext, IFragmentBaseView iFragmentBaseView) {
         this.mContext = mContext;
         this.iFragmentBaseView = iFragmentBaseView;
     }
 
+    /*
+    * home all 分类*/
     @Override
     public void doInitSweetSheet(RelativeLayout rl) {
+        //屏幕高度
         WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int mSweetSheetHeight = windowManager.getDefaultDisplay().getHeight() / 2;
-        // SweetSheet 控件,根据 rl 确认位置
+        //选择分类
         mSweetSheet = new SweetSheet(rl);
-        //设置数据源 (数据源支持设置 list 数组,也支持从menu 资源中获取)
         mSweetSheet.setMenuList(R.menu.home_all_sweet_menu);
-        //根据设置不同的 Delegate 来显示不同的风格.
         mSweetSheet.setDelegate(new RecyclerViewDelegate(true, mSweetSheetHeight));
-        //根据设置不同Effect来设置背景效果:BlurEffect 模糊效果.DimEffect 变暗效果,NoneEffect 没有效果.
         mSweetSheet.setBackgroundEffect(new NoneEffect());
         mSweetSheet.setBackgroundClickEnable(false);
-        //设置菜单点击事件
         mSweetSheet.setOnMenuItemClickListener(this);
     }
 
@@ -115,7 +111,6 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 注册*/
     @Override
     public void doRegisterMultitypeItem(RecyclerView rc) {
-        this.rc = rc;
         items = new Items();
         adapter = new MultiTypeAdapter(items);
         //注册
@@ -170,7 +165,6 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
                 movieFragmentModel.toConnectData();
                 break;
             case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐数据
-                MyLogUtils.i(TAG, "isLoading加载数据");
                 if (homeDayRecommendFragmentModel == null)
                     homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
                 homeDayRecommendFragmentModel.toConnectHttp();
@@ -195,7 +189,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     }
 
     /*
-    * 取消网络请求*/
+    * 取消rxjava订阅*/
     @Override
     public void doDestroy() {
         if (musicFragmentModel != null) musicFragmentModel.cancelHttpRequset();
@@ -212,9 +206,11 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * 开始请求*/
     @Override
     public void onConnectStart(boolean isLoadMore) {
+        //判断是否是加载更多
         if (isLoadMore) {
+            //加载更多不显示progressbar
             iFragmentBaseView.onStartVisibility(View.GONE, View.GONE);
-            if (!items.isEmpty()) {//不为空，先删除加载更多条目再添加
+            if (!items.isEmpty()) {//不为空，先删除加载更多，再重新添加
                 items.remove(items.size() - 1);
                 items.add(items.size(), new LoadMoreItem("正在加载"));
                 iFragmentBaseView.onNotifyDataSetChanged();
@@ -229,26 +225,30 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     @Override
     public void onConnectError() {
         iFragmentBaseView.onErrorVisibility(View.GONE, View.VISIBLE);
-        //为空就不是加载更多的错误返回不需要操作加载更多，
-        // 不为空则是加载更多的错误返回，先删除加载更多条目再添加
+        //为空就不是加载更多的错误返回，本身没有加载更多的界面，错误的返回一定为空，不需要操作加载更多
+        //不为空则是加载更多的错误返回，先删除加载更多条目再添加
         if (!items.isEmpty()) {
             items.remove(items.size() - 1);
             items.add(items.size(), new LoadMoreItem("上拉加载"));
             iFragmentBaseView.onNotifyDataSetChanged();
         }
-        //提示网络状态
-        Snackbar snackbar = Snackbar.make(rc, R.string.snakebar_text, Snackbar.LENGTH_LONG);
-        View view = snackbar.getView();
-        view.setBackgroundColor(Color.LTGRAY);
-        TextView snakeText = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        snakeText.setTextColor(Color.parseColor("#333333"));
-        snackbar.setAction("重试", new View.OnClickListener() {
+        showNetStateError();
+    }
+
+    /*
+    * 提示网络连接不稳定*/
+    private void showNetStateError() {
+        AppMsg appMsg = AppMsg.makeText((MainActivity) mContext, "当前未检测到网络，请重试", AppMsg.STYLE_INFO);
+        appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
+        appMsg.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iFragmentBaseView.onErrorSnakeBarAction();
+                AppMsg.cancelAll();
+                iFragmentBaseView.onErrorAppMsgClick();
             }
         });
-        snackbar.show();
+        AppMsg.cancelAll();
+        appMsg.show();
     }
 
     /*
@@ -303,33 +303,24 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     public void onHomeDayRecommendConnectNext(HomeDayRecommendJsonData res, String day) {
         //items.add(new ContentTitleViewPagerItem(vpTitleData, MyConstants.HOME_DR_CONTENT_TITLE_VP_INDEX));
         //每日推荐安卓
-
-        if (!items.isEmpty()) {//不为空，先删除加载更多条目再添加
+        if (!items.isEmpty())//不为空，先删除加载更多条目再添加
             items.remove(items.size() - 1);
-        }
         items.add(new TopItem(day));
-        if (res.getResults().getAndroid() != null)
+        if (res.getResults().getAndroid() != null && res.getResults().getAndroid().size() >= 2)
             items.add(new NormalItem(res, "Android", MyConstants.HOME_DR_ANDROID_INDEX));
-
-        if (res.getResults().getIOS() != null)
+        if (res.getResults().getIOS() != null && res.getResults().getIOS().size() >= 2)
             items.add(new NormalItem(res, "iOS", MyConstants.HOME_DR_IOS_INDEX));
-
         if (res.getResults().get福利() != null)
             items.add(new ContentIconItem(res.getResults().get福利().get(0).getUrl(), "福利", MyConstants.HOME_DR_WELFARE_INDEX));
-
-        if (res.getResults().get拓展资源() != null)
+        if (res.getResults().get拓展资源() != null && res.getResults().get拓展资源().size() >= 2)
             items.add(new NormalItem(res, "扩展资源", MyConstants.HOME_DR_EXTENDS_RESOURCE_INDEX));
-
-        if (res.getResults().get前端() != null)
+        if (res.getResults().get前端() != null && res.getResults().get前端().size() >= 2)
             items.add(new NormalItem(res, "前端", MyConstants.HOME_DR_FRONT_INDEX));
-
         if (res.getResults().get休息视频() != null)
             items.add(new HomeNormalItem(res, "休息视频", MyConstants.HOME_DR_REST_INDEX));
-
-        if (res.getResults().getApp() != null)
+        if (res.getResults().getApp() != null && res.getResults().getApp().size() >= 2)
             items.add(new NormalItem(res, "App", MyConstants.HOME_DR_APP_INDEX));
-
-        items.add(items.size(), new LoadMoreItem("正在加载"));
+        items.add(items.size(), new LoadMoreItem("上拉加载"));
     }
 
     /*

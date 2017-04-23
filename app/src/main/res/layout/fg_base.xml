@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <lib.homhomlib.design.SlidingLayout
-        android:id="@+id/sl_base"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sr_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rc_base"
+        <lib.homhomlib.design.SlidingLayout
+            android:id="@+id/sl_base"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:descendantFocusability="blocksDescendants">
+            android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
-    </lib.homhomlib.design.SlidingLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_base"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:descendantFocusability="blocksDescendants">
+
+            </android.support.v7.widget.RecyclerView>
+        </lib.homhomlib.design.SlidingLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/loading" />
 

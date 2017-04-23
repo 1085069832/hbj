@@ -95,7 +95,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     }
 
     @Override
-    public void onErrorSnakeBarAction() {
+    public void onErrorAppMsgClick() {
         bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX);
     }
 

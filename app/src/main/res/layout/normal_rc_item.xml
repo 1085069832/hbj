@@ -21,7 +21,6 @@
     </LinearLayout>
 
     <TextView
-        android:text="dd"
         android:id="@+id/tv_normal_rc_item_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,17 +29,18 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
-        android:textColor="#696767"
+        android:text="dd"
+        android:textColor="#555555"
         android:textSize="12sp" />
 
     <TextView
-        android:text="dgtgd"
         android:id="@+id/tv_normal_rc_item_who"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="2dp"
+        android:text="dgtgd"
         android:textColor="#edaca8a8"
         android:textSize="8sp" />
 </LinearLayout>

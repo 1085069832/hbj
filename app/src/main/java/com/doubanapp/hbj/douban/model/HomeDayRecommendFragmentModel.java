@@ -79,6 +79,7 @@ public class HomeDayRecommendFragmentModel {
 
                     @Override
                     public void onError(Throwable e) {
+                        pagePosition--;
                         //错误回调
                         iHomeDayRecommendModel.onConnectError();
                     }
@@ -96,8 +97,12 @@ public class HomeDayRecommendFragmentModel {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
                         pagePosition++;
-                        if (pagePosition > 0)
+                        //是否加载更多
+                        if (pagePosition > 0) {
                             iHomeDayRecommendModel.onConnectStart(true);
+                        } else {
+                            iHomeDayRecommendModel.onConnectStart(false);
+                        }
                     }
                 });
 
