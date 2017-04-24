@@ -1,9 +1,15 @@
 package com.doubanapp.hbj.douban.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
+import android.view.Gravity;
+import android.view.View;
 
+import com.devspark.appmsg.AppMsg;
+import com.doubanapp.hbj.douban.R;
+import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.global.MyApplication;
 
@@ -148,6 +154,47 @@ public class MyUtils {
         } else {
             return getContext().getCacheDir();
         }
+    }
+    //*************************************************************
+
+
+    /*
+   * 提示信息*/
+    //*************************************************************
+    public static void showAppMsg(Activity mContext, int stringId, int color) {
+        AppMsg appMsg = AppMsg.makeText(mContext, stringId, AppMsg.STYLE_INFO);
+        appMsg.setLayoutGravity(Gravity.TOP);
+        appMsg.setDuration(2000);
+        View view = appMsg.getView();
+        view.setPadding(0, 70, 0, 0);
+        view.setBackgroundColor(color);
+        appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppMsg.cancelAll();
+            }
+        });
+        AppMsg.cancelAll();
+        appMsg.show();
+    }
+
+    public static void showAppMsg(Activity mContext, String text, int color) {
+        AppMsg appMsg = AppMsg.makeText(mContext, text, AppMsg.STYLE_INFO);
+        appMsg.setLayoutGravity(Gravity.TOP);
+        appMsg.setDuration(2000);
+        View view = appMsg.getView();
+        view.setPadding(0, 70, 0, 0);
+        view.setBackgroundColor(color);
+        appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppMsg.cancelAll();
+            }
+        });
+        AppMsg.cancelAll();
+        appMsg.show();
     }
     //*************************************************************
 }

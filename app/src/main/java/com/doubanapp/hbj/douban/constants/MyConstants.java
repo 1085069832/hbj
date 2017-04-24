@@ -6,7 +6,7 @@ package com.doubanapp.hbj.douban.constants;
 public class MyConstants {
     //spf
     public static final String MYSPF = "myspf";
-    public static final String CONNECTPAGEINDEX = "connectPageIndex";//记录加载更多索引
+    public static final String SPFREFRESHDAY = "spfrefreshdays";
 
     //movie条目
     public static final int MOVIE_HOT_SHOW_INDEX = 1;

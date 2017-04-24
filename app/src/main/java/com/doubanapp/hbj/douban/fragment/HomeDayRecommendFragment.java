@@ -54,13 +54,6 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //设置swipelayout可用
-        srBase.setEnabled(true);
-    }
-
-    @Override
     protected synchronized void lazyLoad() {
         MyLogUtils.i(TAG, isCreateView + "isCreateView");
         MyLogUtils.i(TAG, isVisible + "isVisible");
@@ -69,7 +62,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
             //不加载数据
             return;
         }
-        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false);
     }
 
     @Override
@@ -81,7 +74,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
+                homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false);
                 break;
         }
     }
@@ -89,13 +82,13 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     @Override
     protected void onRefresh() {
         super.onRefresh();
-
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false);
     }
 
     @Override
     protected void loadMore() {
         super.loadMore();
-        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, true);
     }
 
     @Override
@@ -125,14 +118,17 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     }
 
     @Override
-    public void onErrorAppMsgClick() {
-        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX);
+    public void onRefreshCompleted() {
+        if (srBase.isRefreshing())
+            srBase.setRefreshing(false);
     }
 
     @Override
     public void onCompletedVisibility(int progressVisb, int errorVisb) {
         pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
+        //设置swipelayout可用
+        srBase.setEnabled(true);
     }
 
     @Override

@@ -11,4 +11,6 @@ public interface IBaseModel {
     void onConnectError();
 
     void onConnectCompleted();
+
+    void onRefreshResult(int resultCount);
 }

@@ -6,6 +6,8 @@
     <!--bottom color-->
     <color name="colorHome">#d20e56e7</color>
     <color name="colorMovie">#d214b73f</color>
-    <color name="colorBook">#d2233a45</color>
+    <color name="colorBook">#d2d9871b</color>
     <color name="colorMusic">#d2e70e20</color>
+
+    <color name="colorToolBar">#d2102026</color>
 </resources>

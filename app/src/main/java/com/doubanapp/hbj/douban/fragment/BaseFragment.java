@@ -80,7 +80,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         srBase.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onRefresh();
+                BaseFragment.this.onRefresh();
             }
         });
 
@@ -124,22 +124,28 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
         //设置Toolbar和floating的显示隐藏，上拉加载更多
         rc_base.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
+            private int mDy = 0;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //滑动到最后一个item加载更多
+                    if ((lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1) && mDy > 0) {
+                        loadMore();
+                    }
+                }
+
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                mDy = dy;
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
                 } else {
                     //lastVisibleItemPosition = ((StaggeredGridLayoutManager) ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPositions();
-                }
-                //滑动到最后一个item加载更多
-                if (lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1 && dy > 0) {
-                    loadMore();
                 }
 
                 if (dy > 0) {

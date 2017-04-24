@@ -9,7 +9,8 @@
 
         <TextView
             android:id="@+id/tv_content_icon_mt_title"
-            style="@style/ItemTitle" />
+            style="@style/ItemTitle"
+            android:textColor="@color/colorBook" />
 
         <TextView
             android:id="@+id/tv_content_icon_mt_look_more"

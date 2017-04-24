@@ -6,10 +6,13 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_search">搜索</string>
-    <string name="snakebar_text">网络连接不稳定,请重试</string>
+    <string name="appmsg_connect_error_text">无法连接到网络，请稍后再试</string>
+    <string name="appmsg_refresh_no_data_text">已经是最新的内容了</string>
+    <string name="appmsg_refresh_has_data_text_header">发现了</string>
+    <string name="appmsg_refresh_has_data_text_footer">条内容</string>
 
     <string-array name="home_titlepage">
-        <item>每日推荐</item>
+        <item>推荐</item>
         <item>分类</item>
         <item>安卓</item>
         <item>福利</item>

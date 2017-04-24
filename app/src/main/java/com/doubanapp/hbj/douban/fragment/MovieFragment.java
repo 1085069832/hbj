@@ -48,7 +48,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
+        movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX, false);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
+                movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX, false);
                 break;
         }
     }
@@ -93,8 +93,8 @@ public class MovieFragment extends BaseFragment implements IMovieFragmentView {
     }
 
     @Override
-    public void onErrorAppMsgClick() {
-        movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
+    public void onRefreshCompleted() {
+       // movieFragmentPresenter.doConnectHttp(MyConstants.MOVIE_PRESENTER_PAGE_INDEX);
     }
 
     @Override

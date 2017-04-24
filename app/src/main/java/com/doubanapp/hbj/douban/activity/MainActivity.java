@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity
     }
 
     /*
-            * 申请权限*/
+   * 申请权限*/
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);

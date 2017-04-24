@@ -119,7 +119,7 @@ public class MainPresenter implements IMainPresenter {
         switch (index) {
             case 0:
                 toolbar.setTitle("首页");
-                toolbar.setBackgroundResource(color[0]);
+                //toolbar.setBackgroundResource(color[0]);
                 fab.setColorNormalResId(color[0]);
                 if (homeFragment == null) {
                     homeFragment = HomeFragment.newsInstance(0);
@@ -129,7 +129,7 @@ public class MainPresenter implements IMainPresenter {
                 break;
             case 1:
                 toolbar.setTitle("电影");
-                toolbar.setBackgroundResource(color[1]);
+                //toolbar.setBackgroundResource(color[1]);
                 fab.setColorNormalResId(color[1]);
                 if (movieFragment == null) {
                     movieFragment = MovieFragment.newsInstance(1);
@@ -139,7 +139,7 @@ public class MainPresenter implements IMainPresenter {
                 break;
             case 2:
                 toolbar.setTitle("书籍");
-                toolbar.setBackgroundResource(color[2]);
+                //toolbar.setBackgroundResource(color[2]);
                 fab.setColorNormalResId(color[2]);
                 if (bookFragment == null) {
                     bookFragment = BookFragment.newsInstance(2);
@@ -149,7 +149,7 @@ public class MainPresenter implements IMainPresenter {
                 break;
             case 3:
                 toolbar.setTitle("音乐");
-                toolbar.setBackgroundResource(color[3]);
+                //toolbar.setBackgroundResource(color[3]);
                 fab.setColorNormalResId(color[3]);
                 if (musicFragment == null) {
                     musicFragment = MusicFragment.newsInstance(3);

@@ -44,7 +44,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX);
+        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX,false);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX);
+                bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX,false);
                 break;
             default:
         }
@@ -95,8 +95,8 @@ public class BookFragment extends BaseFragment implements IBookFragmentView {
     }
 
     @Override
-    public void onErrorAppMsgClick() {
-        bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX);
+    public void onRefreshCompleted() {
+        //bookFragmentPresenter.doConnectHttp(MyConstants.BOOK_PRESENTER_PAGE_INDEX);
     }
 
     @Override
