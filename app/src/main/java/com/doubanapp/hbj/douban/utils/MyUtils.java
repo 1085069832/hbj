@@ -6,6 +6,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.devspark.appmsg.AppMsg;
 import com.doubanapp.hbj.douban.R;
@@ -157,17 +160,17 @@ public class MyUtils {
     }
     //*************************************************************
 
-
     /*
    * 提示信息*/
     //*************************************************************
     public static void showAppMsg(Activity mContext, int stringId, int color) {
+        //屏幕高度
         AppMsg appMsg = AppMsg.makeText(mContext, stringId, AppMsg.STYLE_INFO);
         appMsg.setLayoutGravity(Gravity.TOP);
         appMsg.setDuration(2000);
         View view = appMsg.getView();
-        view.setPadding(0, 70, 0, 0);
         view.setBackgroundColor(color);
+        view.setPadding(0, MyUtils.dip2px(mContext, 40), 0,  MyUtils.dip2px(mContext, 10));
         appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,12 +183,13 @@ public class MyUtils {
     }
 
     public static void showAppMsg(Activity mContext, String text, int color) {
+        //屏幕高度
         AppMsg appMsg = AppMsg.makeText(mContext, text, AppMsg.STYLE_INFO);
         appMsg.setLayoutGravity(Gravity.TOP);
         appMsg.setDuration(2000);
         View view = appMsg.getView();
-        view.setPadding(0, 70, 0, 0);
         view.setBackgroundColor(color);
+        view.setPadding(0, MyUtils.dip2px(mContext, 40), 0, MyUtils.dip2px(mContext, 10));
         appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

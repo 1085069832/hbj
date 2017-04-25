@@ -27,9 +27,9 @@ public class MyToolBar extends Toolbar {
     }
 
     private void initView() {
-        setBackgroundColor(Color.parseColor("#ffffff"));
+        setBackgroundResource(R.color.colorToolBar);
         setNavigationIcon(R.mipmap.toolbar_back);
-        setTitleTextColor(Color.parseColor("#666666"));
+        setTitleTextColor(Color.WHITE);
     }
 
     private void initEvent() {

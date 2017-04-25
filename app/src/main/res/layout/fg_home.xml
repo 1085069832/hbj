@@ -9,10 +9,10 @@
         android:orientation="vertical">
 
         <com.viewpagerindicator.TabPageIndicator
-            android:background="@drawable/me_item_bg_normal"
             android:id="@+id/ti_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/me_item_bg_normal">
 
         </com.viewpagerindicator.TabPageIndicator>
 

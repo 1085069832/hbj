@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
 import com.melnykov.fab.FloatingActionButton;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +60,7 @@ public class MainActivity extends BaseActivity
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+    private boolean bnIsShow = true;//标记bottomNavigationView是否显示
 
     private static Map<String, String> mIsCheckedMap = new HashMap<>();//guid选中的标签
     private List<String> permissionList = new ArrayList<>();
@@ -75,18 +80,16 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        //申请权限
-        checkPermission();
+        navView.getChildAt(0).setVerticalScrollBarEnabled(false);
+        if (Build.VERSION.SDK_INT >= 21)
+            checkPermission();
         //设置不能滑动退出
         setSwipeBackEnable(false);
-
         //set listener
         drawer.addDrawerListener(this);
         navView.setNavigationItemSelectedListener(this);
         fab.setOnClickListener(this);
         bottomNavigationView.setOnBottomNavigationItemClickListener(this);
-
         //Presenter
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.doAnim();//开启动画
@@ -96,7 +99,6 @@ public class MainActivity extends BaseActivity
         mainPresenter.doInitDefaultFragment();//默认显示HomeFragment
         //bottomNavigationView显示和隐藏动画
         animator = ObjectAnimator.ofFloat(bottomNavigationView, "translationY", 0);
-
     }
 
     /*
@@ -150,9 +152,10 @@ public class MainActivity extends BaseActivity
     public void hideBottomNavigation() {
         if (animator.isStarted() || animator.isRunning())
             return;
-        animator.setFloatValues(150);
-        animator.setDuration(150);
+        animator.setFloatValues(700);
+        animator.setDuration(250);
         animator.start();
+        bnIsShow = false;
     }
 
     /*
@@ -161,8 +164,9 @@ public class MainActivity extends BaseActivity
         if (animator.isStarted() || animator.isRunning())
             return;
         animator.setFloatValues(0);
-        animator.setDuration(150);
+        animator.setDuration(250);
         animator.start();
+        bnIsShow = true;
     }
 
     @Override
@@ -170,6 +174,8 @@ public class MainActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (!bnIsShow) {
+            showBottomNavigation();
         } else {
             //提示关闭app
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)

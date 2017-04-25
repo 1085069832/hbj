@@ -9,5 +9,7 @@
     <color name="colorBook">#d2d9871b</color>
     <color name="colorMusic">#d2e70e20</color>
 
-    <color name="colorToolBar">#d2102026</color>
+    <color name="colorToolBar">#c3102026</color>
+    <color name="colorStatus">#c3102026</color>
+    <color name="colorNavigation">#c3102026</color>
 </resources>
