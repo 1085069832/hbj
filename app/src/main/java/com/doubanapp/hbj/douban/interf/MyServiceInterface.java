@@ -19,6 +19,6 @@ public interface MyServiceInterface {
 
     //动态url
     @GET
-    Observable<ResponseBody> toConnecHomeDayRecommendData(@Url String url);
+    Observable<ResponseBody> toConnectGankData(@Url String url);
 
 }

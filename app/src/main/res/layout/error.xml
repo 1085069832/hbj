@@ -11,6 +11,7 @@
         android:layout_centerInParent="true"
         android:drawableTop="@mipmap/ic_loading_error"
         android:gravity="center_horizontal"
+        android:paddingBottom="20dp"
         android:text="点击重试"
         android:textColor="#999999" />
 

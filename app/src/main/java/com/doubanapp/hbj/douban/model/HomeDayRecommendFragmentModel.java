@@ -37,27 +37,26 @@ public class HomeDayRecommendFragmentModel {
     private Retrofit retrofit;
     private int pagePosition = 0;//记录加载更多索引
     private int oldDayCount = 0;//标记上一次加载的索引
-    private boolean isFirstLoad = true;//记录是否第一次加载
-    private boolean isLoadMore;
+
+    private boolean isRefreshing = false;
+    private boolean isLoadMoreing = false;
+
 
     public HomeDayRecommendFragmentModel(Context mContext, IHomeDayRecommendModel iHomeDayRecommendModel) {
         this.mContext = mContext;
         this.iHomeDayRecommendModel = iHomeDayRecommendModel;
     }
 
-    public void toConnectHttp(final boolean isLoadMore) {
-        //判断是否订阅了
-        if (daySubscription != null && !daySubscription.isUnsubscribed() || contentSubscription != null
-                && !contentSubscription.isUnsubscribed()) {
-            MyLogUtils.i(TAG, "已经在加载了");
+    public void toConnectHttp(final boolean isRefresh, final boolean isLoadMore) {
+        //判断是否正在加载
+        if (isRefresh && isRefreshing || isLoadMore && isLoadMoreing)
             return;
-        }
-        this.isLoadMore = isLoadMore;
+
         MyLogUtils.i(TAG, "toConnectHttp");
         gank_base_url = MyUtils.getResourcesString(R.string.gank_base_url);
         //获取有内容的日期 http://gank.io/api/day/history
         retrofit = MyUtils.getRetrofit(gank_base_url);
-        daySubscription = retrofit.create(MyServiceInterface.class).toConnecHomeDayRecommendData(gank_base_url + "/api/day/history")
+        daySubscription = retrofit.create(MyServiceInterface.class).toConnectGankData("api/day/history")
                 //ResponseBody数据保存，和转换
                 .map(new Func1<ResponseBody, DayHistoryJsonData>() {
                     @Override
@@ -84,10 +83,16 @@ public class HomeDayRecommendFragmentModel {
 
                                @Override
                                public void onError(Throwable e) {
-                                   if (isLoadMore)
+                                   if (isLoadMore) {
+                                       isLoadMoreing = false;
                                        pagePosition--;
-                                   //错误回调
-                                   iHomeDayRecommendModel.onConnectError();
+                                   }
+                                   if (isRefresh) {
+                                       isRefreshing = false;
+                                       iHomeDayRecommendModel.onRefreshResult(-1);
+                                   } else {
+                                       iHomeDayRecommendModel.onConnectError();
+                                   }
                                }
 
                                @Override
@@ -98,27 +103,24 @@ public class HomeDayRecommendFragmentModel {
                                    //获取有内容日期的数据
                                    if (isLoadMore) {
                                        //加载更多
-                                       toConnectDayRecommendData(nearestDay, false);
-                                   } else {
-                                       //不是加载更多
-                                       if (pagePosition == 0 && isFirstLoad) {
-                                           //第一次加载
-                                           isFirstLoad = false;
-                                           MyLogUtils.i(TAG, dayResults.get(0) + " 第一次加载");
-                                           toConnectDayRecommendData(dayResults.get(0).replace("-", "/"), false);
-                                       } else if (dayResults.size() == oldDayCount) {
+                                       toConnectDayRecommendData(nearestDay, false, true);
+                                   } else if (isRefresh) {
+                                       if (dayResults.size() == oldDayCount) {
                                            //下拉刷新没有新数据
+                                           isRefreshing = false;
                                            MyLogUtils.i(TAG, dayResults.size() - oldDayCount + " 下拉刷新没有新数据");
                                            iHomeDayRecommendModel.onRefreshResult(0);
                                        } else {
+                                           //下拉刷新有数据
                                            MyLogUtils.i(TAG, dayResults.size() - oldDayCount + " 下拉刷新有新数据");
-                                           //下拉刷新有新数据
-                                           toConnectDayRecommendData(dayResults.get(dayResults.size() - oldDayCount - 1).replace("-", "/"), true);
+                                           toConnectDayRecommendData(dayResults.get(dayResults.size() - oldDayCount - 1).replace("-", "/"), true, false);
                                        }
+                                   } else {
+                                       MyLogUtils.i(TAG, dayResults.get(0) + " 第一次加载");
+                                       toConnectDayRecommendData(dayResults.get(0).replace("-", "/"), false, false);
                                    }
-                                   //记录上一次加载多少数据
-                                   if (pagePosition == 0)
-                                       oldDayCount = dayResults.size();
+                                   //记录上一次刷新加载多少数据
+                                   oldDayCount = dayResults.size();
                                }
 
                                @Override
@@ -126,26 +128,27 @@ public class HomeDayRecommendFragmentModel {
                                    //开始
                                    MyLogUtils.i(TAG, "onStart");
                                    if (isLoadMore) {
+                                       isLoadMoreing = true;
                                        //加载更多
-                                       iHomeDayRecommendModel.onConnectStart(true);
+                                       iHomeDayRecommendModel.onConnectStart(false, true);
                                        pagePosition++;
+                                   } else if (isRefresh) {
+                                       isRefreshing = true;
+                                       //下拉刷新
+                                       iHomeDayRecommendModel.onConnectStart(true, false);
                                    } else {
-                                       if (pagePosition == 0 && isFirstLoad) {
-                                           //第一次加载
-                                           iHomeDayRecommendModel.onConnectStart(false);
-                                       } else {
-                                           //下拉刷新
-                                           iHomeDayRecommendModel.onConnectStart(true);
-                                       }
+                                       //第一次加载
+                                       iHomeDayRecommendModel.onConnectStart(false, false);
                                    }
                                }
                            }
                 );
     }
 
-    private void toConnectDayRecommendData(final String day, final boolean isRefresh) {
+    private void toConnectDayRecommendData(final String day, final boolean isRefresh, final boolean isLoadMore) {
         //此处加载数据
-        contentSubscription = retrofit.create(MyServiceInterface.class).toConnecHomeDayRecommendData("api/day/" + day)
+        //http://gank.io/api/day/2015/08/06
+        contentSubscription = retrofit.create(MyServiceInterface.class).toConnectGankData("api/day/" + day)
                 //ResponseBody数据保存，和转换
                 .map(new Func1<ResponseBody, HomeDayRecommendJsonData>() {
                     @Override
@@ -168,6 +171,10 @@ public class HomeDayRecommendFragmentModel {
                     @Override
                     public void onCompleted() {
                         //请求结束
+                        if (isLoadMore)
+                            isLoadMoreing = false;
+                        if (isRefresh)
+                            isRefreshing = false;
                         iHomeDayRecommendModel.onConnectCompleted();
                     }
 
@@ -175,10 +182,14 @@ public class HomeDayRecommendFragmentModel {
                     public void onError(Throwable e) {
                         //错误回调
                         iHomeDayRecommendModel.onConnectError();
-                        if (isLoadMore)
+                        if (isLoadMore) {
                             pagePosition--;
-                        if (pagePosition == 0)//防止第一次加载时间成功，加载内容失败的情况
-                            isFirstLoad = true;
+                            isLoadMoreing = false;
+                        }
+                        if (isRefresh) {
+                            iHomeDayRecommendModel.onRefreshResult(-1);
+                            isRefreshing = false;
+                        }
                     }
 
                     @Override
@@ -186,7 +197,18 @@ public class HomeDayRecommendFragmentModel {
                         iHomeDayRecommendModel.onHomeDayRecommendConnectNext(res, day, isRefresh);
                         //通知刷新了多少数据
                         if (isRefresh) {
-                            iHomeDayRecommendModel.onRefreshResult(res.getCategory().size());
+                            int count = res.getCategory().size();
+                            if (res.getResults().getAndroid() != null && res.getResults().getAndroid().size() < 2)
+                                count--;
+                            if (res.getResults().getApp() != null && res.getResults().getApp().size() < 2)
+                                count--;
+                            if (res.getResults().getIOS() != null && res.getResults().getIOS().size() < 2)
+                                count--;
+                            if (res.getResults().get前端() != null && res.getResults().get前端().size() < 2)
+                                count--;
+                            if (res.getResults().get拓展资源() != null && res.getResults().get拓展资源().size() < 2)
+                                count--;
+                            iHomeDayRecommendModel.onRefreshResult(count);
                         }
                     }
 

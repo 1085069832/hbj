@@ -113,7 +113,7 @@ public class BookFragmentModel {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
                         new BoubanAPIConnectCountAlert(mContext);
-                        iBookModel.onConnectStart(false);
+                        iBookModel.onConnectStart(false,false);
                     }
                 });
     }

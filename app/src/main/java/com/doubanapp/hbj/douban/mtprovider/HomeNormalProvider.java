@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
@@ -38,15 +39,48 @@ public class HomeNormalProvider extends ItemViewProvider<HomeNormalItem, Recycle
 
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final HomeNormalItem homeNormalItem) {
-        ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeNormalItem.title);
         switch (homeNormalItem.pageIndex) {
             case MyConstants.HOME_DR_REST_INDEX://homerecommend 休息视频
-                HomeDayRecommendJsonData.ResultsBean.休息视频Bean rest = homeNormalItem.res.getResults().get休息视频().get(0);
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeNormalItem.title);
+                HomeDayRecommendJsonData.ResultsBean.休息视频Bean rest = homeNormalItem.homeDayRecommendJsonDataRes.getResults().get休息视频().get(0);
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_who.setText("作者: " + rest.getWho());
                 String time = rest.getPublishedAt().replace("T", " ");
                 String substringTime = time.substring(time.indexOf("-") + 1, time.lastIndexOf(":"));
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_time.setText(substringTime);
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_des.setText(rest.getDesc());
+                break;
+            case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://home all
+               /* HomeJsonData.ResultsBean homeJson = homeNormalItem.homeJsonDataRes.getResults().get(homeNormalItem.position);
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeJson.getType());
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_who.setText("作者: " + homeJson.getWho());
+                String homeJsonTime = homeJson.getPublishedAt().replace("T", " ");
+                String homeJsonTimest = homeJsonTime.substring(homeJsonTime.indexOf("-") + 1, homeJsonTime.lastIndexOf(":"));
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_time.setText(homeJsonTimest);
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_des.setText(homeJson.getDesc());
+                if (homeJson.getImages() != null) {
+                    Glide.with(mContext)
+                            .load(homeJson.getImages().get(0))
+                            .centerCrop()
+                            .crossFade()
+                            .placeholder(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.pic_placeholder_default)
+                            .into(((HomeNormalItemViewHolder) holder).iv_home_normal_image);
+                }*/
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeNormalItem.type);
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_who.setText("作者: " + homeNormalItem.who);
+                String homeJsonTime = homeNormalItem.time.replace("T", " ");
+                String homeJsonTimest = homeJsonTime.substring(homeJsonTime.indexOf("-") + 1, homeJsonTime.lastIndexOf(":"));
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_time.setText(homeJsonTimest);
+                ((HomeNormalItemViewHolder) holder).tv_home_normal_des.setText(homeNormalItem.des);
+                if (homeNormalItem.image != null) {
+                    Glide.with(mContext)
+                            .load(homeNormalItem.image)
+                            .centerCrop()
+                            .crossFade()
+                            .placeholder(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.pic_placeholder_default)
+                            .into(((HomeNormalItemViewHolder) holder).iv_home_normal_image);
+                }
                 break;
             default:
         }

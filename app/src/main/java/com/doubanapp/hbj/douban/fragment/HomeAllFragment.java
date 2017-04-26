@@ -60,14 +60,14 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
             //不加载数据
             return;
         }
-        homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX, false);
+        homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX, false,false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX, false);
+                homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX, false,false);
                 break;
             default:
         }

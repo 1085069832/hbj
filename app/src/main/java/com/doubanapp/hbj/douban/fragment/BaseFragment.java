@@ -36,7 +36,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
 
     private static final String TAG = "BaseFragment";
     @BindView(R.id.sr_base)
-    SwipeRefreshLayout srBase;
+    SwipeRefreshLayout swipeRLBase;
     private int lastVisibleItemPosition;
     @BindView(R.id.rc_base)
     RecyclerView rc_base;
@@ -76,8 +76,8 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //设置swipelayout不可用,及监听刷新事件
-        srBase.setEnabled(false);
-        srBase.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRLBase.setEnabled(false);
+        swipeRLBase.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 BaseFragment.this.onRefresh();
@@ -136,7 +136,6 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
                         loadMore();
                     }
                 }
-
             }
 
             @Override

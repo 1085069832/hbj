@@ -22,6 +22,7 @@ import com.doubanapp.hbj.douban.IView.IFragmentBaseView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
+import com.doubanapp.hbj.douban.bean.HomeJsonData;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.model.BookFragmentModel;
 import com.doubanapp.hbj.douban.model.HomeAllFragmentModel;
@@ -139,7 +140,7 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
     /*
     * 连接网络获取数据*/
     @Override
-    public void doConnectHttp(int selectPage, boolean isLoadMore) {
+    public void doConnectHttp(int selectPage, boolean isRefresh, boolean isLoadMore) {
         switch (selectPage) {
             case MyConstants.MUSIC_PRESENTER_PAGE_INDEX://获取音乐数据
                 if (musicFragmentModel == null)
@@ -159,12 +160,12 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
             case MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX://获取主页每日推荐数据
                 if (homeDayRecommendFragmentModel == null)
                     homeDayRecommendFragmentModel = new HomeDayRecommendFragmentModel(mContext, this);
-                homeDayRecommendFragmentModel.toConnectHttp(isLoadMore);
+                homeDayRecommendFragmentModel.toConnectHttp(isRefresh, isLoadMore);
                 break;
             case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://获取主页all数据
                 if (homeAllFragmentModel == null)
                     homeAllFragmentModel = new HomeAllFragmentModel(mContext, this);
-                homeAllFragmentModel.toConnectData();
+                homeAllFragmentModel.toConnectData("all");
                 break;
             case MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX://获取主页android数据
                 if (homeAndroidFragmentModel == null)
@@ -197,10 +198,10 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
     /*
     * 开始请求*/
     @Override
-    public void onConnectStart(boolean disAllowedShowPreogress) {
-        //判断是否是加载更多
-        if (disAllowedShowPreogress) {
-            //不显示progressbar
+    public void onConnectStart(boolean isRefresh, boolean isLoadMore) {
+        if (isRefresh) {
+            iFragmentBaseView.onStartVisibility(View.GONE, View.GONE);
+        } else if (isLoadMore) {
             iFragmentBaseView.onStartVisibility(View.GONE, View.GONE);
             if (!items.isEmpty()) {//不为空，先删除加载更多，再重新添加
                 items.remove(items.size() - 1);
@@ -208,7 +209,7 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
                 iFragmentBaseView.onNotifyDataSetChanged();
             }
         } else {
-            //第一次进入加载
+            //第一次加载
             iFragmentBaseView.onStartVisibility(View.VISIBLE, View.GONE);
         }
     }
@@ -226,7 +227,6 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
             iFragmentBaseView.onNotifyDataSetChanged();
         }
         MyUtils.showAppMsg((MainActivity) mContext, R.string.appmsg_connect_error_text, Color.RED);
-        iFragmentBaseView.onRefreshCompleted();
     }
 
     /*
@@ -237,13 +237,17 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
         iFragmentBaseView.onNotifyDataSetChanged();
     }
 
+    /*刷新状态
+    * >0表示有新数据，=-1表示刷新失败 ，0表示没有新数据*/
     @Override
     public void onRefreshResult(int resultCount) {
         MyLogUtils.i(TAG, "resultCount" + resultCount);
         if (resultCount > 0) {
             MyUtils.showAppMsg((MainActivity) mContext, MyUtils.getResourcesString(R.string.appmsg_refresh_has_data_text_header) + resultCount +
                     MyUtils.getResourcesString(R.string.appmsg_refresh_has_data_text_footer), Color.parseColor("#3333ff"));
-        } else {
+        } else if (resultCount == -1) {
+            MyUtils.showAppMsg((MainActivity) mContext, R.string.appmsg_connect_error_text, Color.RED);
+        } else if (resultCount == 0) {
             MyUtils.showAppMsg((MainActivity) mContext, R.string.appmsg_refresh_no_data_text, Color.LTGRAY);
         }
         iFragmentBaseView.onRefreshCompleted();
@@ -336,11 +340,22 @@ public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener,
     /*
     * home all数据*/
     @Override
-    public void onHomeAllConnectNext(List<String> allData) {
+    public void onHomeAllConnectNext(HomeJsonData res) {
         items.add(new HomeAllTitleItem("", bottomSheet, menuSheetView));
-        for (int i = 0; i < allData.size(); i++) {
-            items.add(new HomeNormalItem("", i));
+        for (int position = 0; position < res.getResults().size(); position++) {
+            if ("福利".equals(res.getResults().get(position).getType())) {
+                items.add(new ContentIconItem(res.getResults().get(position).getUrl(), "福利", MyConstants.HOME_DR_WELFARE_INDEX));
+            } else {
+                List<String> images = res.getResults().get(position).getImages();
+                items.add(new HomeNormalItem(res.getResults().get(position).getType(),
+                        res.getResults().get(position).getDesc(),
+                        res.getResults().get(position).getWho(),
+                        res.getResults().get(position).getPublishedAt(),
+                        images == null ? null : images.get(0),
+                        position, MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX));
+            }
         }
+        MyLogUtils.i(TAG, res.getResults().get(1).getDesc());
     }
 
     /*

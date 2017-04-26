@@ -19,7 +19,7 @@ public interface IFragmentPresenter {
 
     void doInitStaggeredGridLayoutManager();
 
-    void doConnectHttp(int selectPage, boolean isLoadMore);
+    void doConnectHttp(int selectPage, boolean isRefresh, boolean isLoadMore);
 
     void doDestroy();
 }

@@ -60,14 +60,14 @@ public class HomeAndroidFragment extends BaseFragment implements IHomeAndroidFra
             //不加载数据
             return;
         }
-        homeAndroidFragmentPresenter.doConnectHttp(MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX,false);
+        homeAndroidFragmentPresenter.doConnectHttp(MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX,false,false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                homeAndroidFragmentPresenter.doConnectHttp(MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX,false);
+                homeAndroidFragmentPresenter.doConnectHttp(MyConstants.HOME_ANDROID_PRESENTER_PAGE_INDEX,false,false);
                 break;
             default:
         }

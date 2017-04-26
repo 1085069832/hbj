@@ -62,7 +62,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
             //不加载数据
             return;
         }
-        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false);
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false, false);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false);
+                homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false, false);
                 break;
         }
     }
@@ -82,13 +82,13 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
     @Override
     protected void onRefresh() {
         super.onRefresh();
-        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false);
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, true, false);
     }
 
     @Override
     protected void loadMore() {
         super.loadMore();
-        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, true);
+        homeDayReFragmentPresenter.doConnectHttp(MyConstants.HOME_DAYRECOMMEND_PRESENTER_PAGE_INDEX, false, true);
     }
 
     @Override
@@ -119,8 +119,8 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
 
     @Override
     public void onRefreshCompleted() {
-        if (srBase.isRefreshing())
-            srBase.setRefreshing(false);
+        if (swipeRLBase.isRefreshing())
+            swipeRLBase.setRefreshing(false);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class HomeDayRecommendFragment extends BaseFragment implements IDayRecomm
         pb_loading.setVisibility(progressVisb);
         rl_error.setVisibility(errorVisb);
         //设置swipelayout可用
-        srBase.setEnabled(true);
+        swipeRLBase.setEnabled(true);
     }
 
     @Override

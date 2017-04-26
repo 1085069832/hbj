@@ -60,14 +60,14 @@ public class HomeWelFareFragment extends BaseFragment implements IHomeWelFareFra
             //不加载数据
             return;
         }
-        homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX, false);
+        homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX, false,false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX, false);
+                homeWelFareFragmentPresenter.doConnectHttp(MyConstants.HOME_WELFARE_PRESENTER_PAGE_INDEX, false,false);
                 break;
             default:
         }

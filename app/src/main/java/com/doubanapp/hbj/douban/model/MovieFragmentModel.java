@@ -121,7 +121,7 @@ public class MovieFragmentModel {
                         MyLogUtils.i(TAG, "onStart");
                         new BoubanAPIConnectCountAlert(mContext);
                         //设置第一次加载变量
-                        iMovieModel.onConnectStart(false);
+                        iMovieModel.onConnectStart(false,false);
                     }
                 });
     }

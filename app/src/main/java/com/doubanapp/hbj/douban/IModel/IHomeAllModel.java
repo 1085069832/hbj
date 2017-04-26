@@ -1,12 +1,10 @@
 package com.doubanapp.hbj.douban.IModel;
 
-import android.view.View;
-
-import java.util.List;
+import com.doubanapp.hbj.douban.bean.HomeJsonData;
 
 /**
  * Created by Administrator on 2017/4/7 0007.
  */
 public interface IHomeAllModel extends IBaseModel {
-    void onHomeAllConnectNext(List<String> allData);
+    void onHomeAllConnectNext(HomeJsonData res);
 }

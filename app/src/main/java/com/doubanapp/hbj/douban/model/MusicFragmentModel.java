@@ -116,7 +116,7 @@ public class MusicFragmentModel {
                         //开始
                         new BoubanAPIConnectCountAlert(mContext);
                         // MyLogUtils.i(TAG, "onStart");
-                        iMusicFragmentModel.onConnectStart(false);
+                        iMusicFragmentModel.onConnectStart(false,false);
                     }
                 });
     }

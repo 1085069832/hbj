@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.doubanapp.hbj.douban.IModel.IHomeAllModel;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.bean.KuaiDiJsonData;
+import com.doubanapp.hbj.douban.bean.HomeJsonData;
 import com.doubanapp.hbj.douban.interf.MyServiceInterface;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
@@ -33,26 +33,28 @@ public class HomeAllFragmentModel {
     private IHomeAllModel iHomeAllModela;
     private List<String> mData = new ArrayList<>();
     private Subscription subscription;
+    private int currentPage = 1;//标记第几页数据
+    private int count = 20;//请求多少个数据
 
     public HomeAllFragmentModel(Context mContext, IHomeAllModel iHomeAllModela) {
         this.mContext = mContext;
         this.iHomeAllModela = iHomeAllModela;
     }
 
-    public void toConnectData() {
+    public void toConnectData(String type) {
         //判断是否订阅了
         if (subscription != null && !subscription.isUnsubscribed()) {
             MyLogUtils.i(TAG, "已经在加载了");
             return;
         }
-        String baseUrl = MyUtils.getResourcesString(R.string.base_kuaidi_url);
+        String baseUrl = MyUtils.getResourcesString(R.string.gank_base_url);
         //此处加载数据
         Retrofit retrofit = MyUtils.getRetrofit(baseUrl);
-        subscription = retrofit.create(MyServiceInterface.class).toSearch("yuantong", "500379523313")
+        subscription = retrofit.create(MyServiceInterface.class).toConnectGankData("api/data/" + type + "/" + count + "/" + currentPage)
                 //ResponseBody数据保存，和转换
-                .map(new Func1<ResponseBody, KuaiDiJsonData>() {
+                .map(new Func1<ResponseBody, HomeJsonData>() {
                     @Override
-                    public KuaiDiJsonData call(ResponseBody responseBody) {
+                    public HomeJsonData call(ResponseBody responseBody) {
 
                         String stringJson = null;
                         try {
@@ -67,7 +69,7 @@ public class HomeAllFragmentModel {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<KuaiDiJsonData>() {
+                .subscribe(new Subscriber<HomeJsonData>() {
                     @Override
                     public void onCompleted() {
                         //请求结束
@@ -81,27 +83,28 @@ public class HomeAllFragmentModel {
                     }
 
                     @Override
-                    public void onNext(KuaiDiJsonData res) {
+                    public void onNext(HomeJsonData res) {
                         //成功
                         for (int i = 0; i < 30; i++) {
                             mData.add("全部");
                         }
-                        iHomeAllModela.onHomeAllConnectNext(mData);
+                        iHomeAllModela.onHomeAllConnectNext(res);
                     }
 
                     @Override
                     public void onStart() {
                         //开始
                         MyLogUtils.i(TAG, "onStart");
-                        iHomeAllModela.onConnectStart(false);
+                        iHomeAllModela.onConnectStart(false, false);
                     }
                 });
     }
 
-    private KuaiDiJsonData parseJsonData(String data) {
+    private HomeJsonData parseJsonData(String data) {
         Gson gson = new Gson();
-        return gson.fromJson(data, KuaiDiJsonData.class);
+        return gson.fromJson(data, HomeJsonData.class);
     }
+
     /*
 * 取消rxjava订阅*/
     public void cancelHttpRequset() {

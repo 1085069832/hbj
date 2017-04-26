@@ -43,7 +43,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX, false);
+        musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX, false, false);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MusicFragment extends BaseFragment implements IMusicFragmentView {
 
         switch (v.getId()) {
             case R.id.rl_error:
-                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX, false);
+                musicFragmentPresenter.doConnectHttp(MyConstants.MUSIC_PRESENTER_PAGE_INDEX, false, false);
                 break;
             default:
         }

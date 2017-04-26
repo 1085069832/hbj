@@ -16,9 +16,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
@@ -100,9 +98,9 @@ public class MyUtils {
 
     public static Retrofit getRetrofit(String baseUrl) {
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                .writeTimeout(10000L, TimeUnit.MILLISECONDS)
+                .connectTimeout(5000L, TimeUnit.MILLISECONDS)
+                .readTimeout(5000L, TimeUnit.MILLISECONDS)
+                .writeTimeout(5000L, TimeUnit.MILLISECONDS)
                 .cache(new Cache(getContext().getCacheDir(), 10 * 1024 * 1024))
                 .build();
         //设置Retrofit，并把okhttp设置进来
@@ -112,16 +110,6 @@ public class MyUtils {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit;
-    }
-
-
-    public static void sendOkHttpConnect(String url, Callback callback) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .get()
-                .url(url)
-                .build();
-        okHttpClient.newCall(request).enqueue(callback);
     }
 
     //*************************************************************

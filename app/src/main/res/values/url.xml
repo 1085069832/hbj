@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="douban_base_url">http://api.douban.com</string>
-    <string name="gank_base_url">http://gank.io</string>
+    <string name="gank_base_url">http://gank.io/</string>
     <string name="base_kuaidi_url">http://www.kuaidi100.com</string>
 </resources>
