@@ -150,16 +150,12 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
                 }
 
                 if (dy > 0) {
-                    if (dy > 5) {
-                        mContext.hideFloating();
-                        mContext.hideBottomNavigation();
-                    }
-
+                    mContext.hideFloating();
+                    mContext.hideBottomNavigation();
                 } else if (dy <= 0) {
-                    if (dy < -5) {
-                        mContext.showFloating();
-                        mContext.showBottomNavigation();
-                    }
+                    mContext.showFloating();
+                    mContext.showBottomNavigation();
+
                 }
             }
         });
