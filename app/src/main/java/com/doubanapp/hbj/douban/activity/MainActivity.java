@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
@@ -27,11 +25,11 @@ import com.doubanapp.hbj.douban.IView.IMainView;
 import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.presenter.MainPresenter;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
 import com.melnykov.fab.FloatingActionButton;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +44,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 * 主界面
 * */
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
+        implements NavigationView.OnNavigationItemSelectedListener, BottomSheetLayout.OnSheetStateChangeListener,
         DrawerLayout.DrawerListener, View.OnClickListener, OnBottomNavigationItemClickListener, IMainView {
 
     private static final String TAG = "MainActivity";
@@ -60,6 +58,8 @@ public class MainActivity extends BaseActivity
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+    @BindView(R.id.bottomsheet)
+    BottomSheetLayout bottomsheet;
     private boolean bnIsShow = true;//标记bottomNavigationView是否显示
 
     private static Map<String, String> mIsCheckedMap = new HashMap<>();//guid选中的标签
@@ -99,6 +99,7 @@ public class MainActivity extends BaseActivity
         mainPresenter.doInitDefaultFragment();//默认显示HomeFragment
         //bottomNavigationView显示和隐藏动画
         animator = ObjectAnimator.ofFloat(bottomNavigationView, "translationY", 0);
+
     }
 
     /*
@@ -133,6 +134,11 @@ public class MainActivity extends BaseActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    public BottomSheetLayout getBottomsheet() {
+        bottomsheet.addOnSheetStateChangeListener(this);
+        return bottomsheet;
+    }
+
     /*
     * 显示floating*/
     public void showFloating() {
@@ -150,23 +156,23 @@ public class MainActivity extends BaseActivity
     /*
     * 隐藏BottomNavigation*/
     public void hideBottomNavigation() {
-        if (animator.isStarted() || animator.isRunning())
+        if (!bnIsShow)
             return;
+        bnIsShow = false;
         animator.setFloatValues(700);
         animator.setDuration(250);
         animator.start();
-        bnIsShow = false;
     }
 
     /*
     * 显示BottomNavigation*/
     public void showBottomNavigation() {
-        if (animator.isStarted() || animator.isRunning())
+        if (bnIsShow)
             return;
+        bnIsShow = true;
         animator.setFloatValues(0);
         animator.setDuration(250);
         animator.start();
-        bnIsShow = true;
     }
 
     @Override
@@ -323,6 +329,24 @@ public class MainActivity extends BaseActivity
     public void onNavigationItemClick(int index) {
         mainPresenter.doHideFragment();
         mainPresenter.doShowFragment(toolbar, fab, index);
+    }
+
+    /*
+    *bottomSheet状态改变 */
+    @Override
+    public void onSheetStateChanged(BottomSheetLayout.State state) {
+
+        switch (state) {
+            case PREPARING:
+                hideFloating();
+                hideBottomNavigation();
+                break;
+            case HIDDEN:
+                showFloating();
+                showBottomNavigation();
+                break;
+            default:
+        }
     }
 
     public interface FloatingClickedListener {

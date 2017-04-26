@@ -1,7 +1,8 @@
 package com.doubanapp.hbj.douban.IPresenter;
 
 import android.support.v7.widget.RecyclerView;
-import android.widget.RelativeLayout;
+
+import com.flipboard.bottomsheet.BottomSheetLayout;
 
 /**
  * Created by Administrator
@@ -10,7 +11,7 @@ import android.widget.RelativeLayout;
 
 public interface IFragmentPresenter {
 
-    void doInitSweetSheet(RelativeLayout rl);
+    void doInitBottomSheet(BottomSheetLayout bottomSheet);
 
     void doRegisterMultitypeItem(RecyclerView rc);
 

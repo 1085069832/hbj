@@ -10,6 +10,7 @@
     <string name="appmsg_refresh_no_data_text">已经是最新的内容了</string>
     <string name="appmsg_refresh_has_data_text_header">发现了</string>
     <string name="appmsg_refresh_has_data_text_footer">条内容</string>
+    <string name="home_all_bottom_sheet_text">选择分类</string>
 
     <string-array name="home_titlepage">
         <item>推荐</item>

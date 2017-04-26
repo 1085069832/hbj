@@ -42,7 +42,7 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
     @Override
     protected View initChildView() {
         homeAllFragmentPresenter = new FragmentPresenter(mContext, this);
-        homeAllFragmentPresenter.doInitSweetSheet(rl);
+        homeAllFragmentPresenter.doInitBottomSheet(mContext.getBottomsheet());
         homeAllFragmentPresenter.doRegisterMultitypeItem(rc_base);
         homeAllFragmentPresenter.doInitLinearLayoutManager();
 
@@ -60,14 +60,14 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
             //不加载数据
             return;
         }
-        homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX,false);
+        homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX, false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_error:
-                homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX,false);
+                homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX, false);
                 break;
             default:
         }
@@ -106,7 +106,7 @@ public class HomeAllFragment extends BaseFragment implements IHomeAllFragmentVie
 
     @Override
     public void onRefreshCompleted() {
-       // homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX);
+        // homeAllFragmentPresenter.doConnectHttp(MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX);
     }
 
     @Override

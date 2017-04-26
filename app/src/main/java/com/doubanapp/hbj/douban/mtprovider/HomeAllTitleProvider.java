@@ -12,7 +12,8 @@ import com.doubanapp.hbj.douban.R;
 import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.mtitem.HomeAllTitleItem;
 import com.doubanapp.hbj.douban.utils.MyUtils;
-import com.mingle.sweetpick.SweetSheet;
+import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.flipboard.bottomsheet.commons.MenuSheetView;
 
 import me.drakeet.multitype.ItemViewProvider;
 
@@ -21,13 +22,13 @@ import me.drakeet.multitype.ItemViewProvider;
  */
 public class HomeAllTitleProvider extends ItemViewProvider<HomeAllTitleItem, RecyclerView.ViewHolder> implements View.OnClickListener {
 
-    private SweetSheet mSweetSheet;
     private TextView tv_home_all_title;
     private MainActivity mContext;
+    private BottomSheetLayout bottomSheet;
+    private MenuSheetView menuSheetView;
 
-    public HomeAllTitleProvider(Context mContext, SweetSheet mSweetSheet) {
+    public HomeAllTitleProvider(Context mContext) {
         this.mContext = (MainActivity) mContext;
-        this.mSweetSheet = mSweetSheet;
     }
 
     @NonNull
@@ -40,18 +41,15 @@ public class HomeAllTitleProvider extends ItemViewProvider<HomeAllTitleItem, Rec
 
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final HomeAllTitleItem homeAllTitleItem) {
-
+        this.bottomSheet = homeAllTitleItem.bottomSheet;
+        this.menuSheetView = homeAllTitleItem.menuSheetView;
     }
 
     @Override
     public synchronized void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_home_all_title:
-                if (!mSweetSheet.isShow()) {
-                    mContext.hideBottomNavigation();
-                    mContext.hideFloating();
-                    mSweetSheet.show();
-                }
+                bottomSheet.showWithSheetView(menuSheetView);
                 break;
             default:
         }

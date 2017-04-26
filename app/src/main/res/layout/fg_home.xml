@@ -3,25 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.viewpagerindicator.TabPageIndicator
-            android:id="@+id/ti_home"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/me_item_bg_normal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        </com.viewpagerindicator.TabPageIndicator>
+            <com.viewpagerindicator.TabPageIndicator
+                android:id="@+id/ti_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/me_item_bg_normal">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </com.viewpagerindicator.TabPageIndicator>
 
-        </android.support.v4.view.ViewPager>
-    </LinearLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v4.view.ViewPager>
+        </LinearLayout>
 
 </RelativeLayout>

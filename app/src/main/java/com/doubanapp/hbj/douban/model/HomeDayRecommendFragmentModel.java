@@ -36,8 +36,9 @@ public class HomeDayRecommendFragmentModel {
     private Subscription daySubscription;
     private Retrofit retrofit;
     private int pagePosition = 0;//记录加载更多索引
-    private int currentDayCount = 0;//标记第一次加载的索引
+    private int oldDayCount = 0;//标记上一次加载的索引
     private boolean isFirstLoad = true;//记录是否第一次加载
+    private boolean isLoadMore;
 
     public HomeDayRecommendFragmentModel(Context mContext, IHomeDayRecommendModel iHomeDayRecommendModel) {
         this.mContext = mContext;
@@ -51,6 +52,7 @@ public class HomeDayRecommendFragmentModel {
             MyLogUtils.i(TAG, "已经在加载了");
             return;
         }
+        this.isLoadMore = isLoadMore;
         MyLogUtils.i(TAG, "toConnectHttp");
         gank_base_url = MyUtils.getResourcesString(R.string.gank_base_url);
         //获取有内容的日期 http://gank.io/api/day/history
@@ -75,71 +77,70 @@ public class HomeDayRecommendFragmentModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DayHistoryJsonData>() {
-                    @Override
-                    public void onCompleted() {
-                        //请求结束
-                    }
+                               @Override
+                               public void onCompleted() {
+                                   //请求结束
+                               }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (isLoadMore)
-                            pagePosition--;
-                        //错误回调
-                        iHomeDayRecommendModel.onConnectError();
-                    }
+                               @Override
+                               public void onError(Throwable e) {
+                                   if (isLoadMore)
+                                       pagePosition--;
+                                   //错误回调
+                                   iHomeDayRecommendModel.onConnectError();
+                               }
 
-                    @Override
-                    public void onNext(DayHistoryJsonData dayHistoryJsonData) {
-                        //2017-03-31
-                        String nearestDay = dayHistoryJsonData.getResults().get(pagePosition).replace("-", "/");
-                        List<String> dayResults = dayHistoryJsonData.getResults();
-                        //获取有内容日期的数据
-                        if (isLoadMore) {
-                            //加载更多
-                            toConnectDayRecommendData(nearestDay, false);
-                        } else {
-                            //不是加载更多
-                            if (dayResults.size() == currentDayCount) {
-                                //下拉刷新没有新数据
-                                MyLogUtils.i(TAG, dayResults.size() - currentDayCount + " 下拉刷新没有新数据");
-                                iHomeDayRecommendModel.onRefreshResult(0);
-                            } else {
-                                if (pagePosition == 0 && isFirstLoad) {
-                                    isFirstLoad = false;
-                                    MyLogUtils.i(TAG, dayResults.get(0) + " 第一次加载");
-                                    //第一次加载
-                                    toConnectDayRecommendData(dayResults.get(0).replace("-", "/"), false);
-                                } else {
-                                    MyLogUtils.i(TAG, dayResults.size() - currentDayCount + " 下拉刷新有新数据");
-                                    //下拉刷新有新数据
-                                    toConnectDayRecommendData(dayResults.get(dayResults.size() - currentDayCount - 1).replace("-", "/"), true);
-                                }
-                            }
-                        }
-                        //记录第一次加载数据大小
-                        if (pagePosition == 0)
-                            currentDayCount = dayResults.size();
-                    }
+                               @Override
+                               public void onNext(DayHistoryJsonData dayHistoryJsonData) {
+                                   //2017-03-31
+                                   String nearestDay = dayHistoryJsonData.getResults().get(pagePosition).replace("-", "/");
+                                   List<String> dayResults = dayHistoryJsonData.getResults();
+                                   //获取有内容日期的数据
+                                   if (isLoadMore) {
+                                       //加载更多
+                                       toConnectDayRecommendData(nearestDay, false);
+                                   } else {
+                                       //不是加载更多
+                                       if (pagePosition == 0 && isFirstLoad) {
+                                           //第一次加载
+                                           isFirstLoad = false;
+                                           MyLogUtils.i(TAG, dayResults.get(0) + " 第一次加载");
+                                           toConnectDayRecommendData(dayResults.get(0).replace("-", "/"), false);
+                                       } else if (dayResults.size() == oldDayCount) {
+                                           //下拉刷新没有新数据
+                                           MyLogUtils.i(TAG, dayResults.size() - oldDayCount + " 下拉刷新没有新数据");
+                                           iHomeDayRecommendModel.onRefreshResult(0);
+                                       } else {
+                                           MyLogUtils.i(TAG, dayResults.size() - oldDayCount + " 下拉刷新有新数据");
+                                           //下拉刷新有新数据
+                                           toConnectDayRecommendData(dayResults.get(dayResults.size() - oldDayCount - 1).replace("-", "/"), true);
+                                       }
+                                   }
+                                   //记录上一次加载多少数据
+                                   if (pagePosition == 0)
+                                       oldDayCount = dayResults.size();
+                               }
 
-                    @Override
-                    public void onStart() {
-                        //开始
-                        MyLogUtils.i(TAG, "onStart");
-                        if (isLoadMore) {
-                            //加载更多
-                            iHomeDayRecommendModel.onConnectStart(true);
-                            pagePosition++;
-                        } else {
-                            if (pagePosition == 0 && isFirstLoad) {
-                                //第一次加载
-                                iHomeDayRecommendModel.onConnectStart(false);
-                            } else {
-                                //下拉刷新
-                                iHomeDayRecommendModel.onConnectStart(true);
-                            }
-                        }
-                    }
-                });
+                               @Override
+                               public void onStart() {
+                                   //开始
+                                   MyLogUtils.i(TAG, "onStart");
+                                   if (isLoadMore) {
+                                       //加载更多
+                                       iHomeDayRecommendModel.onConnectStart(true);
+                                       pagePosition++;
+                                   } else {
+                                       if (pagePosition == 0 && isFirstLoad) {
+                                           //第一次加载
+                                           iHomeDayRecommendModel.onConnectStart(false);
+                                       } else {
+                                           //下拉刷新
+                                           iHomeDayRecommendModel.onConnectStart(true);
+                                       }
+                                   }
+                               }
+                           }
+                );
     }
 
     private void toConnectDayRecommendData(final String day, final boolean isRefresh) {
@@ -174,6 +175,10 @@ public class HomeDayRecommendFragmentModel {
                     public void onError(Throwable e) {
                         //错误回调
                         iHomeDayRecommendModel.onConnectError();
+                        if (isLoadMore)
+                            pagePosition--;
+                        if (pagePosition == 0)//防止第一次加载时间成功，加载内容失败的情况
+                            isFirstLoad = true;
                     }
 
                     @Override

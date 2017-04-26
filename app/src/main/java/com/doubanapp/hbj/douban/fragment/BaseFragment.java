@@ -90,6 +90,7 @@ public abstract class BaseFragment extends LazyFragment implements View.OnClickL
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    MyLogUtils.i(TAG, "hasFocus   " + hasFocus);
                     mContext.setFloatingClickedListener(BaseFragment.this);
                     mContext.showFloating();
                     mContext.showBottomNavigation();

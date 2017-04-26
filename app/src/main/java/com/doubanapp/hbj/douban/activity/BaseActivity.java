@@ -1,18 +1,12 @@
 package com.doubanapp.hbj.douban.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.utils.MyLogUtils;
-import com.doubanapp.hbj.douban.utils.MyUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
@@ -46,7 +40,7 @@ public class BaseActivity extends SwipeBackActivity {
     protected void onResume() {
         super.onResume();
         //设置沉浸式状态栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);

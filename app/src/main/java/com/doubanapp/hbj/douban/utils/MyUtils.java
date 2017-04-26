@@ -6,13 +6,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.devspark.appmsg.AppMsg;
 import com.doubanapp.hbj.douban.R;
-import com.doubanapp.hbj.douban.activity.MainActivity;
 import com.doubanapp.hbj.douban.constants.MyConstants;
 import com.doubanapp.hbj.douban.global.MyApplication;
 
@@ -170,7 +166,7 @@ public class MyUtils {
         appMsg.setDuration(2000);
         View view = appMsg.getView();
         view.setBackgroundColor(color);
-        view.setPadding(0, MyUtils.dip2px(mContext, 40), 0,  MyUtils.dip2px(mContext, 10));
+        view.setPadding(0, MyUtils.dip2px(mContext, 15), 0, MyUtils.dip2px(mContext, 7));
         appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +185,7 @@ public class MyUtils {
         appMsg.setDuration(2000);
         View view = appMsg.getView();
         view.setBackgroundColor(color);
-        view.setPadding(0, MyUtils.dip2px(mContext, 40), 0, MyUtils.dip2px(mContext, 10));
+        view.setPadding(0, MyUtils.dip2px(mContext, 15), 0, MyUtils.dip2px(mContext, 7));
         appMsg.setAnimation(R.anim.app_msg_show_anim, R.anim.app_msg_cancel_anim);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

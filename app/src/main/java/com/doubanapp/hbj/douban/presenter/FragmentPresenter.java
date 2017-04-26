@@ -6,13 +6,10 @@ import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.devspark.appmsg.AppMsg;
 import com.doubanapp.hbj.douban.IModel.IBookModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAllModel;
 import com.doubanapp.hbj.douban.IModel.IHomeAndroidModel;
@@ -57,10 +54,8 @@ import com.doubanapp.hbj.douban.mtprovider.SelectProvider;
 import com.doubanapp.hbj.douban.mtprovider.TopProvider;
 import com.doubanapp.hbj.douban.utils.MyLogUtils;
 import com.doubanapp.hbj.douban.utils.MyUtils;
-import com.mingle.entity.MenuEntity;
-import com.mingle.sweetpick.NoneEffect;
-import com.mingle.sweetpick.RecyclerViewDelegate;
-import com.mingle.sweetpick.SweetSheet;
+import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.flipboard.bottomsheet.commons.MenuSheetView;
 
 import java.util.List;
 
@@ -71,14 +66,13 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * 电影，书籍，音乐的Presenter
  * Created by Administrator on 2017/4/7 0007.
  */
-public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IFragmentPresenter, IMovieModel, IBookModel,
+public class FragmentPresenter implements MenuSheetView.OnMenuItemClickListener, IFragmentPresenter, IMovieModel, IBookModel,
         IMusicModel, IHomeDayRecommendModel, IHomeAllModel, IHomeAndroidModel, IHomeWelFareModel {
 
     public static final String TAG = "FragmentPresenter";
     private Context mContext;
     private IFragmentBaseView iFragmentBaseView;
     private Items items;
-    private SweetSheet mSweetSheet;
     private HomeAllFragmentModel homeAllFragmentModel;
     private HomeDayRecommendFragmentModel homeDayRecommendFragmentModel;
     private MovieFragmentModel movieFragmentModel;
@@ -87,6 +81,8 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     private HomeAndroidFragmentModel homeAndroidFragmentModel;
     private HomeWelFareFragmentModel homeWelFareFragmentModel;
     private MultiTypeAdapter adapter;
+    private MenuSheetView menuSheetView;
+    private BottomSheetLayout bottomSheet;
 
 
     public FragmentPresenter(Context mContext, IFragmentBaseView iFragmentBaseView) {
@@ -97,17 +93,10 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     /*
     * home all 分类*/
     @Override
-    public void doInitSweetSheet(RelativeLayout rl) {
-        //屏幕高度
-        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        int mSweetSheetHeight = windowManager.getDefaultDisplay().getHeight() / 2;
-        //选择分类
-        mSweetSheet = new SweetSheet(rl);
-        mSweetSheet.setMenuList(R.menu.home_all_sweet_menu);
-        mSweetSheet.setDelegate(new RecyclerViewDelegate(true, mSweetSheetHeight));
-        mSweetSheet.setBackgroundEffect(new NoneEffect());
-        mSweetSheet.setBackgroundClickEnable(false);
-        mSweetSheet.setOnMenuItemClickListener(this);
+    public void doInitBottomSheet(final BottomSheetLayout bottomSheet) {
+        this.bottomSheet = bottomSheet;
+        menuSheetView = new MenuSheetView(mContext, MenuSheetView.MenuType.LIST, R.string.home_all_bottom_sheet_text, this);
+        menuSheetView.inflateMenu(R.menu.home_all_sweet_menu);
     }
 
     /*
@@ -128,7 +117,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
         adapter.register(TopItem.class, new TopProvider());
         adapter.register(LoadMoreItem.class, new LoadMoreProvider());
         adapter.register(HomeNormalItem.class, new HomeNormalProvider(mContext));
-        adapter.register(HomeAllTitleItem.class, new HomeAllTitleProvider(mContext, mSweetSheet));
+        adapter.register(HomeAllTitleItem.class, new HomeAllTitleProvider(mContext));
         adapter.register(HomeWelFareItem.class, new HomeWelFareProvider());
         iFragmentBaseView.onRegisterMultitypeItem(adapter);
     }
@@ -236,7 +225,7 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
             items.add(items.size(), new LoadMoreItem("上拉加载"));
             iFragmentBaseView.onNotifyDataSetChanged();
         }
-        MyUtils.showAppMsg((MainActivity) mContext, R.string.appmsg_connect_error_text, Color.BLACK);
+        MyUtils.showAppMsg((MainActivity) mContext, R.string.appmsg_connect_error_text, Color.RED);
         iFragmentBaseView.onRefreshCompleted();
     }
 
@@ -348,27 +337,10 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
     * home all数据*/
     @Override
     public void onHomeAllConnectNext(List<String> allData) {
-        items.add(new HomeAllTitleItem(""));
+        items.add(new HomeAllTitleItem("", bottomSheet, menuSheetView));
         for (int i = 0; i < allData.size(); i++) {
             items.add(new HomeNormalItem("", i));
         }
-    }
-
-    /*
-    * homeall sweet条目选中*/
-    @Override
-    public boolean onItemClick(int position, MenuEntity menuEntity) {
-        switch (position) {
-            case 0:
-
-                break;
-            default:
-        }
-        //homeAllFragmentModel.toConnectData();
-        Toast.makeText(MyUtils.getContext(), menuEntity.title + "  " + position, Toast.LENGTH_SHORT).show();
-        ((MainActivity) mContext).showBottomNavigation();
-        ((MainActivity) mContext).showFloating();
-        return true;
     }
 
     /*
@@ -388,5 +360,16 @@ public class FragmentPresenter implements SweetSheet.OnMenuItemClickListener, IF
             int addHeight = (int) (Math.random() * 50) + 260;//随机高度
             items.add(new HomeWelFareItem(mData, addHeight));
         }
+    }
+
+    /*
+    * home all bottom sheet*/
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(mContext, item.getTitle(), Toast.LENGTH_SHORT).show();
+        if (bottomSheet.isSheetShowing()) {
+            bottomSheet.dismissSheet();
+        }
+        return true;
     }
 }
