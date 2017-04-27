@@ -1,7 +1,6 @@
 package com.doubanapp.hbj.douban.mtitem;
 
 import com.doubanapp.hbj.douban.bean.HomeDayRecommendJsonData;
-import com.doubanapp.hbj.douban.bean.HomeJsonData;
 
 import me.drakeet.multitype.Item;
 
@@ -14,7 +13,6 @@ public class HomeNormalItem implements Item {
     public int position;
     public int pageIndex;
     public HomeDayRecommendJsonData homeDayRecommendJsonDataRes;
-    public HomeJsonData homeJsonDataRes;
     public String type;
     public String des;
     public String who;
@@ -33,10 +31,8 @@ public class HomeNormalItem implements Item {
     }
 
     public HomeNormalItem(String type, String des, String who, String time, String image, int position, int pageIndex) {
-        //this.homeJsonDataRes = homeJsonDataRes;
         this.position = position;
         this.pageIndex = pageIndex;
-
         this.type = type;
         this.des = des;
         this.who = who;

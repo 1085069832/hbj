@@ -40,7 +40,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     /*
     *HomeDayRecommend数据 */
-    public NormalRcAdapter(Context mContext,HomeDayRecommendJsonData mHomeDayRecommendData, int startIndex) {
+    public NormalRcAdapter(Context mContext, HomeDayRecommendJsonData mHomeDayRecommendData, int startIndex) {
         this.startIndex = startIndex;
         this.mContext = mContext;
         switch (startIndex) {
@@ -81,7 +81,10 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-
+        Glide.with(mContext)
+                .load(R.mipmap.pic_placeholder_default)
+                .centerCrop()
+                .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
         switch (startIndex) {
             case MyConstants.HOME_DR_ANDROID_INDEX://homedayrecommend android
                 ((NormalItemViewHolder) holder).tv_normal_rc_item_des.setText(homeDayRecommendAndroid.get(position).getDesc());
@@ -93,7 +96,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .centerCrop()
                             .crossFade()
                             .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.ic_loading_error)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
                 }
                 break;
@@ -107,7 +110,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .centerCrop()
                             .crossFade()
                             .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.ic_loading_error)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
                 }
                 break;
@@ -121,7 +124,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .centerCrop()
                             .crossFade()
                             .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.ic_loading_error)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
                 }
                 break;
@@ -135,7 +138,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .centerCrop()
                             .crossFade()
                             .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.ic_loading_error)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
                 }
                 break;
@@ -149,7 +152,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .centerCrop()
                             .crossFade()
                             .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.ic_loading_error)
                             .into(((NormalItemViewHolder) holder).iv_normal_rc_item_image);
                 }
                 break;
@@ -163,7 +166,7 @@ public class NormalRcAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        int count = 0;
+        int count;
         if (startIndex == MyConstants.HOME_DR_ANDROID_INDEX) {
             count = homeDayRecommendAndroid.size();
         } else if (startIndex == MyConstants.HOME_DR_IOS_INDEX) {

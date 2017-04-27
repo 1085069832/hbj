@@ -66,13 +66,17 @@ public class ContentIconProvider extends ItemViewProvider<ContentIconItem, Recyc
                 }
             }
         });
+        Glide.with(mContext)
+                .load(R.mipmap.pic_placeholder_default)
+                .centerCrop()
+                .into(((VpItemViewHolder) holder).iv_content_icon_mt_item);
         if (contentViewPagerItem.url != null) {
             Glide.with(mContext)
                     .load(contentViewPagerItem.url)
                     .centerCrop()
                     .crossFade()
                     .placeholder(R.mipmap.pic_placeholder_default)
-                    .error(R.mipmap.pic_placeholder_default)
+                    .error(R.mipmap.ic_loading_error)
                     .into(((VpItemViewHolder) holder).iv_content_icon_mt_item);
         }
     }

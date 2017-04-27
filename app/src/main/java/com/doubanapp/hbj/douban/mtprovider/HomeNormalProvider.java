@@ -39,6 +39,10 @@ public class HomeNormalProvider extends ItemViewProvider<HomeNormalItem, Recycle
 
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull final HomeNormalItem homeNormalItem) {
+        Glide.with(mContext)
+                .load(R.mipmap.pic_placeholder_default)
+                .centerCrop()
+                .into(((HomeNormalItemViewHolder) holder).iv_home_normal_image);
         switch (homeNormalItem.pageIndex) {
             case MyConstants.HOME_DR_REST_INDEX://homerecommend 休息视频
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeNormalItem.title);
@@ -50,22 +54,6 @@ public class HomeNormalProvider extends ItemViewProvider<HomeNormalItem, Recycle
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_des.setText(rest.getDesc());
                 break;
             case MyConstants.HOME_ALL_PRESENTER_PAGE_INDEX://home all
-               /* HomeJsonData.ResultsBean homeJson = homeNormalItem.homeJsonDataRes.getResults().get(homeNormalItem.position);
-                ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeJson.getType());
-                ((HomeNormalItemViewHolder) holder).tv_home_normal_who.setText("作者: " + homeJson.getWho());
-                String homeJsonTime = homeJson.getPublishedAt().replace("T", " ");
-                String homeJsonTimest = homeJsonTime.substring(homeJsonTime.indexOf("-") + 1, homeJsonTime.lastIndexOf(":"));
-                ((HomeNormalItemViewHolder) holder).tv_home_normal_time.setText(homeJsonTimest);
-                ((HomeNormalItemViewHolder) holder).tv_home_normal_des.setText(homeJson.getDesc());
-                if (homeJson.getImages() != null) {
-                    Glide.with(mContext)
-                            .load(homeJson.getImages().get(0))
-                            .centerCrop()
-                            .crossFade()
-                            .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
-                            .into(((HomeNormalItemViewHolder) holder).iv_home_normal_image);
-                }*/
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_type.setText(homeNormalItem.type);
                 ((HomeNormalItemViewHolder) holder).tv_home_normal_who.setText("作者: " + homeNormalItem.who);
                 String homeJsonTime = homeNormalItem.time.replace("T", " ");
@@ -78,7 +66,7 @@ public class HomeNormalProvider extends ItemViewProvider<HomeNormalItem, Recycle
                             .centerCrop()
                             .crossFade()
                             .placeholder(R.mipmap.pic_placeholder_default)
-                            .error(R.mipmap.pic_placeholder_default)
+                            .error(R.mipmap.ic_loading_error)
                             .into(((HomeNormalItemViewHolder) holder).iv_home_normal_image);
                 }
                 break;
